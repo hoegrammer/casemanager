@@ -1,0 +1,10 @@
+CREATE TABLE `lcm_keyword_case` (
+  `id_entry` bigint(21) NOT NULL auto_increment,
+  `id_keyword` bigint(21) NOT NULL,
+  `id_case` bigint(21) NOT NULL,
+  `id_stage` bigint(21) NOT NULL default '0',
+  `value` text NOT NULL,
+  PRIMARY KEY  (`id_entry`),
+  KEY `id_keyword` (`id_keyword`),
+  KEY `id_case` (`id_case`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

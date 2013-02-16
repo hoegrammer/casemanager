@@ -1,0 +1,14 @@
+CREATE TABLE `lcm_rep_col` (
+  `id_column` bigint(21) NOT NULL auto_increment,
+  `id_report` bigint(21) NOT NULL,
+  `id_field` bigint(21) NOT NULL default '0',
+  `col_order` bigint(21) NOT NULL default '0',
+  `header` varchar(255) NOT NULL default '',
+  `sort` enum('asc','desc') NOT NULL default 'asc',
+  `total` tinyint(1) NOT NULL default '0',
+  `col_group` enum('COUNT','SUM') NOT NULL,
+  PRIMARY KEY  (`id_column`),
+  KEY `id_report` (`id_report`),
+  KEY `id_field` (`id_field`),
+  KEY `col_order` (`col_order`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

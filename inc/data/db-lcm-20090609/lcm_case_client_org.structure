@@ -1,0 +1,9 @@
+CREATE TABLE `lcm_case_client_org` (
+  `id_case` bigint(21) NOT NULL,
+  `id_client` bigint(21) NOT NULL default '0',
+  `id_org` bigint(21) NOT NULL default '0',
+  UNIQUE KEY `idx_uniq` (`id_case`,`id_client`,`id_org`),
+  KEY `id_case` (`id_case`),
+  KEY `id_client` (`id_client`),
+  KEY `id_org` (`id_org`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

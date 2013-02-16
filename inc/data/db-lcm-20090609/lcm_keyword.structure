@@ -1,0 +1,11 @@
+CREATE TABLE `lcm_keyword` (
+  `id_keyword` bigint(21) NOT NULL auto_increment,
+  `id_group` bigint(21) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `title` text NOT NULL,
+  `description` text NOT NULL,
+  `hasvalue` enum('Y','N') NOT NULL default 'N',
+  `ac_author` enum('Y','N') NOT NULL default 'Y',
+  PRIMARY KEY  (`id_keyword`),
+  UNIQUE KEY `idx_kw_name` (`id_group`,`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=475 DEFAULT CHARSET=utf8

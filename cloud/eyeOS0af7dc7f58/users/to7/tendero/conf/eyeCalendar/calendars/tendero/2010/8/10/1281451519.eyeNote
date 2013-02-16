@@ -1,0 +1,12 @@
+<note>
+	<hourFrom>15</hourFrom>
+	<hourEven>16</hourEven>
+	<minFrom>45</minFrom>
+	<minEven>15</minEven>
+	<day>10</day>
+	<wday>2</wday>
+	<month>8</month>
+	<year>2010</year>
+	<title></title>
+	<dateInt>1281451519</dateInt>
+</note>

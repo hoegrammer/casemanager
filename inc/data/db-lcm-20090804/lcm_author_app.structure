@@ -1,0 +1,5 @@
+CREATE TABLE `lcm_author_app` (
+  `id_author` bigint(21) NOT NULL,
+  `id_app` bigint(21) NOT NULL,
+  UNIQUE KEY `idx_uniq` (`id_author`,`id_app`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

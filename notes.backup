@@ -1,0 +1,345 @@
+<?php
+
+/*
+	This file is part of the Legal Case Management System (LCM).
+	(C) 2004-2005 Free Software Foundation, Inc.
+
+	This program is free software; you can redistribute it and/or modify it
+	under the terms of the GNU General Public License as published by the
+	Free Software Foundation; either version 2 of the License, or (at your
+	option) any later version.
+
+	This program is distributed in the hope that it will be useful, but
+	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+	or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+	for more details.
+
+	You should have received a copy of the GNU General Public License along
+	with this program; if not, write to the Free Software Foundation, Inc.,
+	59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
+
+	$Id: listauthors.php,v 1.33 2006/03/21 19:01:53 mlutfy Exp $
+*/
+
+include('inc/inc.php');
+include_lcm('inc_acc');
+include_lcm('inc_filters');
+include_lcm('inc_obj_fu');
+
+global $author_session;
+
+
+$_SESSION['form_data']=array();
+$_SESSION['errors']=array();
+
+lcm_page_start('Post-it Notes');
+matt_page_start('Post-it Notes');
+$groups = array(
+	'outstanding' => 'Outstanding',
+	'dismissed' => 'Dismissed',
+	);
+$tab = ( isset($_GET['tab']) ? $_GET['tab'] : 'outstanding' );
+show_tabs($groups,$tab,$_SERVER['REQUEST_URI']);
+no_tabs();
+
+switch ($tab)
+	{
+	case 'outstanding':
+		
+		$dismiss = $_GET['dismiss'];
+		if ($dismiss)
+			{
+			lcm_query('update lcm_app set dismissed=1 where id_app='.$dismiss);
+			}
+
+		$_GET = array();
+
+		$q = '
+			SELECT ap.*, cl.name_first as clf, cl.name_last as cll, cl.id_client, au.name_first as auf, au.name_last as aul
+			FROM lcm_app as ap 
+			LEFT JOIN lcm_case_client_org as cco on cco.id_case = ap.id_case
+			LEFT JOIN lcm_client as cl on cl.id_client = cco.id_client
+			LEFT JOIN lcm_author as au on au.id_author = ap.id_author
+			WHERE ap.title="post-it" and dismissed = 0
+			ORDER BY ap.date_creation
+			';
+		$result=lcm_query($q);
+
+		if (lcm_num_rows($result))
+			{
+			echo "<table class='table_postit'>";
+			for ($cpt = 0; ($row = lcm_fetch_array($result)); $cpt++)
+				{
+				if ($cpt % 3==0)
+					{
+					echo "<tr>";
+					}
+				echo "<td class='td_postit'><small>";
+				
+				if ($author_session['status'] == 'admin')
+					echo "
+						<div style='padding:1px 3px 0px 0px; float:right'>
+						<a href='notes.php?tab=outstanding&dismiss=".$row['id_app']."' class='content_link'>Dismiss
+						</a>
+						</div>";
+				echo "
+					<div class='td_postit_title'>
+					<a class='content_link' href='client_det.php?client=". $row['id_client']."'>".$row['clf']." ".$row['cll']."
+					</a>
+					</div>";
+				echo "<div class='td_postit_inner'>";
+				echo "<table><tr><td><br/><br/><br/><br/></td><td width=100%><small>";
+				echo $row['description'];
+				echo "</small><tr><td colspan='2', style='text-align:right;'><small><i>";
+				echo "From ".$row['auf']." ".$row['aul']." on ".format_date($row['date_creation'],date_short);
+				echo '</i></small></td><tr>';
+				echo "</td></tr></table>";
+				echo "</div></td>";
+				if ($cpt % 3==2)
+					{
+			//		echo "</tr>";
+					}
+				}	
+			if ($cpt % 3 == 1)
+				echo "<td style='width:33%'></td><td style='width:33%'></td></tr>";
+			if ($cpt % 3 == 2)
+				echo "<td style='width:33%'></td></tr>";
+
+			echo "</table>";
+			}
+		else
+			{
+			lcm_bubble('no_notes');
+			}
+		break;
+	case 'dismissed':
+		$order='ap.date_creation';
+		$dir='DESC';
+		if (isset($_REQUEST['date_order']))
+			{$order = 'ap.date_creation';$dir=$_REQUEST['date_order'];}
+		elseif (isset($_REQUEST['client_order']))
+			{$order = 'concat(cl.name_first,cl.name_last)';$dir=$_REQUEST['client_order'];}
+		elseif (isset($_REQUEST['author_order']))
+			{$order = 'concat(au.name_first,au.name_last)';$dir=$_REQUEST['author_order'];}
+		$q = '
+			SELECT ap.*, cl.name_first as clf, cl.name_last as cll, cl.id_client, au.name_first as auf, au.name_last as aul
+			FROM lcm_app as ap 
+			LEFT JOIN lcm_case_client_org as cco on cco.id_case = ap.id_case
+			LEFT JOIN lcm_client as cl on cl.id_client = cco.id_client
+			LEFT JOIN lcm_author as au on au.id_author = ap.id_author
+			WHERE ap.title="post-it" and dismissed = true
+			ORDER BY '.$order.' '.$dir.'
+			';
+		$result = lcm_query($q);
+		// Get the number of rows in the result
+		$number_of_rows = lcm_num_rows($result);
+		if ($number_of_rows) {
+			$headers = array( 
+					array( 'title' => 'Client', 'order' => 'client_order'),
+					array( 'title' => 'Author', 'order' => 'author_order'),
+					array( 'title' => 'Creation Date', 'order' => 'date_order', 'default' => 'DESC'),
+					array( 'title' => 'Descrption', 'order' => 'no_order'),
+					);
+			show_list_start($headers);
+		
+			// Check for correct start position of the list
+			$list_pos = 0;
+			
+			if (isset($_REQUEST['list_pos']))
+				$list_pos = $_REQUEST['list_pos'];
+			
+			if ($list_pos>=$number_of_rows) $list_pos = 0;
+			
+			// Position to the page info start
+			if ($list_pos>0)
+				if (!lcm_data_seek($result,$list_pos))
+					lcm_panic("Error seeking position $list_pos in the result");
+			
+			// Show page of the list
+			for ($i = 0 ; (($i<$prefs['page_rows']) && ($row = lcm_fetch_array($result))) ; $i++) {
+				echo "\t<tr>";
+				echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">'
+					. $row['clf'] . ' ' . $row['cll'] . '</td>';
+				echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">'
+					. $row['auf'] . ' ' . $row['aul'] . '</td>';
+				echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">'
+					. format_date($row['date_creation'], 'date_short') . '</td>';
+				echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">'
+					. $row['description'] . '</td>';
+//				echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">'
+//					. (!$row['dismissed'] ? 'Outstanding' : 'Dismissed') . '</td>';
+	//						echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">' . _Tkw('appointments', $row['type']) . '</td>';
+	//			echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">'
+	//				. '<a href="app_det.php?app=' . $row['id_app'] . '" class="content_link">' . $row['title'] . '</a></td>';
+				// [ML] removed, not very useful.
+				// echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">'
+				//	. format_date($row['reminder'], 'short') . '</td>';
+				echo "</tr>\n";
+			}
+		
+			show_list_end($list_pos, $number_of_rows);
+		}
+		break;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+$q= 'SELECT 
+		r.*, 
+		p.id_placement as pid, p.id_case as pca, p.date_start as pds, p.date_end as pde, p.status as pst,
+		a.id_placement as aid, a.id_case as aca, a.date_start as ads, a.date_end as ade, a.status as ast,
+		auth.name_first, auth.name_last, id_author
+	from lcm_room as r 
+	left join (select * from lcm_placement where status="active")as a on r.id_room = a.id_room
+	left join (select * from lcm_placement where status="provisional") as p on r.id_room = p.id_room
+	left join lcm_author as auth on auth.id_author = r.host
+	where 1=1 ';
+if ($tab=='available')
+	{
+	$q.='and a.id_placement is NULL ';
+	$q.='and r.status = "normal" ';
+	}
+elseif ($tab=='occupied')
+	{
+	$q.='and a.id_placement';
+	}
+elseif ($tab=='unavailable')
+	{
+	$q.='and r.status = "unavailable"';
+	}
+$result = lcm_query($q);
+$number_of_rows = lcm_num_rows($result);
+
+// Check for correct start position of the list
+if (isset($_REQUEST['list_pos']))
+	$list_pos = $_REQUEST['list_pos'];
+else
+	$list_pos = 0;
+
+if ($list_pos>=$number_of_rows) $list_pos = 0;
+
+// Position to the page info start
+if ($list_pos>0)
+	if (!lcm_data_seek($result,$list_pos))
+		lcm_panic("Error seeking position $list_pos in the result");
+
+
+$headers = array();
+$headers[0]['title'] = 'Room';
+$headers[1]['title'] = 'Type';
+//$headers[0]['order'] = 'order_short';
+//$headers[0]['default'] = 'ASC';
+$headers[2]['title'] = 'Details';
+$headers[3]['title'] = 'Actions';
+//$headers[2]['title'] = 'Created Date';
+//$headers[2]['order'] = 'order_date';
+//$headers[2]['default'] = '';
+
+show_list_start($headers);
+for ($i = 0 ; (($i<$prefs['page_rows']) && ($row = lcm_fetch_array($result))) ; $i++) 
+	{
+//	if (    !(     ($tab=='available')&& (($row['aid'])||($row['status']!='normal'))    )    )
+		{
+		echo "<tr>\n";
+		echo "<td width = '15%' class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
+		echo "<a class='content_link' href='room_det.php?id_room=".$row['id_room']."'>" . $row['name'] . "</a><br /><br/> ";
+		
+		echo "</td><td class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'><small>";
+		
+		echo $row['type'];
+		if ($row['type']=='homestay')
+			{
+			if ($row['host'])
+				{
+				echo " with <br />";
+				echo "<a class='content_link' href='author_det.php?author=".$row['id_author']."'>".get_person_name($row)."</a>";
+				}
+			else
+				{
+				echo ", no host listed";
+				}
+			}
+		echo "</small></td>\n";
+
+		echo "<td class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
+		if ($row['aid'] == '')
+			{
+			if ($row['status']=='normal')
+				{
+				echo "<b>Unoccupied</b>.";
+				echo '<br />';
+				}
+			elseif ($row['status']=='unavailable')
+				{
+				echo "Currently <b>Unavailable</b>.";
+				echo '<br />';
+				}
+			}
+		else
+			{
+			$client=lcm_fetch_array(lcm_query("SELECT cl.name_first, cl.name_last, cl.id_client from lcm_case_client_org as cco natural left join lcm_client as cl where cco.id_case='".$row['aca']."'"));
+			echo "Occupied by <b>". get_person_name($client). '</b>, from: '.format_date($row['ads'], 'date_short').'.';
+			echo '<br />';
+			}
+		if (!$row['pid'] == '')
+			{
+			$client=lcm_fetch_array(lcm_query("SELECT cl.name_first, cl.name_last, cl.id_client from lcm_case_client_org as cco natural left join lcm_client as cl where cco.id_case='".$row['pca']."'"));
+			echo "Reserved for <b>". get_person_name($client). '</b>.';
+			}
+		if ($row['aid']=='' && $row['pid']=='')
+			{
+			echo '(Suitable for '.($row['sex']=='both'?'male or female':$row['sex']).' clients'.($row['note']?'.<br/>Extra Notes: '.$row['note']:'').')';
+			}
+		echo "</td>";
+		echo "<td width = '40%' class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
+		if (!$row['pid'])
+			{
+			echo '<a href="edit_fu.php?room='.$row['id_room'].'&ctype=accomidation&type=stage_change&stage=reserved&ref=listrooms.php" class="add_lnk">
+				Make Reservation</a>';
+			if (!$row['aid'] && $row['status']=='normal')
+				{
+				echo '<a href="edit_fu.php?room='.$row['id_room'].'&ctype=accomidation&type=stage_change&stage=accom&ref=listrooms.php" class="add_lnk">
+					Move a Client In</a>';
+				}
+			}
+		else
+			{
+			echo '<a href="edit_fu.php?room='.$row['id_room'].'&case='.$row['pca'].'ctype=accomidation&type=stage_change&stage=unreserved&ref=listrooms.php" class="add_lnk">
+				Cancel Reservation</a>';
+			if (!$row['aid'] && $row['status']=='normal')
+				{
+				echo '<a href="edit_fu.php?room='.$row['id_room'].'&case='.$row['pca'].'ctype=accomidation&type=stage_change&stage=accom&ref=listrooms.php" class="add_lnk">
+					Move In Reservation</a>';
+				}
+			}
+
+		echo "</td>";
+		echo "</tr>\n";
+		}
+	}
+show_list_end($list_pos, $number_of_rows);
+	
+echo '<p class="normal_text"><a href="edit_room.php" class="add_lnk">Add A New Room</a></p>';
+*/
+matt_page_end();
+lcm_page_end();
+
+?>

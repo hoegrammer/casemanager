@@ -1,0 +1,10 @@
+CREATE TABLE `lcm_room` (
+  `id_room` bigint(21) NOT NULL auto_increment,
+  `name` text,
+  `type` enum('shared house','homestay') default 'shared house',
+  `host` bigint(21) NOT NULL default '0',
+  `sex` enum('male','female','both') default 'both',
+  `note` text,
+  `status` enum('normal','unavailable','closed') default 'normal',
+  PRIMARY KEY  (`id_room`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8

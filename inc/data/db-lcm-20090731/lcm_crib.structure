@@ -1,0 +1,9 @@
+CREATE TABLE `lcm_crib` (
+  `id_crib` bigint(21) NOT NULL auto_increment,
+  `id_keyword` bigint(21) NOT NULL,
+  `short` text NOT NULL,
+  `full` text NOT NULL,
+  `visible` tinyint(1) NOT NULL,
+  `date_created` datetime NOT NULL,
+  PRIMARY KEY  (`id_crib`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

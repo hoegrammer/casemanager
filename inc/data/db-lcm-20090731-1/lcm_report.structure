@@ -1,0 +1,15 @@
+CREATE TABLE `lcm_report` (
+  `id_report` bigint(21) NOT NULL auto_increment,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `notes` text NOT NULL,
+  `id_author` bigint(21) NOT NULL,
+  `date_creation` datetime NOT NULL,
+  `date_update` datetime NOT NULL,
+  `line_src_type` text NOT NULL,
+  `line_src_name` text NOT NULL,
+  `col_src_type` text NOT NULL,
+  `col_src_name` text NOT NULL,
+  `filecustom` text NOT NULL,
+  PRIMARY KEY  (`id_report`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

@@ -1,0 +1,7 @@
+CREATE TABLE `lcm_bib` (
+  `id_crib` bigint(21) NOT NULL auto_increment,
+  `id_keyword` bigint(21) NOT NULL,
+  `short` text NOT NULL,
+  `full` text NOT NULL,
+  PRIMARY KEY  (`id_crib`)
+) ENGINE=MyISAM AUTO_INCREMENT=1264 DEFAULT CHARSET=utf8

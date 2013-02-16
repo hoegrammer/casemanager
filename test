@@ -1,0 +1,50 @@
+#!/bin/bash
+
+n=0
+echo "---------------------------------------------------------" >> /var/www/log/backup.log
+VAR=`grep -E -o -m 1 "yes|no" /var/www/inc/config/backup`
+if [ "$VAR" == "yes" ]; then
+	echo -e "Starting Backup at \c " >> /var/www/log/backup.log
+	date >> /var/www/log/backup.log
+	echo -e "Mounting drive...         \c " >> /var/www/log/backup.log
+	mount /dev/sdb1 /media/disk
+	if [ $? -ne 0 ]; then
+		echo "[Fail]" >> /var/www/log/backup.log
+	else
+		echo "[Okay]" >> /var/www/log/backup.log
+		echo -e "Preforming backup...      \c " >> /var/www/log/backup.log
+		mysqldump -u root --password=polydisco lcm > /tmp/lcm.dump
+		if [ $? -ne 0 ]; then
+			echo "[Fail]" >> /var/www/log/backup.log
+		else
+			echo "[Okay]" >> /var/www/log/backup.log
+			echo -e "Backup size: \c " >> /var/www/log/backup.log
+			stat --format=%s /tmp/lcm.dump >> /var/www/log/backup.log
+			echo " bytes" >> /var/www/log/backup.log
+			echo -e "Moving backup to drive... \c " >> /var/www/log/backup.log
+			sudo mv /tmp/lcm.dump /media/disk/lcm.dump
+			if [ $? -ne 0 ]; then
+				echo "[Fail]" >> /var/www/log/backup.log
+			else
+				echo "[Okay]" >>/var/www/log/backup.log
+				n=1
+			fi
+		fi
+		echo -e "Unmounting drive...       \c " >> /var/www/log/backup.log
+		umount /media/disk
+		if [ $? -ne 0 ]; then
+			echo "[Fail]" >> /var/www/log/backup.log
+		else
+			echo "[Okay]" >> /var/www/log/backup.log
+		fi
+	fi
+	if [ $n -ne 0 ]; then
+		echo -e ":o) Backup Completed at \c " >> /var/www/log/backup.log
+		date >> /var/www/log/backup.log
+	else
+		echo -e ":o( Backup Aborted." >> /var/www/log/backup.log
+	fi
+else
+	echo -e "Backup skipped at \c " >> /var/www/log/backup.log
+	date >> /var/www/log/backup.log
+fi

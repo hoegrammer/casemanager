@@ -1,0 +1,14 @@
+<calendars>
+	<calendarInfo>
+		<name>tendero</name>
+		<num>1</num>
+		<show>1</show>
+		<selected>0</selected>
+	</calendarInfo>
+	<calendarInfo>
+		<name>room43 booking</name>
+		<num>2</num>
+		<show>1</show>
+		<selected>1</selected>
+	</calendarInfo>
+</calendars>

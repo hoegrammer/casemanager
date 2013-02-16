@@ -1,0 +1,18 @@
+CREATE TABLE `lcm_expense` (
+  `id_expense` bigint(21) NOT NULL auto_increment,
+  `id_case` bigint(21) NOT NULL default '0',
+  `id_followup` bigint(21) NOT NULL default '0',
+  `id_author` bigint(21) NOT NULL,
+  `id_admin` bigint(21) NOT NULL default '0',
+  `status` enum('pending','granted','refused','deleted') NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `cost` decimal(19,4) NOT NULL default '0.0000',
+  `description` text NOT NULL,
+  `date_creation` datetime NOT NULL,
+  `date_update` datetime NOT NULL,
+  `pub_read` tinyint(1) NOT NULL,
+  `pub_write` tinyint(1) NOT NULL,
+  PRIMARY KEY  (`id_expense`),
+  KEY `id_case` (`id_case`),
+  KEY `id_author` (`id_author`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

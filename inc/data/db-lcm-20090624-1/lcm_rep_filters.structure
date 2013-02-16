@@ -1,0 +1,6 @@
+CREATE TABLE `lcm_rep_filters` (
+  `id_report` bigint(21) NOT NULL,
+  `id_filter` bigint(21) NOT NULL,
+  `type` enum('AND','OR') NOT NULL default 'AND',
+  UNIQUE KEY `idx_uniq` (`id_report`,`id_filter`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

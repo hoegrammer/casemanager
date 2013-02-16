@@ -1,0 +1,16 @@
+CREATE TABLE `lcm_client_attachment` (
+  `id_attachment` bigint(21) NOT NULL auto_increment,
+  `id_client` bigint(21) NOT NULL default '0',
+  `id_author` bigint(21) NOT NULL default '0',
+  `filename` varchar(255) NOT NULL default '',
+  `type` varchar(255) NOT NULL default '',
+  `size` bigint(21) NOT NULL default '0',
+  `description` text,
+  `content` longblob,
+  `date_attached` datetime NOT NULL,
+  `date_removed` datetime default NULL,
+  PRIMARY KEY  (`id_attachment`),
+  KEY `id_client` (`id_client`),
+  KEY `id_author` (`id_author`),
+  KEY `filename` (`filename`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

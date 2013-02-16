@@ -1,0 +1,17 @@
+CREATE TABLE `lcm_followup` (
+  `id_followup` bigint(21) NOT NULL auto_increment,
+  `id_case` bigint(21) NOT NULL default '0',
+  `id_author` bigint(21) NOT NULL default '0',
+  `date_start` datetime NOT NULL,
+  `date_end` datetime default NULL,
+  `type` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `case_stage` varchar(255) NOT NULL,
+  `sumbilled` decimal(19,4) NOT NULL default '0.0000',
+  `hidden` enum('N','Y') NOT NULL default 'N',
+  `outcome` bigint(21) default NULL,
+  `outcome_amount` int(4) default NULL,
+  PRIMARY KEY  (`id_followup`),
+  KEY `id_case` (`id_case`),
+  KEY `id_author` (`id_author`)
+) ENGINE=MyISAM AUTO_INCREMENT=151 DEFAULT CHARSET=utf8

@@ -1,0 +1,9 @@
+CREATE TABLE `lcm_keyword_client` (
+  `id_entry` bigint(21) NOT NULL auto_increment,
+  `id_keyword` bigint(21) NOT NULL,
+  `id_client` bigint(21) NOT NULL,
+  `value` text NOT NULL,
+  PRIMARY KEY  (`id_entry`),
+  KEY `id_keyword` (`id_keyword`),
+  KEY `id_client` (`id_client`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

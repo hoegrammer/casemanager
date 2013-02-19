@@ -208,25 +208,7 @@ function show_login($cible, $prive = 'prive', $message_login='') {
 			echo  _T('login_access_denied') . " $error </div> <br />\n";		
 			// echo "<div class='error_warning'> " .  _T('login_access_denied') . " $error </div> <br />\n";
 		}
-
-		if ($flag_challenge_md5) {
-			// This is printed with javascript so that it is hidden from navigators not
-			// using JS, since they will see the username field anyway.
-			echo "<script type=\"text/javascript\"><!--\n" 
-				.  "document.write('" . addslashes(_T('login_login')) .  _T('typo_column') . " <b>$login</b><br/>"
-				. "<font size=\\'2\\'><a href=\\'lcm_cookie.php?cookie_admin=no&amp;url=".rawurlencode($action)."\\' class=\\'link_btn\\'>" . _T('login_other_identifier') . "</a></font>');\n"
-				.  "//--></script>\n";
-
-			// If javascript is active, we pass the login in the hidden field
-		 	echo "<input type='hidden' name='session_login_hidden' value='$login' />";
-
-			// If javascript is not active, the login is still modifiable
-			// (since the challenge is not used)
-			echo "<noscript>";
-		}
-
-		echo "\t<label for='session_login'><b>" . _T('login_login') . _T('typo_column') . "</b> (" . _T('login_info_login').")<br /></label>";
-		echo "\t<input type='text' name='session_login' id='session_login' class='forml' value=\"$login\" size='40' />\n";
+		echo "\t<input type='hidden' name='session_login' id='session_login' class='forml' value=\"$login\" size='40' />\n";
 		if ($flag_challenge_md5) echo "</noscript>\n";
 
 		echo "\t<p />\n";

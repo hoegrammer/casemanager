@@ -955,14 +955,20 @@ function get_date_inputs($name = 'select', $date = '', $blank = true, $table = f
 	return $ret;
 }
 
-function get_time_inputs($name = 'select', $time = '', $hours24 = true, $show_seconds = false, $table = false) {
+function get_time_inputs($name = 'select', $time = '', $hours24 = true, $show_seconds = false, $table = false, $now = false) {
 	// table parameter above is deprecated
-
-	$split_time = recup_time($time);
-	$default_hour = $split_time[0];
-	$default_minutes = $split_time[1]; //- ($split_time[1] % 5); // make it round
-	$default_seconds = $split_time[2];
-
+	
+	if ($now) {
+		$default_hour = date('h');
+		$default_minutes = date('i');
+		$default_seconds = date('s');
+	} else {
+		$split_time = recup_time($time);
+	        $default_hour = $split_time[0];
+        	$default_minutes = $split_time[1]; //- ($split_time[1] % 5); // make it round
+	        $default_seconds = $split_time[2];
+	}
+	
 	// If name is empty, disable fields
 	$dis = (($name) ? '' : 'disabled="disabled"');
 

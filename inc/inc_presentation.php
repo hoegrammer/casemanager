@@ -959,7 +959,7 @@ function get_time_inputs($name = 'select', $time = '', $hours24 = true, $show_se
 	// table parameter above is deprecated
 	
 	if ($now) {
-		$default_hour = date('h');
+		$default_hour = date('H');
 		$default_minutes = date('i');
 		$default_seconds = date('s');
 	} else {

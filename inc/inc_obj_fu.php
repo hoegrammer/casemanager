@@ -664,10 +664,10 @@ class LcmFollowupInfoUI extends LcmFollowup {
 		$hour = (int) substr($date,11,2);
 		$min = (int) substr($date,14,2);
 //		echo get_date_inputs($name, $this->data['date_start'], false);
-		echo get_date_inputs($name, '', false);
+		echo get_date_inputs($name, date('Y-m-d'), false);
 		echo ' ' . _T('time_input_time_at') . ' ';
 //		echo get_time_inputs($name, $this->data['date_start']);
-		echo get_time_inputs($name);
+		echo get_time_inputs($name, null, null, null, null, true);
 		echo '<a href="#" onClick="
 			document.forms[\'form\'][\'start_year\'].value = '.$year.';
 			document.forms[\'form\'][\'start_month\'].value = '.$month.';

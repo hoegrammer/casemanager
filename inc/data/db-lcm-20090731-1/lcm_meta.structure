@@ -1,6 +1,0 @@
-CREATE TABLE `lcm_meta` (
-  `name` varchar(255) NOT NULL,
-  `value` varchar(255) default '',
-  `upd` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8

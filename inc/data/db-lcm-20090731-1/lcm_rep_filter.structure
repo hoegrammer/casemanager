@@ -1,8 +1,0 @@
-CREATE TABLE `lcm_rep_filter` (
-  `id_filter` bigint(21) NOT NULL auto_increment,
-  `id_report` bigint(21) NOT NULL,
-  `id_field` bigint(21) NOT NULL default '0',
-  `type` varchar(255) NOT NULL default '',
-  `value` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id_filter`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8

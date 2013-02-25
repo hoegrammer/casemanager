@@ -1,9 +1,0 @@
-CREATE TABLE `lcm_filter` (
-  `id_filter` bigint(21) NOT NULL auto_increment,
-  `title` varchar(255) NOT NULL,
-  `type` enum('AND','OR') NOT NULL default 'AND',
-  `id_author` bigint(21) NOT NULL default '0',
-  `date_creation` datetime default NULL,
-  `date_update` datetime default NULL,
-  PRIMARY KEY  (`id_filter`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8

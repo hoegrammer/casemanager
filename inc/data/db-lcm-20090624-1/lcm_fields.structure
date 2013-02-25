@@ -1,9 +1,0 @@
-CREATE TABLE `lcm_fields` (
-  `id_field` bigint(21) NOT NULL auto_increment,
-  `table_name` varchar(255) NOT NULL default '',
-  `field_name` varchar(255) NOT NULL default '',
-  `description` varchar(255) NOT NULL default '',
-  `filter` enum('none','date','number','text','currency') NOT NULL default 'none',
-  `enum_type` text NOT NULL,
-  PRIMARY KEY  (`id_field`)
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8

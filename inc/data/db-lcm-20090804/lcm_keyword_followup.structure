@@ -1,9 +1,0 @@
-CREATE TABLE `lcm_keyword_followup` (
-  `id_entry` bigint(21) NOT NULL auto_increment,
-  `id_keyword` bigint(21) NOT NULL,
-  `id_followup` bigint(21) NOT NULL,
-  `value` text NOT NULL,
-  PRIMARY KEY  (`id_entry`),
-  KEY `id_keyword` (`id_keyword`),
-  KEY `id_followup` (`id_followup`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8

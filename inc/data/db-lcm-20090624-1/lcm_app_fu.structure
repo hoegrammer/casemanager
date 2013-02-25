@@ -1,6 +1,0 @@
-CREATE TABLE `lcm_app_fu` (
-  `id_app` bigint(21) NOT NULL,
-  `id_followup` bigint(21) NOT NULL,
-  `relation` enum('parent','child') NOT NULL default 'parent',
-  UNIQUE KEY `idx_uniq` (`id_app`,`id_followup`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8

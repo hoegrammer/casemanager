@@ -1,9 +1,0 @@
-CREATE TABLE `lcm_contact` (
-  `id_contact` bigint(21) NOT NULL auto_increment,
-  `type_person` enum('author','client','org') NOT NULL,
-  `id_of_person` bigint(21) NOT NULL,
-  `value` text NOT NULL,
-  `type_contact` tinyint(2) NOT NULL default '0',
-  `date_update` datetime default NULL,
-  PRIMARY KEY  (`id_contact`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8

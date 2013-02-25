@@ -1980,13 +1980,23 @@ function show_listfu_start($screen = 'general', $show_more_desc = true) {
 // function can be used to find case work on followup_id.
 function show_listfu_item($item, $cpt, $screen = 'general') {
 	global $prefs;
+        // If current user is author of this follow-up, then create a link for them to edit it
+        $editable = $GLOBALS['author_session']['name_first'] === $item['name_first']
+                && $GLOBALS['author_session']['name_last'] === $item['name_last'];
 	$desc = get_fu_description($item, $cut_fu);
 	$fu_id=$item['id_followup'];
 	echo 	"<tr><td class='tbl_cont_".($cpt%2?'dark':'light')."'>".
-		'<b><big>'.
-		"<a class='edit_casework' href='edit_fu.php?followup=$fu_id'>". 
+		'<b><big>';
+	if ($editable) {
+		echo "<a class='edit_casework' href='edit_fu.php?followup=$fu_id'>";
+	}
+	echo 
 		($item['type_case']=='Default'?"":$item['type_case'].": ").
-		_Tkw('followups', $item['type']). '</a>'.
+		_Tkw('followups', $item['type']);
+	if ($editable) {
+		echo '</a>';
+	}
+	echo
 		 '</big></b>'.
 		' on the <b>'.
 		format_date($item['date_start'], 'short').

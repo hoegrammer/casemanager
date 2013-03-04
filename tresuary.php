@@ -28,47 +28,17 @@ include_lcm('inc_obj_fu');
 
 global $author_session;
 
-//if ($author_session['status'] != 'admin')
-//	{
-//	echo 'Not allowed';
-//	exit;
-//	}
-
 $_SESSION['form_data']=array();
 $_SESSION['errors']=array();
 	
 lcm_page_start('Welfare Payments');
 matt_page_start('Welfare Payments');
-//if ($author_session['status'] != 'admin')
-//	{
-//	no_tabs();
-//	echo "You do not have access to this area.";
-//	matt_page_end();
-//	lcm_page_end();
-//	exit;
-//	}
-
-
 
 echo '<form name="form" action="tresave.php" method="post" onSubmit="var but = document.forms[\'form\'][\'submit\']; but.disabled=true; but.innerHTML=\'Please wait\'; return true;">';
 
 $fu_zomg = new lcmFollowupInfoUI();
 $fu_zomg->data['type']='opening';
 $fu_zomg->printEdit();
-
-/*$when_day = _request('when_day');
-$when_month = _request('when_month');
-$when_year = _request('when_year');
-if ($when_year < 1900 || $when_year > 9999) {$when_year = '';}
-if ($when_month< 1 || $when_month > 12 ) {$when_month = '';}
-if ($when_day < 1 || $when_day > 31 ) {$when_day = '';}
-if (!$when_year) {$when_year= date('Y');}
-if (!$when_month) {$when_month= date('m');}
-if (!$when_day) {$when_day = date('d');}
-$the_date = $when_year.'-'.$when_month.'-'.$when_day;
-echo '<form action="listrooms.php" method="get"><p><small>Offer a room on:</small> ';
-echo get_date_inputs('when',$the_date,false);
-echo '<button name="submit" type="submit" value="submit" class="simple_form_btn">Refresh</button></p></form>';*/
 
 $q= 'select c.*, cl.*
 	from lcm_case as c 

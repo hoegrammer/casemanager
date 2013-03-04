@@ -272,7 +272,7 @@ $hash_recherche_strict = '';
 $php_version = explode('.', phpversion());
 $php_version_maj = intval($php_version[0]);
 $php_version_med = intval($php_version[1]);
-if (ereg('([0-9]+)', $php_version[2], $match)) $php_version_min = intval($match[1]);
+if (preg_match('([0-9]+)', $php_version[2], $match)) $php_version_min = intval($match[1]);
 
 $flag_levenshtein = ($php_version_maj >= 4);
 $flag_uniqid2 = ($php_version_maj > 3 OR $php_version_min >= 13);
@@ -283,7 +283,7 @@ $flag_ini_get = (function_exists("ini_get")
 	&& (@ini_get('max_execution_time') > 0));	// verifier pas desactivee
 $flag_gz = function_exists("gzopen");
 $flag_ob = ($flag_ini_get
-	&& !ereg("ob_", ini_get('disable_functions'))
+	&& !preg_match('/ob_/', ini_get('disable_functions'))
 	&& function_exists("ob_start"));
 $flag_obgz = ($flag_ob && function_exists("ob_gzhandler"));
 $flag_pcre = function_exists("preg_replace");

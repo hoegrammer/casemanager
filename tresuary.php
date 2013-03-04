@@ -47,6 +47,15 @@ $q= 'select c.*, cl.*
 	where c.amount > 0 and c.status="open"
 	order by cl.name_first, cl.name_last
 	';
+$q = 'select name_first, name_last, cl.id_client, amount, c.id_case 
+	from lcm_case as c 
+	left join lcm_case_client_org as cco on c.id_case = cco.id_case
+	left join lcm_client as cl on cl.id_client = cco.id_client
+	where c.amount > 0 and c.status="open"
+	order by cl.name_first, cl.name_last
+	';
+
+
 $result = lcm_query($q);
 $number_of_rows = lcm_num_rows($result);
 

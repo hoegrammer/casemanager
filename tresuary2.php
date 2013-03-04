@@ -93,7 +93,7 @@ switch($tab)
 					}
 
 				$q='SELECT 
-						concat(", SUM(IF(substr(fu.date_start,9,2) = \'",substr(date_start,9,2) ,"\',outcome_amount,0)) as D",substr(date_start,9,2),"" ) as zam 
+						concat(", IF(substr(fu.date_start,9,2) = \'",substr(date_start,9,2) ,"\',concat(outcome_amount, IF(bus_pass_given, \' + BP\', \'\')),0) as D",substr(date_start,9,2),"" ) as zam 
 					FROM 
 						lcm_followup
 					WHERE

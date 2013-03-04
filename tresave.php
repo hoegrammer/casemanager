@@ -51,6 +51,7 @@ while ($row=lcm_fetch_array($result))
 	$note=$zap['note_'.$row['id_case']];
 	$check=$zap['check_'.$row['id_case']];
 	$amount=$zap['amount_'.$row['id_case']];
+	$bus_pass=$zap['bus_pass_'.$row['id_case']];
 	if ($zap['user']>0)
 		$user = $zap['user'];
 	else
@@ -68,7 +69,7 @@ while ($row=lcm_fetch_array($result))
 		$fu->data['type']='followups27';
 //		$fu->data['description']='Client collects £'.$amount;
 		$fu->data['outcome_amount']=$amount;
-		$fu->data['bus_pass_given']=$zap['bus_pass'];
+		$fu->data['bus_pass_given']=$bus_pass;
 		$fu->data['user']=$user;
 		$cripes[$row['id_case']]= $fu->save();
 		}
@@ -91,8 +92,10 @@ while ($row=lcm_fetch_array($result))
 				id_author = '. $user.', 
 				title = "tres", 
 				description = "' . $note . '",
-				date_creation = "'.$date.'"
+				date_creation = "'.$date.'",
+				dismissed = 1
 				';
+
 		lcm_query($q);
 		$id_app = lcm_insert_id('lcm_app', 'id_app');
 		$_SESSION['form_data']['id_app'] = $id_app;
@@ -102,14 +105,6 @@ while ($row=lcm_fetch_array($result))
 if ((lcm_num_rows($cripes)>0)or(lcm_num_rows($cripes)>0))
 	{
 	echo "Danger: something is amiss.";
-	}
-foreach ($zap as $key=>$value)
-	{
-	if (substr($key,0,7)=='dismiss')
-		{
-		$id = substr($key,8,100);
-		lcm_query("UPDATE lcm_app set dismissed = true where id_app =".$id);
-		}
 	}
 
 lcm_header("location: tresuary2.php");

@@ -84,26 +84,6 @@ echo "</table>";
 echo "<p><button name='submit' value='submit' class='simple_form_btn'>Submit</button></p>";
 echo "</form>";
 
-show_page_subtitle('Cash Totals');
-$result = lcm_query('select amount, count(id_case) as ttl from lcm_case where status="open" and amount > 0 group by amount');
-
-echo "<table class='tbl_usr_dtl'><tr><td><b>Quantity</b></td><td><b>Amount</b></td></tr>";
-while ($row = lcm_fetch_array($result))
-{
-	echo "<tr><td>";
-	echo $row['ttl'];
-	echo "</td><td>";
-	echo $row['amount'];
-	echo "</td></tr>";
-}
-
-$row = lcm_fetch_array(lcm_query('select sum(amount) ttl from lcm_case where amount > 0'));
-echo "<tr><td><b>Total:</b></td><td>";
-echo $row['ttl'];
-echo "</td></tr>";
-
-
-echo "</table>";
 
 matt_page_end();
 lcm_page_end();

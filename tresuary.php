@@ -1,26 +1,5 @@
 <?php
 
-/*
-	This file is part of the Legal Case Management System (LCM).
-	(C) 2004-2005 Free Software Foundation, Inc.
-
-	This program is free software; you can redistribute it and/or modify it
-	under the terms of the GNU General Public License as published by the
-	Free Software Foundation; either version 2 of the License, or (at your
-	option) any later version.
-
-	This program is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-	or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-	for more details.
-
-	You should have received a copy of the GNU General Public License along
-	with this program; if not, write to the Free Software Foundation, Inc.,
-	59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
-
-	$Id: listauthors.php,v 1.33 2006/03/21 19:01:53 mlutfy Exp $
-*/
-
 include('inc/inc.php');
 include_lcm('inc_acc');
 include_lcm('inc_filters');
@@ -40,13 +19,6 @@ $fu_zomg = new lcmFollowupInfoUI();
 $fu_zomg->data['type']='opening';
 $fu_zomg->printEdit();
 
-$q= 'select c.*, cl.*
-	from lcm_case as c 
-	left join lcm_case_client_org as cco on c.id_case = cco.id_case
-	left join lcm_client as cl on cl.id_client = cco.id_client
-	where c.amount > 0 and c.status="open"
-	order by cl.name_first, cl.name_last
-	';
 $q = 'select name_first, name_last, cl.id_client, amount, c.id_case 
 	from lcm_case as c 
 	left join lcm_case_client_org as cco on c.id_case = cco.id_case
@@ -57,8 +29,6 @@ $q = 'select name_first, name_last, cl.id_client, amount, c.id_case
 
 
 $result = lcm_query($q);
-$number_of_rows = lcm_num_rows($result);
-
 
 $headers = array();
 $headers[0]['title'] = 'Client';
@@ -121,7 +91,6 @@ while ($row = lcm_fetch_array($result))
 	echo "</tr>\n";
 	$i++;
 	}
-//show_list_end($list_pos, $number_of_rows);
 echo "</table>";
 echo "<p><button name='submit' value='submit' class='simple_form_btn'>Submit</button></p>";
 echo "</form>";

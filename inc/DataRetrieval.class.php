@@ -6,15 +6,26 @@ from the DB. */
 class DataRetrieval 
 {
 	/*
-		name_first, name_last, id_client, amount, id_case
-		for all open cases where amount > 0
+		Gets client and case data for any case with an amount over 0.
+		Also gets any welfare payment notes they may have
 	*/
-	public static function getIdAmountAndClientNameForAllOpenCasesOverZero() 
+	public static function getDataForWelfarePaymentsEntrySheet() 
 	{
-		$sql = 'select name_first, name_last, cl.id_client, amount, c.id_case 
-	        from lcm_case as c 
-        	left join lcm_case_client_org as cco on c.id_case = cco.id_case
-	        left join lcm_client as cl on cl.id_client = cco.id_client
+		$sql = 'select cl.name_first as client_name_first, cl.name_last as client_name_last, 
+		cl.id_client, a.name_first as author_name_first, a.name_last as author_name_last,
+		description as note, amount, c.id_case, ap.id_app, ap.date_creation
+	        from 
+			lcm_case as c 
+		left join 
+			(select id_app, id_case, id_author, description, date_creation from lcm_app
+			 where dismissed = 0 AND title="tres") ap
+			on c.id_case = ap.id_case
+        	join 
+			lcm_case_client_org as cco on c.id_case = cco.id_case
+	        join 
+			lcm_client as cl on cl.id_client = cco.id_client
+		left join
+			lcm_author as a on a.id_author = ap.id_author
         	where c.amount > 0 and c.status="open"
 	        order by cl.name_first, cl.name_last';
 

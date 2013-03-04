@@ -21,7 +21,8 @@ $fu_zomg = new lcmFollowupInfoUI();
 $fu_zomg->data['type']='opening';
 $fu_zomg->printEdit();
 
-$data = DataRetrieval::getIdAmountAndClientNameForAllOpenCasesOverZero();
+// Retrieve all the data that is to be displayed
+$data = DataRetrieval::getDataForWelfarePaymentsEntrySheet();
 
 $headers = array();
 $headers[0]['title'] = 'Client';
@@ -35,20 +36,22 @@ show_list_start($headers);
 $i = 0;
 foreach ($data as $row)
 {
+	extract($row);
 	echo "<tr>\n";
 	echo "<td  width = '20%' class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
-	echo "<a class='content_link' href='client_det.php?client=".$row['id_client']."'>" . get_person_name($row) . "</a>";
+	echo "<a class='content_link' href='client_det.php?client=$id_client'>";
+	echo "$client_name_first $client_name_last</a>";
 	echo "</td>\n";
 	
 	echo "<td width = '5%' class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
-	echo "£".$row['amount'];
+	echo "&pound;$amount";
 	echo "</td>\n";	
 	echo "<td width = '10%' class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
-	echo '<select name="amount_'.$row['id_case'].'">';
+	echo "<select name='amount_$id_case'>";
 	for ($j=0;$j<=60;$j=$j+5)
 	{
 		$sel='';
-		if (clean_output($row['amount'])==$j)
+		if (clean_output($amount==$j))
 			$sel='selected';
 		echo '<option value="'.$j.'" '.$sel.'>'.$j.'</option>';
 	}
@@ -56,23 +59,16 @@ foreach ($data as $row)
 	echo "</td>\n";
 
 	echo "<td width = '10%' class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
-	echo "<input type='checkbox' name='check_".$row['id_case']."'/>";
+	echo "<input type='checkbox' name='check_$id_case'/>";
 	echo "</td>\n";
 
 	echo "<td width = '55%' class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
-	$q = "
-		SELECT ap.*, a.*
-		FROM lcm_app as ap
-		LEFT JOIN lcm_case_client_org as cco on cco.id_case = ap.id_case
-		LEFT JOIN lcm_client as cl on cl.id_client = cco.id_client	
-		LEFT JOIN lcm_author as a on a.id_author = ap.id_author
-		WHERE ap.dismissed = 0 AND ap.title='tres' AND cl.id_client=".$row['id_client']."
-		";
-	$notes = lcm_query($q);
-	while ($note = lcm_fetch_array($notes))
-	{
-		echo "<input type='checkbox' name='dismiss_" . $note['id_app']."'/>";
-		echo $note['description'].' <small><i>(by '.get_person_name($note).' on '.format_date($note['date_creation'],'date_short').')</i></small><br />';
+	
+	// if there is a note, then display it and its metadata and box to dismiss
+	if ($row['note']) {
+		echo "<input type='checkbox' name='dismiss_$id_app'/>";
+		echo $row['note']. " <small><i>(by $author_name_first $author_name_last)) on "; 
+		echo format_date($date_creation,'date_short').')</i></small><br />';
 	}
 	echo "<input type='text' name='note_".$row['id_case']."' class='search_form_txt'/>";
 	echo "</td>\n";

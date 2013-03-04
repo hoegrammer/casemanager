@@ -29,7 +29,7 @@ $headers[0]['title'] = 'Client';
 $headers[1]['title'] = 'Normal';
 $headers[2]['title'] = 'This Week';
 $headers[3]['title'] = 'Attended?';
-$headers[4]['title'] = 'Notes (tick box to dismiss)';
+$headers[4]['title'] = 'Notes';
 $headers[5]['title'] = 'Signature';
 
 show_list_start($headers);
@@ -42,10 +42,16 @@ foreach ($data as $row)
 	echo "<a class='content_link' href='client_det.php?client=$id_client'>";
 	echo "$client_name_first $client_name_last</a>";
 	echo "</td>\n";
-	
+
+	// Normal support amount and whether they have a bus pass	
 	echo "<td width = '5%' class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
 	echo "&pound;$amount";
+	if ($bus_pass) {
+		echo " + Bus Pass";
+	}
 	echo "</td>\n";	
+
+	// Support amount for this week (select) and bus pass (select)
 	echo "<td width = '10%' class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
 	echo "<select name='amount_$id_case'>";
 	for ($j=0;$j<=60;$j=$j+5)
@@ -56,7 +62,16 @@ foreach ($data as $row)
 		echo '<option value="'.$j.'" '.$sel.'>'.$j.'</option>';
 	}
 	echo '</select>';
-	echo "</td>\n";
+	echo "<select name='bus_pass_$id_case'>";
+	echo "<option value=0 ";
+	echo $bus_pass ? '' : 'selected=selected';
+	echo "></option>";
+	echo "<option value=1 ";
+	echo $bus_pass ? 'selected=selected' : '';
+	echo "> + Bus Pass</option>";
+        echo '</select>';
+        echo "</td>\n";
+
 
 	echo "<td width = '10%' class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
 	echo "<input type='checkbox' name='check_$id_case'/>";
@@ -66,9 +81,9 @@ foreach ($data as $row)
 	
 	// if there is a note, then display it and its metadata and box to dismiss
 	if ($row['note']) {
-		echo "<input type='checkbox' name='dismiss_$id_app'/>";
-		echo $row['note']. " <small><i>(by $author_name_first $author_name_last)) on "; 
-		echo format_date($date_creation,'date_short').')</i></small><br />';
+		echo "$note <small><i>(by $author_name_first $author_name_last on "; 
+		echo format_date($date_creation,'date_short').')</i>';
+		echo " &nbsp; Delete<input type='checkbox' name='dismiss_$id_app'/></small><br />";
 	}
 	echo "<input type='text' name='note_".$row['id_case']."' class='search_form_txt'/>";
 	echo "</td>\n";

@@ -13,7 +13,8 @@ class DataRetrieval
 	{
 		$sql = 'select cl.name_first as client_name_first, cl.name_last as client_name_last, 
 		cl.id_client, a.name_first as author_name_first, a.name_last as author_name_last,
-		description as note, amount, c.id_case, ap.id_app, ap.date_creation
+		description as note, amount, c.id_case, ap.id_app, ap.date_creation,
+		if(c.legal_reason="yes", 1, 0) as bus_pass
 	        from 
 			lcm_case as c 
 		left join 

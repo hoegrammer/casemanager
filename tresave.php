@@ -68,6 +68,7 @@ while ($row=lcm_fetch_array($result))
 		$fu->data['type']='followups27';
 //		$fu->data['description']='Client collects £'.$amount;
 		$fu->data['outcome_amount']=$amount;
+		$fu->data['bus_pass_given']=$zap['bus_pass'];
 		$fu->data['user']=$user;
 		$cripes[$row['id_case']]= $fu->save();
 		}

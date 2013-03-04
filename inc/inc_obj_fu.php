@@ -213,9 +213,7 @@ class LcmFollowup extends LcmObject {
 
 	function save($weird = 0) {
 		$_SESSION['matt_data']['user']=$this->getDataString('user');
-		
-//		lcm_query('insert into lcm_bib values ("","1","zip","zot")');
-
+	
 		$errors = $this->validate();
 		if (count($errors))
 			return $errors;
@@ -342,8 +340,8 @@ class LcmFollowup extends LcmObject {
 
 			// Add the new follow-up
 			$q = "INSERT INTO lcm_followup
-					SET id_case=" . $this->getDataInt('id_case') . ",
-					id_author=" . ($this->getDataInt('user')>0?$this->getDataInt('user'):$GLOBALS['author_session']['id_author']) . ",
+					SET id_case=" . $this->getDataInt('id_case') . ", bus_pass_given = ". $this->getDataInt('bus_pass_given').
+					", id_author=" . ($this->getDataInt('user')>0?$this->getDataInt('user'):$GLOBALS['author_session']['id_author']) . ",
 					$fl";
 //					case_stage='$case_stage'";
 

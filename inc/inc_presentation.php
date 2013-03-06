@@ -2004,13 +2004,15 @@ function show_listfu_item($item, $cpt, $screen = 'general') {
 		 clean_output($item['name_first']." ".$item['name_last']).
 
 		// display the outcome amount
-		($item['outcome_amount']?"<p>Paid: £".$item['outcome_amount']."</p>":"").
+		($item['outcome_amount']?"<p>Paid: £".$item['outcome_amount']."</p>":"");
 		
-		// add "+ buss pass" if one was given
-		($item['bus_pass_given']?"<p> &#43; Bus Pass Given</p>":"").
+	// add "Bus Pass Given" if one was given
+	if ($item['bus_pass_given'] === '1') {
+		echo "<p>Bus Pass Given</p>";
+	}
 
 		// display description (notes)
-		($desc=="No description."?"":"<p>".$desc."</p>"). "</td></tr>";
+	echo ($desc=="No description."?"":"<p>".$desc."</p>"). "</td></tr>";
 
 
 	return;

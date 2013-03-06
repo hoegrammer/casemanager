@@ -86,7 +86,6 @@ class LcmFollowup extends LcmObject {
 		if (isset($_SESSION['form_data'])) {
 			foreach($_SESSION['form_data'] as $key => $value) {
 				$nkey = $key;
-
 				if (substr($key, 0, 3) == 'fu_')
 					$nkey = substr($key, 3);
 
@@ -156,7 +155,7 @@ class LcmFollowup extends LcmObject {
 		echo 'Bus Pass Given:';
 		echo '</td><td>';
 		echo '<input type="checkbox" name="bus_pass_given"';
-		if ($this->data['bus_pass_given']) {
+		if ($this->data['bus_pass_given'] === '1') {
 			echo ' checked';
 		}
 		echo ' />';
@@ -279,61 +278,22 @@ class LcmFollowup extends LcmObject {
 			{
 			$this->data['description']='Support set at £'.$this->getDataString('amount').($this->getDataString('buspass')?'& bus pass':'').".\n".$this->getDataString('description');
 			}
-		//
+		
 		// Update
-		// COME BACK HERE
-		//echo $this->getDataString('date_start');
 		$fl = " date_start = '" . substr($this->getDataString('date_start'),0,17) . "00',
 				date_end   = '" . $this->getDataString('date_end') . "',
 				type       = '" . $this->getDataString('type') . "',
 				sumbilled  = " . $this->getDataFloat('sumbilled', 0.00);
 		
 
-//		if ($this->getDataString('type') == 'stage_change') {
-//			// [ML] To be honest, we should "assert" most of the
-//			// following values, but "new_stage" is the most important.
-//			lcm_assert_value($this->getDataString('new_stage', '__ASSERT__'));
-//MATT WAS HERE CAUSING TROUBLE. DON'T CHUCK ALL SORTS OF CRAP IN WITH DISCRIPTION OF CONCLUSION FOLLOWUPS
-//			$desc = array(
-//					'description'  => $this->getDataString('description'),
-//					'result'       => $this->getDataString('result'),
-//					'conclusion'   => $this->getDataString('conclusion'),
-//					'sentence'     => $this->getDataString('sentence'),
-//					'sentence_val' => $this->getDataString('sentence_val'),
-//					'new_stage'    => $this->getDataString('new_stage'));
-//
-//			$fl .= ", description = '" . serialize($desc) . "'";
-//		} elseif (is_status_change($this->getDataString('type'))) {
-//			$desc = array(
-//					'description'  => $this->getDataString('description'),
-//					'result'       => $this->getDataString('result'),
-//					'conclusion'   => $this->getDataString('conclusion'),
-//					'sentence'     => $this->getDataString('sentence'),
-//					'sentence_val' => $this->getDataString('sentence_val'));
-//
-//			$fl .= ", description = '" . serialize($desc) . "'";
-//		} else {
-
 
 		if (!$weird)
 			{
 			$fl .= ", description  = '" . $this->getDataString('description') . "'";
 			}
-		//MATT WAS HERE. "CONCLUSION" AND "SENTENCE AMOUNT" CAN BE STORED FOR SOME FOLLOWUPS, IF IT IS A CONCLUSION STYLE OF FOLLOWUP (OUTCOME)
-//		if ((is_status_change($this->getDataString('type')))||false )
-//		if (($_SESSION['form_data']['conclusion']) ||($_SESSION['form_data']['sentence_val'] ))
-//		{
-//			$fl .= ", outcome = '" . $this->getDataString('conclusion'). "'";
-//			$fl .= ", outcome_amount ='". $this->getDataString('sentence_val'). "'";
-//		
-//		}
-		if ($this->getDataString('outcome_amount'))
-			{
 			$fl .= ", outcome_amount = '". $this->getDataString('outcome_amount') . "'";
-			}
 
 
-//		}
 		if ($this->getDataInt('id_followup') > 0) {
 			// Edit of existing follow-up
 			$id_followup = $this->getDataInt('id_followup');
@@ -341,7 +301,6 @@ class LcmFollowup extends LcmObject {
 			if (!allowed($this->getDataInt('id_case'), 'e')) 
 				lcm_panic("You don't have permission to modify this case's information. (" . $this->getDataInt('id_case') . ")");
 
-			// TODO: check if hiding this FU is allowed
 			if (allowed($this->getDataInt('id_case'), 'a')
 					&& (! (is_status_change($this->getDataString('type'))
 							|| $this->getDataString('type') == 'assignment'
@@ -354,37 +313,16 @@ class LcmFollowup extends LcmObject {
 			} else {
 				$fl .= ", hidden = 'N'";
 			}
-
+		
+			$fl .= ", bus_pass_given = " . $this->getDataInt('bus_pass_given');
 			$q = "UPDATE lcm_followup SET $fl WHERE id_followup = $id_followup";
 			$result = lcm_query($q);
-
-			// Get stage of the follow-up entry
-//			$q = "SELECT case_stage FROM lcm_followup WHERE id_followup = $id_followup";
-//			$result = lcm_query($q);
-//
-//			if ($row = lcm_fetch_array($result)) {
-//				$case_stage = lcm_assert_value($row['case_stage']);
-//			} else {
-//				lcm_panic("There is no such follow-up (" . $id_followup . ")");
-//			}
-
-			// Update the related lcm_stage entry
-//			$q = "UPDATE lcm_stage SET
-//					date_conclusion = '" . $this->getDataString('date_end') . "',
-//					kw_result = '" . $this->getDataString('result') . "',
-//					kw_conclusion = '" . $this->getDataString('conclusion') . "',
-//					kw_sentence = '" . $this->getDataString('sentence') . "',
-//					sentence_val = '" . $this->getDataString('sentence_val') . "',
-//					date_agreement = '" . $this->getDataString('date_end') . "'
-///				WHERE id_case = " . $this->getDataInt('id_case');
 
 			lcm_query($q);
 		} else {
 			// New follow-up
 			if (!allowed($this->getDataInt('id_case'), 'w'))
 				lcm_panic("You don't have permission to add information to this case. (" . $this->getDataInt('id_case') . ")");
-			//MATT WAS HERE, STOLE THIS SQL QUERY ABOUT CASE STAGES TO LOOK UP CASE STATUS INSTED. ALLOWS FIRST ONEOFF FU TO BE PLACED
-			//WITHOUT OPENING CASE 'AUTOMATICLY';
 			// Get the current case stage
 			$q = "SELECT status FROM lcm_case WHERE id_case=" . $this->getDataInt('id_case', '__ASSERT__');
 			$result = lcm_query($q);
@@ -400,7 +338,6 @@ class LcmFollowup extends LcmObject {
 					SET id_case=" . $this->getDataInt('id_case') . ", bus_pass_given = ". $this->getDataInt('bus_pass_given').
 					", id_author=" . ($this->getDataInt('user')>0?$this->getDataInt('user'):$GLOBALS['author_session']['id_author']) . ",
 					$fl";
-//					case_stage='$case_stage'";
 
 			
 			lcm_query($q);

@@ -60,10 +60,6 @@ class LcmFollowup extends LcmObject {
 				$this->data['id_case'] = $id_case;
 			}
 
-			// Dates
-//			$this->data['date_start'] = date('Y-m-d H:i:s'); // '2004-09-16 16:32:37'
-//			$this->data['date_end']   = date('Y-m-d H:i:s'); // '2004-09-16 16:32:37'
-
 			// Set appointment start/end/reminder times to current time
 			$this->data['app_start_time'] = date('Y-m-d H:i:s', strtotime('+3 months'));
 			$this->data['app_end_time'] = date('Y-m-d H:i:s');
@@ -86,7 +82,6 @@ class LcmFollowup extends LcmObject {
 			$this->data[$nkey] = clean_input(_request($key));
 		}
 
-		// SUPERZOT. MATT WAS HERE REMOVING ONE BUG, CREATING ANOTHER?/
 		// If any, populate with session variables (for error reporting)
 		if (isset($_SESSION['form_data'])) {
 			foreach($_SESSION['form_data'] as $key => $value) {

@@ -30,11 +30,6 @@ include_lcm('inc_obj_fu');
 $fu_sum_billed = read_meta('fu_sum_billed');
 $admin = ($GLOBALS['author_session']['status']=='admin');
 
-//if (isset($_GET['special']))
-//	{
-//	$special=1;
-//	}
-
 // Don't clear form data if comming back from upd_fu with errors
 if (! isset($_SESSION['form_data']))
 	$_SESSION['form_data'] = array();
@@ -43,95 +38,94 @@ if (! isset($_SESSION['form_data']))
 // it will send back to "fu_det.php?followup=NNN" after update.
 $_SESSION['form_data']['ref_edit_fu'] = _request('ref');
 	
-	 /* T-Comment
-	  * Referer: client_det.php?clientID | $_GET value: $caseid | Followup is set when Editing a record
-	 */ 	
-	if (isset($_GET['followup'])) {
-		$_SESSION['followup'] = intval($_GET['followup']);
-
-		// Fetch the details on the specified follow-up
-		$q="SELECT *
-			FROM lcm_followup as fu
-			WHERE fu.id_followup=" . $_SESSION['followup'];
-
+ /* T-Comment
+  * Referer: client_det.php?clientID | $_GET value: $caseid | Followup is set when Editing a record
+ */ 	
+if (isset($_GET['followup'])) {
+	$_SESSION['followup'] = intval($_GET['followup']);
+	// Fetch the details on the specified follow-up
+	$q="SELECT *
+		FROM lcm_followup as fu
+		WHERE fu.id_followup=" . $_SESSION['followup'];
 		$result = lcm_query($q);
+	if (! ($row = lcm_fetch_array($result))) {
+		lcm_panic("Edit follow-up: invalid 'follow-up id': " . $_SESSION['followup']);
+	}
+	// Set the case ID, to which this followup belongs
+	$case = $row['id_case'];
+	foreach($row as $key=>$value) {
+		$_SESSION['form_data'][$key] = $value;
+	}
 
-		if (! ($row = lcm_fetch_array($result)))
-			lcm_panic("Edit follow-up: invalid 'follow-up id': " . $_SESSION['followup']);
-
-		// Set the case ID, to which this followup belongs
-		$case = $row['id_case'];
-
-		foreach($row as $key=>$value) {
-			$_SESSION['form_data'][$key] = $value;
+	if (empty($_SESSION['errors'])) {
+		// If editing "stage change"..
+		if ($row['type'] == 'stage_change') {
+			$old_stage = $row['case_stage'];
+		}
+		// Get new stage from description field
+		$tmp = lcm_unserialize($_SESSION['form_data']['description']);
+		if (isset($tmp['new_stage'])) {
+			$new_stage = $tmp['new_stage'];
 		}
 
-		if (empty($_SESSION['errors'])) {
-			// If editing "stage change"..
-			if ($row['type'] == 'stage_change') 
-				$old_stage = $row['case_stage'];
-
-			// Get new stage from description field
-			$tmp = lcm_unserialize($_SESSION['form_data']['description']);
-			if (isset($tmp['new_stage']))
-				$new_stage = $tmp['new_stage'];
-
-			$title="Edit Notes";
-			lcm_page_start($title);
-			matt_page_start($title);
+		$title="Edit Notes";
+		lcm_page_start($title);
+		matt_page_start($title);
 				
+	}
+} else {
+	unset($_SESSION['followup']);
+	$case = intval($_GET['case']);
+	$room = intval($_GET['room']);
+	$bef = intval($_GET['bef']);
+	if (! ($case > 0)) {
+		if (!(($room > 0)||($bef > 0)))	{
+			lcm_panic("Edit follow-up: No CaseID or RoomID : " . $_GET['case']); 
 		}
-	} else {
-		unset($_SESSION['followup']);
-		$case = intval($_GET['case']);
-		$room = intval($_GET['room']);
-		$bef = intval($_GET['bef']);
+	}
+	$_SESSION['form_data']['id_case'] = $case; // Link to the case
+	$_SESSION['form_data']['id_room'] = $room; // Link to the room
 
-		if (! ($case > 0))
-			{
-			if (!(($room > 0)||($bef > 0)))
-				{
-				lcm_panic("Edit follow-up: No CaseID or RoomID : " . $_GET['case']); // TRAD?
-				}
-			}
-		$_SESSION['form_data']['id_case'] = $case; // Link to the case
-		$_SESSION['form_data']['id_room'] = $room; // Link to the room
+	if (empty($_SESSION['errors'])) {
+		$_SESSION['form_data']['date_start'] = date('Y-m-d H:i:s'); // '2004-09-16 16:32:37'
+		$_SESSION['form_data']['date_end']   = date('Y-m-d H:i:s'); // '2004-09-16 16:32:37'
 
-		if (empty($_SESSION['errors'])) {
-			$_SESSION['form_data']['date_start'] = date('Y-m-d H:i:s'); // '2004-09-16 16:32:37'
-			$_SESSION['form_data']['date_end']   = date('Y-m-d H:i:s'); // '2004-09-16 16:32:37'
-
-			if (isset($_REQUEST['stage']))
-				$new_stage = $_REQUEST['stage'];
-
-			if (isset($_REQUEST['type']))
-				$_SESSION['form_data']['type'] = $_REQUEST['type'];
+		if (isset($_REQUEST['stage'])) {
+			$new_stage = $_REQUEST['stage'];
 		}
 
+		if (isset($_REQUEST['type'])) {
+			$_SESSION['form_data']['type'] = $_REQUEST['type'];
+		}
+	}
 
+}
 //
 // Change status/stage: check for if case status/stage is different than current
 //
 $statuses = get_possible_case_statuses();
 
-if (! isset($_REQUEST['submit']))
+if (! isset($_REQUEST['submit'])) {
 	$_REQUEST['submit'] = '';
+}
 
 if ($_REQUEST['submit'] == 'set_status') {
 	// Get case status
 	$result = lcm_query("SELECT status FROM lcm_case WHERE id_case = " . $case);
 	$row1 = lcm_fetch_array($result);
 
-	if ($statuses[$_REQUEST['type']] == $row1['status'])
+	if ($statuses[$_REQUEST['type']] == $row1['status']) {
 		header('Location: ' . $_SERVER['HTTP_REFERER']);
+	}
 } elseif ($_REQUEST['submit'] == 'set_stage') {
 	// Get case stage
 	$result = lcm_query("SELECT stage FROM lcm_case WHERE id_case = " . $case);
 	$row1 = lcm_fetch_array($result);
 	$old_stage = $row1['stage'];
 
-	if ($_REQUEST['stage'] == $row1['stage'])
+	if ($_REQUEST['stage'] == $row1['stage']) {
 		header('Location: ' . $_SERVER['HTTP_REFERER']);
+	}
 }
 
 //

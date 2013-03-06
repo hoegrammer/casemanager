@@ -34,8 +34,6 @@ include_lcm('inc_obj_generic');
 include_lcm('inc_obj_client');
 
 class LcmFollowup extends LcmObject {
-	// Note: Since PHP5 we should use "private", and generates a warning,
-	// but we must support PHP >= 4.0.
 	var $data; 
 
 	function LcmFollowup($id_fu = 0, $id_case = 0) {
@@ -104,6 +102,16 @@ class LcmFollowup extends LcmObject {
 		// date_start
 		if (get_datetime_from_array($_SESSION['form_data'], 'start', 'start', -1, false) != -1)
 			$this->data['date_start'] = get_datetime_from_array($_SESSION['form_data'], 'start', 'start', '', false);
+	}
+
+	/*
+		Display description in editable box
+	*/
+	protected function editDescription()
+	{
+		echo '<textarea ' . $dis . ' name="description" rows="15" cols="60" class="frm_tarea">';
+		echo clean_output($this->getDataString('description'));
+		echo "</textarea>";
 	}
 
 	function validate() {
@@ -1085,11 +1093,9 @@ class LcmFollowupInfoUI extends LcmFollowup {
 				echo get_fu_description($this->data);
 				} 
 			else 
-				{
-			echo '<textarea ' . $dis . ' name="description" rows="15" cols="60" class="frm_tarea">';
-				echo clean_output($this->getDataString('description'));
-				echo "</textarea>";
-				}
+			{
+				$this->editDescription();
+			}
 			echo "</td></tr>\n";
 			}	
 	

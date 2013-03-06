@@ -46,45 +46,15 @@ lcm_page_start('File for Client: '. get_person_name($row), '', '', 'clients_intr
 matt_page_start('File for '.get_person_name($row));
 $edit = true;
 
-
-
-
-		/* Saved for future use
-			// Check for access rights
-			:if (!($row['public'] || allowed($client,'r'))) {
-				die("You don't have permission to view this client details!");
-			}
-			$edit = allowed($client,'w');
-		*/
-
-
-		// Show tabs
+// Show tabs
 $groups = array(
 	'work' => 'File',
-//	'dates' => 'Event Dates',
 	'details' => 'Details',
 	'documents'=> 'Documents'
 	);
 $tab = ( isset($_GET['tab']) ? $_GET['tab'] : 'work' );
 show_tabs($groups,$tab,$_SERVER['REQUEST_URI']);
 
-//if (isset($_REQUEST['attach_case'])) {
-//	$q = "SELECT title
-//			FROM lcm_case
-//			WHERE id_case = " . intval($_REQUEST['attach_case']);
-//	$result = lcm_query($q);
-//
-//	while ($row1 = lcm_fetch_array($result)) {
-//		echo '<div class="sys_msg_box">';
-//		echo '<ul>';
-//		echo '<li>' . _Ti('client_info_created_attached')
-//			. '<a class="content_link" href="case_det.php?case=' . $_REQUEST['attach_case'] . '">' 
-//			. $row1['title'] 
-//			. "</a></li>\n";
-//		echo "</ul>\n";
-//		echo "</div>\n";
-//	}
-//}
 
 $admin=false;
 $accad=false;
@@ -140,17 +110,7 @@ switch ($tab) {
 			AND cl.id_client=".$client."
 			";
 
-	///	if ($date_end != "-1") 
-	//		$q .= " AND UNIX_TIMESTAMP(end_time) <= UNIX_TIMESTAMP('" . $date_end . "') ";
-	//
-	//				$q .= " AND aa.id_author = " . $GLOBALS['author_session']['id_author'];
-	//	$q .= " AND aa.id_author = " . $author_data['id_author']. " ";				
-		// Sort agenda by date/time of the appointments
-	//	order = 'DESC';
-	//	if (isset($_REQUEST['order']))
-	//		if ($_REQUEST['order'] == 'ASC' || $_REQUEST['order'] == 'DESC')
-	//			$order = $_REQUEST['order'];
-	//	
+	
 		$q .= " ORDER BY start_time " . $order;
 		$result = lcm_query($q);
 		// Get the number of rows in the result
@@ -160,11 +120,7 @@ switch ($tab) {
 					array( 'title' => 'Event', 'order' => 'no_order'),
 					array( 'title' => 'Date', 'order' => 'no_order', 'default'=>'DESC'),
 					array( 'title' => 'Creation Date', 'order' => 'no_order'),
-	//				array( 'title' => 'Actions', 'order' => 'no_order')
 					array( 'title' => 'Status', 'order' => 'no_order'),
-//					array( 'title' => _Th('app_input_type'), 'order' => 'no_order'),
-	//				array( 'title' => _Th('app_input_title'), 'order' => 'no_order'));
-					// array( 'title' => _Th('app_input_reminder'), 'order' => 'no_order')
 					);
 			show_list_start($headers);
 		
@@ -192,12 +148,6 @@ switch ($tab) {
 					. format_date($row['date_creation'], 'date_short') . '</td>';
 				echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">'
 					. (!$row['dismissed'] ? 'Outstanding' : 'Dismissed') . '</td>';
-	//						echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">' . _Tkw('appointments', $row['type']) . '</td>';
-	//			echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">'
-	//				. '<a href="app_det.php?app=' . $row['id_app'] . '" class="content_link">' . $row['title'] . '</a></td>';
-				// [ML] removed, not very useful.
-				// echo '<td class="tbl_cont_' . ($i % 2 ? 'dark' : 'light') . '">'
-				//	. format_date($row['reminder'], 'short') . '</td>';
 				echo "</tr>\n";
 			}
 		
@@ -516,9 +466,6 @@ switch ($tab) {
 				echo "<a href=\"edit_case.php?case=0&type=accomidation&attach_client=$client\" class=\"content_link\">Submit to Accommodation Team</a><br />\n";
 			if (!$bef_stage)
 				echo "<a href=\"edit_case.php?case=0&type=befriender&attach_client=$client\" class=\"content_link\">Submit for Befriender</a><br />\n";
-//			echo '<br/>';
-	//		if (!$s4_stage)
-	//			echo "<a href=\"edit_case.php?case=0&type=section4&attach_client=$client\" class=\"content_link\">Section 4 Application</a><br />\n";
 			}
 		
 		echo "</small></div></td>";
@@ -564,7 +511,6 @@ switch ($tab) {
 			}
 		echo "</table>";
 
-//		if ($acc_stage=='accom') 
 		$show_ns=false;
 		if ($GLOBALS['author_session']['right8'])
 			{
@@ -591,21 +537,6 @@ switch ($tab) {
 			}
 		echo "</p>\n";
 		$obj_client->printFollowups();
-//		echo '<form action="edit_fu.php" method="get">';
-//		echo '<select name="case">';
-//		while ($row = lcm_fetch_array($result))
-//			{
-//			echo '<option value="'.$row['id_case'].'">'.$row['type_case'].'</option>';
-//			}
-//		echo '</select>';
-//		echo ' <button type="submit"/>Add case work</button>';
-//		echo '</form>';
-
-//		cool_box_start('Work in File:');
-//		$obj_client->printFollowupsTitle();	
-//		echo '<p class="normal_text">';
-//		echo "<a href=\"edit_fu.php?client=".$row["id_client"]."\" class=\"create_new_lnk\">" . _T('new_followup') . "</a>&nbsp;\n";
-//		echo "</p>\n";
 		if ($GLOBALS['author_session']['right3'])
 			{
 			echo "<p><a href=\"client_del.php?client=".$client."\" class=\"edit_lnk\">Delete Client</a></p>\n";

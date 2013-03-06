@@ -195,7 +195,7 @@ class LcmClient extends LcmObject {
 //				WHERE id_case = " . $this->getDataInt('id_case', '__ASSERT__') . "
 //				  AND fu.id_author = a.id_author ";
 
-		$q = "SELECT fu.id_followup, fu.date_start, fu.date_end, fu.type, fu.description, fu.case_stage,
+		$q = "SELECT fu.id_followup, fu.date_start, fu.date_end, fu.type, fu.description, fu.case_stage, fu.bus_pass_given,
 					fu.hidden, a.name_first, a.name_middle, a.name_last, c.type_case, fu.outcome_amount
 				FROM lcm_followup as fu 
 				LEFT JOIN lcm_case as c on c.id_case = fu.id_case
@@ -244,6 +244,7 @@ class LcmClient extends LcmObject {
 		if (! $prefs['page_rows']) $prefs['page_rows'] = 10; 
 
 		$this->followups = array();
+
 		$this->loadFollowups($this->fu_start_from);
 	}
 

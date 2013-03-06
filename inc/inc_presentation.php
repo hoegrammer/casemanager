@@ -2002,7 +2002,14 @@ function show_listfu_item($item, $cpt, $screen = 'general') {
 		format_date($item['date_start'], 'short').
 		'</b> by '.
 		 clean_output($item['name_first']." ".$item['name_last']).
+
+		// display the outcome amount
 		($item['outcome_amount']?"<p>Paid: £".$item['outcome_amount']."</p>":"").
+		
+		// add "+ buss pass" if one was given
+		($item['bus_pass_given']?"<p> &#43; Bus Pass Given</p>":"").
+
+		// display description (notes)
 		($desc=="No description."?"":"<p>".$desc."</p>"). "</td></tr>";
 
 

@@ -196,6 +196,7 @@ switch ($tab) {
 		$sup_stage = false;
 		echo "<table class='table_strands'>";
 		for ($cpt = 0; (($i<$prefs['page_rows']) && ($row1 = lcm_fetch_array($result))); $cpt++)
+		
 			{
 			if (!$cpt % 2)
 				{

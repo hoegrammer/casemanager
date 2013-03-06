@@ -98,7 +98,15 @@ class LcmFollowup extends LcmObject {
 		if (get_datetime_from_array($_SESSION['form_data'], 'start', 'start', -1, false) != -1)
 			$this->data['date_start'] = get_datetime_from_array($_SESSION['form_data'], 'start', 'start', '', false);
 	}
-
+	
+	/*
+		Determines whether the followup is the sort that includes a payment
+	*/
+	protected function isPayment() {
+		return $this->getDataString('type')=='followups43' 
+			|| $this->getDataString('bugfix')=='followups43'
+			|| $this->getDataString('type')=='followups27';
+	}
 	/*
 		Display description in editable box
 	*/
@@ -107,6 +115,27 @@ class LcmFollowup extends LcmObject {
 		echo '<textarea ' . $dis . ' name="description" rows="15" cols="60" class="frm_tarea">';
 		echo clean_output($this->getDataString('description'));
 		echo "</textarea>";
+	}
+	
+	/*
+		Display amount in editable box
+	*/
+	protected function editAmount()
+	{
+		echo '<tr><td>';
+		echo 'Paid:';
+		echo '</td><td>';
+		echo '<select name="outcome_amount">';
+		for ($i=0;$i<=60;$i=$i+5)
+		{
+			$sel='';
+			if ($this->getDataInt('outcome_amount')==$i) {
+				$sel='selected';
+			}
+			echo '<option value="'.$i.'" '.$sel.'>'.$i.'</option>';
+		}
+		echo '</select>';
+		echo '</td></tr>';
 	}
 
 	function validate() {
@@ -874,24 +903,11 @@ class LcmFollowupInfoUI extends LcmFollowup {
 		show_edit_keywords_form('followup', $this->getDataInt('id_followup'));
 		
 		//+------------------------------------+
-		//| SHOW AMOUNTS FOR EMERGENCY PAYMENT |
+		//| FOR PAYMENTS, SHOW OUTCOME AMOUNT
 		//+------------------------------------+
-		if ($this->getDataString('type')=='followups43' || $this->getDataString('bugfix')=='followups43')
-			{
-			echo '<tr><td>';
-			echo 'Emergency Payment:';
-			echo '</td><td>';
-			echo '<select name="outcome_amount">';
-			for ($i=0;$i<=60;$i=$i+5)
-				{
-				$sel='';
-				if (clean_output($zot['amount'])==$i)
-					$sel='selected';
-				echo '<option value="'.$i.'" '.$sel.'>'.$i.'</option>';
-				}
-			echo '</select>';
-			echo '</td></tr>';
-			}
+		if ($this->isPayment()) {
+			$this->editAmount();	
+		}
 		
 		//+----------------------------------------+
 		//| SHOW POSSIBLE POST-IT NOTE RECEPITANTS |

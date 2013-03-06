@@ -107,6 +107,15 @@ class LcmFollowup extends LcmObject {
 			|| $this->getDataString('bugfix')=='followups43'
 			|| $this->getDataString('type')=='followups27';
 	}
+
+	/*
+		Determines whether the followup is a welfare payment in particular
+	*/
+	protected function isWelfarePayment() {
+		return $this->getDataString('type')=='followups27';
+	}
+
+		
 	/*
 		Display description in editable box
 	*/
@@ -138,6 +147,22 @@ class LcmFollowup extends LcmObject {
 		echo '</td></tr>';
 	}
 
+	/*
+		Display whether bus pass given, in editable checkbox
+	*/
+	protected function editBusPass()
+	{
+		echo '<tr><td>';
+		echo 'Bus Pass Given:';
+		echo '</td><td>';
+		echo '<input type="checkbox" name="bus_pass_given"';
+		if ($this->data['bus_pass_given']) {
+			echo ' checked';
+		}
+		echo ' />';
+		echo '</td></tr>';
+
+	}
 	function validate() {
 		$errors = array();
 		if ($this->getDataInt('user') == 1000000)
@@ -843,6 +868,11 @@ class LcmFollowupInfoUI extends LcmFollowup {
 			echo '<input type="hidden" name="type" value="followups21">';
 			echo '<input type="hidden" name="bugfix" value="review">';
 			}
+		elseif ($this->getDataString('type')=='followups27' || $this->getDataString('bugfix')=='followups27')
+			{
+			echo '<input type="hidden" name="type" value="followups27">';
+			echo '<input type="hidden" name="bugfix" value="followups27">';
+			}
 		elseif ($this->getDataString('type')=='followups28' || $this->getDataString('bugfix')=='followups28')
 			{
 			echo '<input type="hidden" name="type" value="followups28">';
@@ -871,6 +901,8 @@ class LcmFollowupInfoUI extends LcmFollowup {
 				}
 			else
 				{
+
+				
 				echo "<tr>\n";
 				echo "<td>" . _T('fu_input_type') . "</td>\n";
 				echo "<td>";
@@ -903,10 +935,17 @@ class LcmFollowupInfoUI extends LcmFollowup {
 		show_edit_keywords_form('followup', $this->getDataInt('id_followup'));
 		
 		//+------------------------------------+
-		//| FOR PAYMENTS, SHOW OUTCOME AMOUNT
+		//| FOR PAYMENTS in general, SHOW OUTCOME AMOUNT
 		//+------------------------------------+
 		if ($this->isPayment()) {
 			$this->editAmount();	
+		}
+	
+		/*
+			For welfare payments, show bus pass checkbox
+		*/
+		if ($this->isWelfarePayment()) {
+			$this->editBusPass();
 		}
 		
 		//+----------------------------------------+
@@ -1220,29 +1259,6 @@ class LcmFollowupInfoUI extends LcmFollowup {
 				echo "</td></tr>\n";
 				}
 
-
-
-
-
-	//		echo "<!-- End time -->\n\t\t<tr><td>";
-	//		echo (($prefs['time_intervals'] == 'absolute') ? _T('time_input_date_end') : _T('app_input_time_length'));
-	//		echo "</td><td>";
-	//		if ($prefs['time_intervals'] == 'absolute') 
-	//			{
-	//			echo get_date_inputs('app_end', $this->data['app_end_time']);
-	//			echo ' ' . _T('time_input_time_at') . ' ';
-	//			echo get_time_inputs('app_end', $this->data['app_end_time']);
-	//			echo f_err_star('app_end_time');
-	//			} 
-	//		else 
-	//			{
-	//			$interval = ( ($this->data['app_end_time']!='0000-00-00 00:00:00') ?
-	//					strtotime($this->data['app_end_time']) - strtotime($this->data['app_start_time']) : 0);
-	//			//	echo _T('calendar_info_time') . ' ';
-	//			echo get_time_interval_inputs('app_delta', $interval);
-	//			echo f_err_star('app_end_time');
-	//			}
-	//		echo "</td></tr>\n";
 
 //			print "<tr><td>";
 //			print "</td></tr>";

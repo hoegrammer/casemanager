@@ -440,49 +440,7 @@ class LcmFollowup extends LcmObject {
 						WHERE id_case=" . $this->getDataInt('id_case');
 
 				lcm_query($q);
-				//MATT WAS HERE, MORE DUD STAGE STUFF REMOVED.
-				// Close the lcm_stage
-				// XXX for now, date_agreement is not used
-				//if ($status == 'open') {
-				//	// case is being re-opened, so erase previously entered info
-				//	$q = "UPDATE lcm_stage
-				//			SET
-				//				date_conclusion = '0000-00-00 00:00:00',
-				//				id_fu_conclusion = 0,
-				//				kw_result = '',
-				//				kw_conclusion = '',
-				//				kw_sentence = '',
-				//				sentence_val = '',
-				//				date_agreement = '0000-00-00 00:00:0'
-				//			WHERE id_case = " . $this->getDataInt('id_case') . "
-				//			  AND kw_case_stage = '" . $case_stage . "'";
-				//} else {
-				//	$q = "UPDATE lcm_stage
-				//			SET
-				//				date_conclusion = '" . $this->getDataString('date_end') . "',
-				//				id_fu_conclusion = " . $this->getDataInt('id_followup') . ",
-				//				kw_result = '" . $this->getDataString('result') . "',
-				//				kw_conclusion = '" . $this->getDataString('conclusion') . "',
-				//				kw_sentence = '" . $this->getDataString('sentence') . "',
-				//				sentence_val = '" . $this->getDataString('sentence_val') . "',
-				//				date_agreement = '" . $this->getDataString('date_end') . "'
-				//			WHERE id_case = " . $this->getDataInt('id_case', '__ASSERT__') . "
-				//			  AND kw_case_stage = '" . $case_stage . "'";
-				//}
-	
-				//lcm_query($q);
-			}
-
-			// If creating a new case stage, make new lcm_stage entry
-//			if ($stage) {
-//				$q = "INSERT INTO lcm_stage SET
-//							id_case = " . $this->getDataInt('id_case', '__ASSERT__') . ",
-//							kw_case_stage = '" . lcm_assert_value($stage) . "',
-//							date_creation = NOW(),
-//							id_fu_creation = " . $this->getDataInt('id_followup');
-//
-//				lcm_query($q);
-//			}
+					}
 		}
 
 		// Keywords
@@ -498,16 +456,8 @@ class LcmFollowupInfoUI extends LcmFollowup {
 
 	function LcmFollowupInfoUI($id_fu = 0) {
 		$this->LcmFollowup($id_fu);
-//MATT READ THIS, MATT WAS HERE?
 		// In rintEdit(), whether to show "conclusion" fields
 		$this->show_conclusion = false;
-
-//		if (_request('submit') == 'set_status' || _request('submit') == 'set_stage') {
-//			$this->show_conclusion = true;
-//		} elseif (_session('type') == 'stage_change' || is_status_change(_session('type'))) {
-//			$this->show_conclusion = true;
-//		}
-
 		// In rintEdit(), whether to check for sumbilled
 		$this->show_sum_billed = read_meta('fu_sum_billed');
 	}
@@ -530,18 +480,7 @@ class LcmFollowupInfoUI extends LcmFollowup {
 			. '<span class="value2">' . format_date($this->data['date_start']) . '</span>'
 			. "</li>\n";
 		
-		// Date end
-//		echo '<li>'
-//			. '<span class="label2">' . _Ti('time_input_date_end') . '</span>'
-//			. '<span class="value2">' . format_date($this->data['date_end']) . '</span>'
-//			. "</li>\n";
-//		
-//		// Date length
-//		echo '<li>'
-//			. '<span class="label2">' . _Ti('time_input_length') . '</span>'
-//			. '<span class="value2">' . format_time_interval_prefs($this->data['length']) . '</span>'
-//			. "</li>\n";
-		
+	
 		// FU type
 		echo '<li>'
 			. '<span class="label2">' . _Ti('fu_input_type') . '</span>'
@@ -551,7 +490,6 @@ class LcmFollowupInfoUI extends LcmFollowup {
 		// Keywords
 		show_all_keywords('followup', $this->getDataInt('id_followup'));
 
-//MATT WAS HERE, SHOWING OUTCOME ON FOLLOWUP DETAILS PAGE!!
 		if ($this->data['outcome'])
 			{
 			$zot = get_kw_from_id($this->data['outcome']);
@@ -568,26 +506,7 @@ class LcmFollowupInfoUI extends LcmFollowup {
 				. "</li>\n";
 			}
 
-		// Conclusion for case/status change
-//		if ($this->data['type'] == 'status_change' || $this->data['type'] == 'stage_change') {
-//			$tmp = lcm_unserialize($this->data['description']);n
-//		
-//			echo '<li>'
-//				. '<span class="label2">' . _Ti('fu_input_conclusion') .  '</span>';
-//
-//			echo '<span class="value2">';
-//		
-//			if (read_meta('case_result') == 'yes' && $tmp['result'])
-//				echo _Tkw('_crimresults', $tmp['result']) . "<br />\n";
-//			
-//			echo _Tkw('conclusion', $tmp['conclusion']) . '</span>';
-//			echo "</li>\n";
-//		
-//			echo '<li>'
-//				. '<span class="label2">' . _Ti('fu_input_sentence') . '</li>'
-//				. '<span class="value2">' . _Tkw('sentence', $tmp['sentence']) . '</span>'
-//				. "</li>\n";
-//		}
+		
 		
 		// Description//MATT READ HERE
 		$desc = get_fu_description($this->data, false);
@@ -999,20 +918,9 @@ class LcmFollowupInfoUI extends LcmFollowup {
 			echo 'Select Client:<br />(From Waiting List)';
 			echo '</td><td>';
 			$q="SELECT cco.id_client, ap.title as ttl, max(fu.date_start) as date_start, fu.description, c.amount, c.id_case, cl.name_first, cl.name_last, cl.check1, cl.check2, cl.check3, cl.pannel, cl.accom, kw.title, c.status, c.public, c.pub_write, c.date_creation, c.date_update, c.type_case, c.stage FROM lcm_case as c NATURAL JOIN lcm_case_author as a NATURAL LEFT JOIN lcm_keyword_case as kc LEFT JOIN lcm_keyword as kw ON kc.id_keyword = kw.id_keyword LEFT JOIN lcm_case_client_org as cco ON c.id_case = cco.id_case LEFT JOIN lcm_client as cl ON cco.id_client = cl.id_client LEFT JOIN ( select a.* from lcm_app as a where a.dismissed = false ) as ap on ap.id_case = c.id_case LEFT JOIN lcm_followup as fu on fu.id_case = c.id_case WHERE (fu.type='followups18') AND c.type_case = \"Accomidation\" AND c.stage = \"Waiting List\" AND c.status = \"Open\" group by cco.id_case";
-//			$q = "SELECT cl.*, c.id_case
-//					from lcm_client as cl 
-//					left join lcm_case_client_org as cco on cl.id_client = cco.id_client 
-//					left join lcm_case as c on c.id_case = cco.id_case 
-//					where c.type_case = 'accomidation' and c.stage='waiting list'";
 			$result = lcm_query($q);
 			$checked = true;
 
-	//		include_lcm('inc_obj_case');
-	//		$listtype='12';
-	//		$case_list = new LcmCaseListUI();
-	//		$case_list->start($listtype);
-	//		$case_list->printList($listtype);
-	//		$case_list->finish();
 			echo '<table>';
 			while ($row = lcm_fetch_array($result))
 				{
@@ -1166,11 +1074,6 @@ class LcmFollowupInfoUI extends LcmFollowup {
 					$zomg='acc';
 				echo '<input type="hidden" name="add_appointment" value="'.$zomg.'rev">';	
 				echo '<input type="hidden" name="app_title" value="">';
-//				echo '<input type="textbox" name="app_start_year" value="0000">';
-//				echo '<input type="textbox" name="app_start_month" value="00">';
-//				echo '<input type="textbox" name="app_start_day" value="00">';
-//				echo '<input type="textbox" name="app_start_hour" value="00">';
-//				echo '<input type="textbox" name="app_start_minuites" value="00">';
 				}
 			else
 				{
@@ -1179,79 +1082,22 @@ class LcmFollowupInfoUI extends LcmFollowup {
 				elseif ($this->getDataString('ctype')=='accomidation')
 					$zomg='acc';
 				echo "<tr><td>Add Future Event:</td><td>";
-	//			echo "<input type=radio checked name='add_appointment' value='".$zomg."rev'>Next Review Date</input><br />";
 				echo "<input type=radio checked name='add_appointment' value='salrev'>SAL Review Date</input><br />";
 				echo "<input type=radio name='add_appointment' value='".$zomg."term'>Termination Date</input><br />";
 				echo "</td></tr>";
-		//		echo '<table class="tbl_usr_dtl" width="99%">' . "\n";
 				echo "<!-- Start time -->\n\t\t<tr><td>";
 				echo "Event Date:";
 				echo "</td><td>"; 
 				echo get_date_inputs('app_start',$this->data['app_start_time'], false);
-		//		echo ' ' . _T('time_input_time_at') . ' ';
-		//		echo get_time_inputs('app_start', $this->data['app_start_time']);
 				echo f_err_star('app_start_time');
 				echo "</td></tr>\n";
 				echo '<input type="hidden" name="app_title" value="">';
 				echo "</td></tr>\n";
 				}
 
-
-//			print "<tr><td>";
-//			print "</td></tr>";
-/*			if (_request('ctype')=='support')
-				{
-				echo '<input type="hidden" name="app_title" value="suprev">';
-				}
-			else
-				{
-				echo "<!-- Appointment title -->\n\t\t<tr><td>";
-				echo f_err_star('app_title') . _T('app_input_title');
-				echo "</td><td>";
-				echo '<input type="text" ' . $title_onfocus . $dis . ' name="app_title" size="50" value="';
-				echo clean_output($this->getDataString('app_title')) . '" class="search_form_txt" />';
-				echo "</td></tr>\n";
-				}*/
-
-	//		echo "<!-- Appointment type -->\n\t\t<tr><td>";
-	//		echo _T('app_input_type');
-	//		echo "</td><td>";
-	//		echo '<select ' . $dis . ' name="app_type" size="1" class="sel_frm">';
-	//
-	//		global $system_kwg;
-	//
-	//		if ($_SESSION['fu_app_data']['type'])
-	//			$default_app = $_SESSION['fu_app_data']['type'];
-	//		else {
-	//			$app_kwg = get_kwg_from_name('appointments');
-	//			$default_app = $app_kwg['suggest'];
-	//		}
-	//
-	//		$opts = array();
-	//		foreach($system_kwg['appointments']['keywords'] as $kw)
-	//			$opts[$kw['name']] = _T(remove_number_prefix($kw['title']));
-	//		asort($opts);
-	//
-	//		foreach($opts as $k => $opt) 
-	//			{
-	//			$sel = isSelected($k == $default_app);
-	//			echo "<option value='$k'$sel>$opt</option>\n";
-	//			}
-	//
-	//		echo '</select>';
-	//		echo "</td></tr>\n";
-
-	//		echo "<!-- Appointment description -->\n";
-	//		echo "<tr><td valign=\"top\">";
-	//		echo _T('app_input_description');
-	//		echo "</td><td>";
-	//		echo '<textarea ' . $dis . ' name="app_description" rows="5" cols="60" class="frm_tarea">';
-	//		echo clean_output($this->data['app_description']);
-	//		echo '</textarea>';
 			}
 			
 		echo "</table>\n";
-	//	echo "</div>\n";
 		}
 
 
@@ -1282,62 +1128,6 @@ function printNoEdit() {
 		$dis = isDisabled(! ($admin || $zot));
 	
 		echo '<table class="tbl_usr_dtl" width="99%">' . "\n";
-//		echo '<tr><td>';
-//		echo f_err_star('date_start') . _T('fu_input_date_start'); 
-//		echo "</td>\n";
-//		echo "<td>";
-//
-//		$name = (($admin || $zot) ? 'start' : '');
-//		echo get_date_inputs($name, $this->data['date_start'], false);
-//		echo ' ' . _T('time_input_time_at') . ' ';
-//		echo get_time_inputs($name, $this->data['date_start']);
-//
-//		echo "</td>\n";
-//		echo "</tr>\n";
-//		echo "<tr><td>";
-//
-//		echo f_err_star('date_end') . (($prefs['time_intervals'] == 'absolute') ? _T('fu_input_date_end') : _T('fu_input_time_length'));
-//		echo "</td>\n";
-//		echo '<td>';
-//
-//		if ($prefs['time_intervals'] == 'absolute') {
-//			// Buggy code, so isolated most important cases
-//			if ($this->data['id_followup'] == 0)
-//				$name = 'end';
-//			elseif ($zot)
-//				$name = 'end';
-//			else
-//				// user can 'finish' entering data
-//				$name = (($admin || ($zot && ($this->data['date_end']=='0000-00-00 00:00:00'))) ? 'end' : '');
-//
-//			echo get_date_inputs($name, $this->data['date_end']);
-//			echo ' ';
-//			echo _T('time_input_time_at') . ' ';
-//			echo get_time_inputs($name, $this->data['date_end']);
-//		} else {
-//			$name = '';
-//
-//			// Buggy code, so isolated most important cases
-//			if ($this->getDataInt('id_followup') == 0)
-//				$name = 'delta';
-//			elseif ($zot)
-//				$name = 'delta';
-//			else
-//				// user can 'finish' entering data
-//				$name = (($admin || ($zot && ($this->getDataString('date_end') =='0000-00-00 00:00:00'))) ? 'delta' : '');
-//
-//			if (empty($_SESSION['errors'])) {
-//				$interval = (($this->getDataString('date_end') != '0000-00-00 00:00:00') ?
-//						strtotime($this->getDataString('date_end')) - strtotime($this->getDataString('date_start')) : 0);
-//				echo get_time_interval_inputs($name, $interval);
-//			} else {
-//				echo get_time_interval_inputs_from_array($name, $this->data);
-//			}
-//		}
-
-//		echo "</td>\n";
-//		echo "</tr>\n";
-//MATT READ THIS	
 		// Show 'conclusion' options
 		if ($this->show_conclusion) {
 			$kws_conclusion = get_keywords_in_group_name('conclusion');
@@ -1346,7 +1136,6 @@ function printNoEdit() {
 			echo "<tr>\n";
 			echo "<td><b>" . _Ti('fu_input_conclusion') . "</b></td>\n";
 			echo '<td>';
-	
 	
 			// Conclusion
 			echo '<select ' . $dis . ' name="conclusion" size="1" class="sel_frm">' . "\n";
@@ -1357,7 +1146,6 @@ function printNoEdit() {
 			
 			echo '<option value=""></option>';	
 			foreach ($kws_conclusion as $kw) {
-				//$sel = isSelected($kw['name'] == $default);
 				$sel = isSelected($kw['id_keyword'] == $this->data['outcome']);
 				echo '<option ' . $sel . ' value="' . $kw['id_keyword'] . '">' . _T(remove_number_prefix($kw['title'])) . "</option>\n";
 			}//MATT WAS HERE. RECORDS "ID_KEYWORD", NOT "NAME" FOR OUTCOME KEYWORD FIELD.
@@ -1366,17 +1154,10 @@ function printNoEdit() {
 			echo "</td>\n";
 			echo "</tr>\n";
 	
-			// If guilty, what sentence?
-//			$kws_sentence = get_keywords_in_group_name('sentence');
 //MATT WAS HERE. USED OLD "SENTENCE AMOUNT" BOX FOR OUTCOME AMOUNT
 			echo "<tr>\n";
 			echo "<td><b>" . _Ti('fu_input_sentence') . "</b></td>\n";
 			echo '<td>';
-//			// If sentence, for how much?
-//			if (!($this->data['outcome_amount']))
-//				{
-//				$this->data['outcome_amount']=0;
-//				}
 			echo '<input type="text" name="sentence_val" size="10" value="' . $this->data['outcome_amount'] . '" />';
 			echo "</td>\n";
 			echo "</tr>\n";
@@ -1393,57 +1174,9 @@ function printNoEdit() {
 			echo "</td>\n";
 			echo "</tr>\n";
 			echo '<input type="hidden" name="type" value="' . $this->getDataString('type') . '" />' . "\n";
-			
-
-		} else {
-			// The usual follow-up
-//			echo "<tr>\n";
-//			echo "<td>" . _T('fu_input_type') . "</td>\n";
-//			echo "<td>";
-//			echo '<select ' . $dis . ' name="type" size="1" class="sel_frm">' . "\n";
-//
-//			$default_fu = get_suggest_in_group_name('followups');
-//			$futype_kws = get_keywords_in_group_name('followups');
-//			$kw_found = false;
-//
-//			foreach($futype_kws as $kw) {
-//				$sel = isSelected($kw['name'] == $default_fu);
-//				if ($sel) $kw_found = true;
-//				echo '<option value="' . $kw['name'] . '"' . $sel . '>' . _T(remove_number_prefix($kw['title'])) . "</option>\n";
-//			}
-//
-//			// Exotic case where the FU keyword was hidden by the administrator,
-//			// but an old follow-up using that keyword is being edited.
-//			if (! $kw_found)
-//				echo '<option selected="selected" value="' . $default_fu . '">' . _Tkw('followups', $default_fu) . "</option>\n";
-//
-//			echo "</select>\n";
-//			echo "</td>\n";
-//			echo "</tr>\n";
 		}
 
-		// Keywords (if any)
-//		show_edit_keywords_form('followup', $this->getDataInt('id_followup'));
-	
-//		// Description
-//		echo "<tr>\n";
-//		echo '<td valign="top">' . f_err_star('description') . _T('fu_input_description') . "</td>\n";
-//		echo '<td>';
-
-//		if ($this->getDataString('type') == 'assignment' || $this->getDataString('type') == 'unassignment') {
-//			// Do not allow edit of assignment
-//			echo '<input type="hidden" name="description" value="' . $this->getDataString('description') . '" />' . "\n";
-//			echo get_fu_description($this->data);
-//		} else {
-//			echo '<textarea  ' . $dis . ' name="description" rows="15" cols="60" class="frm_tarea">';
-			echo "<input type='hidden' name='description' value='.".clean_output($this->getDataString('description'))."'>";
-//			echo "</textarea>";
-//		}
-
-//		echo "</td></tr>\n";
-	
-
-		// Sum billed field
+		echo "<input type='hidden' name='description' value='.".clean_output($this->getDataString('description'))."'>";
 		if ($this->show_sum_billed == "yes") {
 			echo '<tr>';
 			echo '<td>' . _T('fu_input_sum_billed') . "</td>\n";
@@ -1466,30 +1199,8 @@ function printNoEdit() {
 			echo htmlspecialchars($currency);
 			echo "</td></tr>\n";
 		}
-			
 		echo "</table><br />\n\n";
-	
-		// XXX FIXME: Should probably be in some function "is_system_fu"
-		// or even "is_deletable"
-//		if ($this->getDataInt('id_followup')
-//				&& allowed($this->data['id_case'], 'a')
-//				&& ! (is_status_change($this->data['type'])
-//					|| $this->data['type'] == 'assignment'
-//					|| $this->data['type'] == 'unassignment'))
-//		{
-//			$checked = ($this->getDataString('hidden') == 'Y' ? ' checked="checked" ' : '');
-//
-//			echo '<p class="normal_text">';
-//			echo '<input type="checkbox"' . $checked . ' name="delete" id="box_delete" />';
-//			echo '<label for="box_delete">' . _T('fu_info_delete') . '</label>';
-//			echo "</p>\n";
-//		}
 	}
-
-
-
-
-
 }
 
 ?>

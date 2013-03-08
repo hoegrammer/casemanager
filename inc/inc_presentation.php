@@ -363,7 +363,7 @@ echo"
 						echo show_navmenu_item("listpannel.php", 'main_pannel');
 						echo show_navmenu_item("listaccom.php", 'main_accom');
 						echo show_navmenu_item("sal.php", 'main_sal');
-						echo show_navmenu_item("tresuary2.php", 'main_tres');
+						echo show_navmenu_item("welfare_payments_input.php", 'main_tres');
 						echo show_navmenu_item("nightshelter.php", 'main_night');
 						echo show_navmenu_item("befriender.php", 'main_befriender');
 						echo show_navmenu_item("admin.php", 'main_admin');

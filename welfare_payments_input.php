@@ -8,29 +8,8 @@ lcm_page_start();
 matt_page_start('Welfare Payments Input Form', 'sub');
 
 
-require 'inc/DataModification.class.php';
 require 'inc/DataRetrieval.class.php';
-require 'inc/WelfarePayment.class.php';
 
-if ($_POST) {
-	$date = date('Y-m-d');
-	for($i = 0; $i < sizeof($_POST['id_case']); $i ++) {
-		$id_case  = $_POST['id_case'][$i];
-
-		// only save rows that have had something entered
-		if ($_POST['amount'][$id_case] !== '' 
-			|| $_POST['bus_pass'][$id_case] === 'on'
-			|| $_POST['note'][$id_case] !== ''
-		) {
-			$amount   = (int)$_POST['amount'][$id_case];
-			$bus_pass = $_POST['bus_pass'][$id_case] === 'on' ? 1 : 0;
-			$note   = $_POST['note'][$id_case];
-			$welfare_payment = new WelfarePayment($id_case, $amount, $bus_pass, $note);
-			var_dump($welfare_payment);
-			DataModification::saveWelfarePayment($welfare_payment);
-		}
-	}
-}
 // Get client names and ids for everyone who is currently financially supported
 // and does not have a welfare payment update for today
 $clients = DataRetrieval::getAllCurrentlySupportedClientsNotUpdatedToday();

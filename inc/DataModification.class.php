@@ -24,7 +24,6 @@ class DataModification
 
 	/*
 		Runs a query
-
 		@param string $sql the query
 	*/
 	private static function _execute($sql) 

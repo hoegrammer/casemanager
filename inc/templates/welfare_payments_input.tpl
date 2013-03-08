@@ -1,6 +1,6 @@
 <!-- Template for welfare payments input form -->
 
-<form action = 'welfare_payments_input.php' method = 'POST'>
+<form action = 'welfare_payments_save.php' method = 'POST'>
 	<table border = 1>
 		<tr>
 			<th>Client</th>

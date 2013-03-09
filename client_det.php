@@ -23,6 +23,7 @@
 
 include('inc/inc.php');
 include('inc/DataRetrieval.class.php');
+include('inc/SupportCombo.class.php');
 include_lcm('inc_contacts');
 include_lcm('inc_obj_client');
 include_lcm('inc_obj_case');
@@ -195,6 +196,11 @@ switch ($tab) {
 		
 		$acc_stage = false;
 		$sup_stage = false;
+		
+		// include code that decides if client is currently supported and if so 
+		// presents FAO Welfare Desk panel
+		require 'inc/fao_welfare_desk.php';	
+
 		echo "<table class='table_strands'>";
 		for ($cpt = 0; (($i<$prefs['page_rows']) && ($row1 = lcm_fetch_array($result))); $cpt++)
 		

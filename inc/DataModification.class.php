@@ -6,6 +6,7 @@ from the DB. */
 class DataModification 
 {
 
+	// always inserts. 
 	public static function saveWelfarePayment(WelfarePayment $welfare_payment)
 	{
 		global $author_session;
@@ -19,6 +20,24 @@ class DataModification
 			date_start, id_case, outcome_amount, bus_pass_given)
 			values ('followups27', $id_author, '$description',
 			NOW(), $id_case, '$amount', '$bus_pass')";
+		self::_execute($sql);
+	}
+
+
+	// uses replace into.
+	public static function saveFaoWelfareDesk(
+		FaoWelfareDesk $faoWelfareDesk
+	) {
+		$id_client = $faoWelfareDesk->id_client;
+		$amount = $faoWelfareDesk->amount;
+		$bus_pass = (int)$faoWelfareDesk->bus_pass;
+		$letter = (int)$faoWelfareDesk->letter;
+		$advocacy = (int)$faoWelfareDesk->advocacy;
+		$from_helpdesk = (int)$faoWelfareDesk->from_helpdesk;
+		$note = $faoWelfareDesk->note;
+		$sql = "replace into lcm_faowelfaredesk 
+		(id_client, amount, bus_pass, letter, advocacy, from_helpdesk, note) values 
+		($id_client, $amount, $bus_pass, $letter, $advocacy, $from_helpdesk, '$note')";
 		self::_execute($sql);
 	}
 

@@ -109,6 +109,44 @@ class LcmClient extends LcmObject {
 		return DataRetrieval::isCurrentlySupported($this->_id_client);
 	}
 
+	/*
+		Retrieves the usual SupportCombo (amount and/or buss pass)
+		for this client, if any
+
+		@return SupportCombo or null
+	*/
+	public function getUsualSupportCombo()
+	{
+		$data = DataRetrieval::getUsualSupportComboByClientId($this->_id_client);
+                if (empty($data)) {
+                        return null;
+                }
+		return new SupportCombo($data[0]); // data is returned as multi array
+	}
+
+	/*
+		FAOWelfareDesk objects are created when the FAO Welfare Desk
+		form on that client's file screen is submitted. If none exists
+		for this client, create a default one using the client's usual
+		support combo.
+
+		@return FAOWelfareDesk or null
+	*/
+	public function getFAOWelfareDesk()
+	{
+		$data = DataRetrieval::getFAOWelfareDeskByClientId($this->_id_client);
+		if (empty($data)) {
+			return FAOWelfareDesk::createFromSupportCombo(
+				$this->_id_client, $this->getUsualSupportCombo()
+			);
+		}
+		$data = $data[0]; // comes from db as multi array	
+		return new FAOWelfareDesk(
+			$this->_id_client, $data['amount'], $data['bus_pass'], $data['letter'],
+			$data['advocacy'], $data['from_helpdesk'], $data['note']
+		);
+	}
+
 	/* private */
 	function loadCases($list_pos = 0) {
 		global $prefs;

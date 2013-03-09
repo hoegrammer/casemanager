@@ -18,6 +18,23 @@ class DataRetrieval
 	}
 
 	/*
+		Gets usual amount and bus pass for client. Fine if none
+
+		@param int $id_client
+
+		@return array - might be empty
+	*/
+	public static function getUsualSupportComboByClientId($id_client)
+	{	
+		if ($id_client === null) {
+			throw new InvalidArguementException('Client Id cannot be null');
+		}
+		$sql = "select amount, legal_reason from currently_supported
+		where id_client = $id_client";
+		return self::_retrieve($sql);		
+	}
+
+	/*
 		Says whether a client is currently (financially)
 		supported
 
@@ -33,6 +50,19 @@ class DataRetrieval
 		$sql = "select id_client from currently_supported where id_client
 		= $id_client";
 		return (bool)self::_retrieve($sql); 
+	}
+
+	/*
+		Gets FAO Welfare Desk entry for this client.
+		It is fine for there to be none
+	
+		@return array - might be empty
+	*/
+        public static function getFAOWelfareDeskByClientId($id_client)
+	{
+		$sql = "select amount, bus_pass, letter, advocacy, from_helpdesk,
+		note from lcm_faowelfaredesk where id_client = $id_client";
+		return self::_retrieve($sql);
 	}
 
 	/*

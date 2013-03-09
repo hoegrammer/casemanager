@@ -30,10 +30,9 @@ include_lcm('inc_db');
 include_lcm('inc_contacts');
 
 class LcmClient extends LcmObject {
-	// Note: Since PHP5 we should use "private", and generates a warning,
-	// but we must support PHP >= 4.0.
 	var $cases;
 	var $case_start_from;
+	private $_id_client;
 
 	function LcmClient($id_client = 0, $record=0,$import=0) {
 		$id_client = intval($id_client);
@@ -97,6 +96,17 @@ class LcmClient extends LcmObject {
 
 		if (get_datetime_from_array($_SESSION['form_data'], 'date_birth', 'start', -1) != -1)
 			$this->data['date_birth'] = get_datetime_from_array($_SESSION['form_data'], 'date_birth', 'start');
+		$this->_id_client = $this->data['id_client'];
+	}
+
+	/*
+		Says whether client is currently financially supported.
+
+		@return boolean
+	*/
+	public function isCurrentlySupported()
+	{
+		return DataRetrieval::isCurrentlySupported($this->_id_client);
 	}
 
 	/* private */
@@ -189,12 +199,6 @@ class LcmClient extends LcmObject {
 	function loadFollowups($list_pos = 0) {
 		global $prefs;
 
-//		$q = "SELECT fu.id_followup, fu.date_start, fu.date_end, fu.type, fu.description, fu.case_stage,
-//					fu.hidden, a.name_first, a.name_middle, a.name_last
-//				FROM lcm_followup as fu, lcm_author as a
-//				WHERE id_case = " . $this->getDataInt('id_case', '__ASSERT__') . "
-//				  AND fu.id_author = a.id_author ";
-
 		$q = "SELECT fu.id_followup, fu.date_start, fu.date_end, fu.type, fu.description, fu.case_stage, fu.bus_pass_given,
 					fu.hidden, a.name_first, a.name_middle, a.name_last, c.type_case, fu.outcome_amount
 				FROM lcm_followup as fu 
@@ -211,10 +215,6 @@ class LcmClient extends LcmObject {
 			$q .= " AND fu.date_end <= '$date_end' ";
 
 		// Sort follow-ups by creation date
-//		$fu_order = 'DESC';
-//		if (_request('fu_order') == 'ASC' || _request('fu_order') == 'DESC')
-//			$fu_order = _request('fu_order');
-		
 		$q .= " ORDER BY fu.date_start DESC, fu.id_followup DESC";// . $fu_order;
 
 		$result = lcm_query($q);
@@ -282,18 +282,6 @@ class LcmClient extends LcmObject {
 
 		return $cpt_total_cache;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 
 	function getName() {
 		return get_person_name($this->data);

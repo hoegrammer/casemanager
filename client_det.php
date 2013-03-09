@@ -22,6 +22,7 @@
 */
 
 include('inc/inc.php');
+include('inc/DataRetrieval.class.php');
 include_lcm('inc_contacts');
 include_lcm('inc_obj_client');
 include_lcm('inc_obj_case');

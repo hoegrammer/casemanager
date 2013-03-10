@@ -1,7 +1,8 @@
 <!-- Template for welfare payments input form -->
 
 <form action = 'welfare_payments_save.php' method = 'POST'>
-	<table class='table_strands' cellspacing="0">
+	<br />
+	<table align='center' class='tbl_usr_dtl' cellspacing="0">
 		<tr>
 			<th class='td_strand_title'>Client</th>
 			<th class='td_strand_title'>Cash</th>
@@ -38,5 +39,5 @@
 		</tr>
 	        <?php } ?>
 	</table>
-	<input type='submit' />
+	<input type='submit' value='save' id='welfare_input_submit' />
 </form>

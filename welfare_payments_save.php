@@ -25,4 +25,4 @@ for($i = 0; $i < sizeof($_POST['id_case']); $i ++) {
 	}
 }
 
-header('Location: /casemanager/welfare_payments_input.php', true, 303);
+header('Location: /casemanager/welfare_payments_input.php?tab=record', true, 303);

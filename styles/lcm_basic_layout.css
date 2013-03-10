@@ -894,8 +894,15 @@ tr.welfare_input .bus_pass_checkbox {
 	margin-left: 30%;
 }
 
+#welfare_input_submit {
+	margin: 20px;
+	margin-left: 50px;
+}
+
 /* FAO Helpdesk input form */
 .fao_note_input {
 	padding-left: 10px;
 	padding-right: 5px;
 }
+
+

@@ -13,6 +13,7 @@ class WelfareSheetRow
 	public $letter; // bool
 	public $advocacy; // bool
 	public $collect_from; // string
+	public $note; // text
 
 	/*
 		construct from array containing
@@ -38,6 +39,7 @@ class WelfareSheetRow
 		$this->letter = $letter;
 		$this->advocacy = $advocacy;
 		$this->collect_from = $from_helpdesk ? 'Helpdesk' : 'Welfare' ;
+		$this->note = $note;
 	}
 
 	public static function createMany(array $data) 

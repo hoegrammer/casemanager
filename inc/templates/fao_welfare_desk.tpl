@@ -1,5 +1,5 @@
 <form method='POST' action="<?php echo $_SERVER['PHP_SELF'] . '?client=' . $client; ?>">
-    <table class='table_strands'>
+    <table class='table_strands'>  <!-- table within a table -->
 	<tr><td class='td_strand'>
 	    <div class='td_strand_title'>
                 Information for Welfare Desk staff

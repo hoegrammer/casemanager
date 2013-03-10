@@ -14,7 +14,7 @@
 				<?php if ($faoWelfareDesk->letter) echo 'checked'; ?>
 				/>
 			</td>
-			<td rowspan=4>
+			<td rowspan=4 class='fao_note_input'>
 				<b><small>Note: </small></b><textarea rows=4 cols=20 name='fao_note'><?php echo $faoWelfareDesk->note; ?></textarea>
 			</td>
 		</tr>

@@ -136,7 +136,7 @@ select.sel_frm {
 td.td_strand {
 	border: 1px solid #996;
 }
-div.td_strand_title{
+div.td_strand_title, th.td_strand_title{
 	background-color: #d7dabd;
 	color: #666633;
 }
@@ -232,9 +232,9 @@ td.tbl_gcont_light {
 	background-color: #fff;
 
 }
-td.tbl_cont_dark {
+td.tbl_cont_dark, tr.tbl_cont_dark td {
 	background-color: #eef6ff;
-}
+} 
 
 td.tbl_cont_light {
 	background-color: #fff;

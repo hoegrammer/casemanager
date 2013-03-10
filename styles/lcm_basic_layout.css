@@ -423,7 +423,7 @@ td.td_strand {
 /*	margin: 0px;*/
 }
 
-div.td_strand_title {
+div.td_strand_title, th.td_strand_title {
 	font-weight:bold;
 	padding: 0px 5px 3px 5px;
 }
@@ -882,3 +882,20 @@ a.cal_yearview:hover {
 	background-color: white;
 }
 
+
+/* Welfare payments input form */
+
+tr.welfare_input td {
+	border-bottom: 1px solid gray;
+	font-size: 0.9em;
+}
+
+tr.welfare_input .bus_pass_checkbox {
+	margin-left: 30%;
+}
+
+/* FAO Helpdesk input form */
+.fao_note_input {
+	padding-left: 10px;
+	padding-right: 5px;
+}

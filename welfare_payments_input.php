@@ -5,7 +5,7 @@ require 'inc/inc.php';
 // header, sidebar etc.
 lcm_page_start();
 // heading for individual page
-matt_page_start('Welfare Payments Input Form', 'sub');
+matt_page_start('Welfare Payments Given', 'sub');
 
 
 require 'inc/DataRetrieval.class.php';

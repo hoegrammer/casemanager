@@ -11,10 +11,15 @@
 			</td>
 			<td>
 				&pound;<input type='text' size=5 name='fao_amount' 
-				value=<?php echo $faoWelfareDesk->amount; ?> /> 
-				&nbsp; Bus Pass <input type='checkbox' name='fao_bus_pass' 
+				value=<?php echo $faoWelfareDesk->amount; ?> />
+			</td>
+			<td> 
+				Bus Pass <input type='checkbox' name='fao_bus_pass' 
 				<?php if ($faoWelfareDesk->bus_pass) echo 'checked'; ?>
 				 />
+			</td>
+			<td>
+				<input type='submit' value='Save' />
 			</td>
 		</tr>
 		<tr>
@@ -25,6 +30,9 @@
 				<input type='checkbox' name='fao_letter'
 				<?php if ($faoWelfareDesk->letter) echo 'checked'; ?>
 				/>
+			</td>
+			<td colspan=2 rowspan=3>
+				<b>Note: </b><textarea rows='3' name='fao_note'><?php echo $faoWelfareDesk->note; ?></textarea>
 			</td>
 		</tr>
 		<tr>
@@ -47,17 +55,6 @@
 				/>
 			</td>
 		</tr>
-		<tr>
-			<td>
-				<b>Note: </b>
-			</td>
-			<td>
-				<input type='textarea' name='fao_note'
-				value  ="<?php echo $faoWelfareDesk->note; ?>" />
-				<input type='submit' value='Save' />
-			</td>
-		</tr>
-
 	    </table>
 	</td></tr>
     </table>

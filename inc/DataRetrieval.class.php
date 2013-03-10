@@ -72,7 +72,7 @@ class DataRetrieval
 	*/
 	public static function getWelfareSheetInformation()
 	{
-		$sql = "select name_first, name_last,
+		$sql = "select id_client, name_first, name_last,
 		currently_supported.amount as usual_amount, currently_supported.legal_reason, 
 		lcm_faowelfaredesk.amount as fao_amount, bus_pass, letter, advocacy, from_helpdesk,
                 note from currently_supported left join lcm_faowelfaredesk using (id_client)";

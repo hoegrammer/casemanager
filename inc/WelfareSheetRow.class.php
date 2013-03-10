@@ -17,7 +17,7 @@ class WelfareSheetRow
 	*/
 
 	public function __construct(
-		$name_first, $name_last, $usual_amount, $legal_reason, $fao_amount, $bus_pass, 
+		$id_client, $name_first, $name_last, $usual_amount, $legal_reason, $fao_amount, $bus_pass, 
 		$letter, $advocacy, $from_helpdesk, $note
 	) {
 		$this->client_name = $name_first . ' ' . $name_last;
@@ -30,10 +30,10 @@ class WelfareSheetRow
 		// and we need to create a default one.
 		if ($fao_amount === null) {
 			$this->faoWelfareDesk 
-				= $this->usualSupportCombo->createFAOWelfareDesk();
+				= $this->usualSupportCombo->createFAOWelfareDesk($id_client);
 		} else {
 			$this->faoWelfareDesk = new FAOWelfareDesk (
-				null, $fao_amount, $bus_pass, $letter, 
+				$id_client, $fao_amount, $bus_pass, $letter, 
 				$advocacy, $from_helpdesk, $note
 			);
 		}	
@@ -43,7 +43,7 @@ class WelfareSheetRow
 	{
 		foreach ($data as $row) {
 			$rows[] = new WelfareSheetRow(
-				$row['name_first'], $row['name_last'],
+				$row['id_client'], $row['name_first'], $row['name_last'],
 				$row['usual_amount'], $row['legal_reason'], $row['fao_amount'],
 				$row['bus_pass'], $row['letter'], 
                                 $row['advocacy'], $row['from_helpdesk'], $row['note']

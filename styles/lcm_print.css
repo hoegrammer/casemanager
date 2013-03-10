@@ -901,3 +901,24 @@ ul.font_size_buttons li a {
 a.set_fnt_sz {
 	font-size: 11px;
 }
+
+/* Printable Welfare Payments Sheet */
+
+#welfare_sheet {
+        font-size: 0.9em;
+        border: 1px solid black;
+        border-collapse: collapse;
+}
+
+#welfare_sheet td, th {
+        padding: 5px;
+}
+
+#welfare_sheet th {
+        background-color: #CCCCCC;
+}
+
+/* Things not to print */
+#header, .news_box {
+	display: none;
+}

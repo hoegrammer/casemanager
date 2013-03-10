@@ -10,22 +10,22 @@ class SupportCombo
 	public $bus_pass; // boolean
 
 	/*
-		Constructor takes array containing legal_reason
-		field and translates it into bus pass boolean.
+		Constructor takes either boolean or string
+		for bus pass.
 
-		@param int    $amount       required
-		@param string $legal_reason required
+		@param int   $amount       required
+		@param mixed $legal_reason required
 		
 	*/
-	public function __construct($amount, $legal_reason)
+	public function __construct($amount, $bus_pass)
 	{
-		if ($amount === null || $legal_reason === null) {
+		if ($amount === null || $bus_pass === null) {
 			throw new InvalidArgumentException(
-				'No amount, or no legal reason'	
+				'No amount, or no legal reason / bus pass'	
 			);
 		}
 		$this->amount = $amount;
-		$this->bus_pass = $legal_reason === 'yes';
+		$this->bus_pass = $bus_pass === 'yes' || $bus_pass === '1';
 	}
 
 
@@ -45,5 +45,14 @@ class SupportCombo
                         $this->bus_pass, false, false, false, ''
                 );
         }
+
+	public function toString()
+	{
+		$str = '&pound;' . $this->amount;
+		if ($this->bus_pass) {
+			$str .= ' + BP';
+		}
+		return $str;
+	}
 
 }

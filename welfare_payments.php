@@ -44,5 +44,6 @@ function show_printable_sheet() {
 	require 'inc/SupportCombo.class.php';
 	require 'inc/FAOWelfareDesk.class.php';
 	$rows = WelfareSheetRow::createMany($data);
-	echo "<pre>"; print_r($rows); echo "</pre>";
+	//echo "<pre>"; print_r($rows); echo "</pre>";
+	require 'inc/templates/welfare_payments_sheet.tpl';
 }

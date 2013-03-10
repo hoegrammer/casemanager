@@ -6,9 +6,13 @@
 
 class WelfareSheetRow
 {
-	public $usualSupportCombo; 
-	public $faoWelfareDesk; 
-	public $client_name;
+	public $usualSupport; //string 
+	public $thisWeekSupport; //string
+	public $client_name; // first and last
+	public $client_id;
+	public $letter; // bool
+	public $advocacy; // bool
+	public $collect_from; // string
 
 	/*
 		construct from array containing
@@ -21,22 +25,19 @@ class WelfareSheetRow
 		$letter, $advocacy, $from_helpdesk, $note
 	) {
 		$this->client_name = $name_first . ' ' . $name_last;
-		$this->usualSupportCombo = new SupportCombo(
-			$usual_amount, $legal_reason
-		);
+		$usualSupport_obj = new SupportCombo($usual_amount, $legal_reason);
+		$this->usualSupport = $usualSupport_obj->toString();
 
-		// if there is nothing in $data['fao_amount'] (i.e. not
-		// even 0) then there has been no FAO created for this client
-		// and we need to create a default one.
+		// If there is no FAO regarding support, set this week same as normal
 		if ($fao_amount === null) {
-			$this->faoWelfareDesk 
-				= $this->usualSupportCombo->createFAOWelfareDesk($id_client);
+			$this->thisWeekSupport = $this->usualSupport;
 		} else {
-			$this->faoWelfareDesk = new FAOWelfareDesk (
-				$id_client, $fao_amount, $bus_pass, $letter, 
-				$advocacy, $from_helpdesk, $note
-			);
+			$thisWeekSupport_obj = new SupportCombo($fao_amount, $bus_pass);
+			$this->thisWeekSupport = $thisWeekSupport_obj->toString();
 		}	
+		$this->letter = $letter;
+		$this->advocacy = $advocacy;
+		$this->collect_from = $from_helpdesk ? 'Helpdesk' : 'Welfare' ;
 	}
 
 	public static function createMany(array $data) 

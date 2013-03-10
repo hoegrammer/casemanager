@@ -138,9 +138,9 @@ class LcmClient extends LcmObject {
 	{
 		$data = DataRetrieval::getFAOWelfareDeskByClientId($this->_id_client);
 		if (empty($data)) {
-			return FAOWelfareDesk::createFromSupportCombo(
-				$this->_id_client, $this->getUsualSupportCombo()
-			);
+			// create a default FAO from the client's usual support combo
+			$usualCombo = $this->getUsualSupportCombo();
+			return $usualCombo->createFaoWelfareDesk($this->_id_client);
 		}
 		$data = $data[0]; // comes from db as multi array	
 		return new FAOWelfareDesk(

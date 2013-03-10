@@ -40,6 +40,9 @@ function show_printable_sheet() {
 	// get client name, usual support and FAO Welfare Desk information
 	// for all supported clients
 	$data = DataRetrieval::getWelfareSheetInformation();
+	require 'inc/WelfareSheetRow.class.php';
+	require 'inc/SupportCombo.class.php';
+	require 'inc/FAOWelfareDesk.class.php';
 	$rows = WelfareSheetRow::createMany($data);
-	print_r($rows);
+	echo "<pre>"; print_r($rows); echo "</pre>";
 }

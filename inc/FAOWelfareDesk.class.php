@@ -25,21 +25,4 @@ class FAOWelfareDesk
 		$this->from_helpdesk = $from_helpdesk;
 		$this->note = $note;
 	}
-
-	/*
-		Create a default one using a client's
-		usual support combo.
-
-		@param SupportCombo $supportCombo
-
-		@return FAOWelfareDesk
-	*/
-	public static function createFromSupportCombo(
-		$id_client, SupportCombo $supportCombo
-	) {
-		return new FAOWelfareDesk(
-			$id_client, $supportCombo->amount, 
-			$supportCombo->bus_pass, false, false, false, ''
-		);
-	}
 }

@@ -27,4 +27,23 @@ class SupportCombo
 		$this->amount = $amount;
 		$this->bus_pass = $legal_reason === 'yes';
 	}
+
+
+        /*
+                Create a default FAOWelfareDesk instance
+                which contains the amount and bus pass from here
+		plus defaults.
+
+		@param int $id_client optional
+
+                @return FAOWelfareDesk
+        */
+        public function createFAOWelfareDesk($id_client = null)
+        {
+                return new FAOWelfareDesk(
+                        $id_client, $this->amount, 
+                        $this->bus_pass, false, false, false, ''
+                );
+        }
+
 }

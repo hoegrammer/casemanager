@@ -72,9 +72,10 @@ class DataRetrieval
 	*/
 	public static function getWelfareSheetInformation()
 	{
-		$sql = "select currently_supported.amount as usual_amount, currently_supported.legal_reason, 
+		$sql = "select name_first, name_last,
+		currently_supported.amount as usual_amount, currently_supported.legal_reason, 
 		lcm_faowelfaredesk.amount as fao_amount, bus_pass, letter, advocacy, from_helpdesk,
-                note from lcm_faowelfaredesk join currently_supported using (id_client)";
+                note from currently_supported left join lcm_faowelfaredesk using (id_client)";
                 return self::_retrieve($sql);
 	}
 

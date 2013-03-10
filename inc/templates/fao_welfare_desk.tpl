@@ -7,6 +7,39 @@
 	    <table>
 		<tr>
 			<td>
+				<label for='fao_letter'><b>Letter:</b></label>
+			</td>
+			<td>
+				<input type='checkbox' name='fao_letter' id='fao_letter'
+				<?php if ($faoWelfareDesk->letter) echo 'checked'; ?>
+				/>
+			</td>
+			<td colspan=2 rowspan=3>
+				<b>Note: </b><textarea rows='3' name='fao_note'><?php echo $faoWelfareDesk->note; ?></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for='fao_advocacy'><b>Advocacy Appointment:</b></label>
+			</td>
+			<td>
+				<input type='checkbox' name='fao_advocacy' id='fao_advocacy'
+				<?php if ($faoWelfareDesk->advocacy) echo 'checked'; ?>
+				/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for='fao_from_helpdesk'><b>Collect from Helpdesk:</b></label>
+			</td>
+			<td>
+				<input type='checkbox' name='fao_from_helpdesk' id='fao_from_helpdesk'
+				<?php if ($faoWelfareDesk->from_helpdesk) echo 'checked'; ?>
+				/>
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<b>Support this week:</b> 
 			</td>
 			<td>
@@ -20,39 +53,6 @@
 			</td>
 			<td>
 				<input type='submit' value='Save' />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b>Letter:</b>
-			</td>
-			<td>
-				<input type='checkbox' name='fao_letter'
-				<?php if ($faoWelfareDesk->letter) echo 'checked'; ?>
-				/>
-			</td>
-			<td colspan=2 rowspan=3>
-				<b>Note: </b><textarea rows='3' name='fao_note'><?php echo $faoWelfareDesk->note; ?></textarea>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b>Advocacy Appointment:</b>
-			</td>
-			<td>
-				<input type='checkbox' name='fao_advocacy'
-				<?php if ($faoWelfareDesk->advocacy) echo 'checked'; ?>
-				/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b>Collect from Helpdesk:</b>
-			</td>
-			<td>
-				<input type='checkbox' name='fao_from_helpdesk'
-				<?php if ($faoWelfareDesk->from_helpdesk) echo 'checked'; ?>
-				/>
 			</td>
 		</tr>
 	    </table>

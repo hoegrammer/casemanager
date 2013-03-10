@@ -35,3 +35,11 @@ function show_input_form() {
 		require 'inc/templates/welfare_payments_input.tpl';
 	}
 }
+
+function show_printable_sheet() {
+	// get client name, usual support and FAO Welfare Desk information
+	// for all supported clients
+	$data = DataRetrieval::getWelfareSheetInformation();
+	$rows = WelfareSheetRow::createMany($data);
+	print_r($rows);
+}

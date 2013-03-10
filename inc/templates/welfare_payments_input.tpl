@@ -2,7 +2,7 @@
 
 <form action = 'welfare_payments_save.php' method = 'POST'>
 	<br />
-	<table align='center' class='tbl_usr_dtl' cellspacing="0">
+	<table align='center' class='tbl_usr_dtl' width='97%'>
 		<tr>
 			<th class='td_strand_title'>Client</th>
 			<th class='td_strand_title'>Cash</th>

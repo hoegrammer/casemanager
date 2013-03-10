@@ -66,6 +66,19 @@ class DataRetrieval
 	}
 
 	/*
+		For each currently supported client, gets:
+			- Usual support amount + bus pass
+			- FAO Welfare Desk information, if any
+	*/
+	public static function getWelfareSheetInformation()
+	{
+		$sql = "select currently_supported.amount as usual_amount, currently_supported.legal_reason, 
+		lcm_faowelfaredesk.amount as fao_amount, bus_pass, letter, advocacy, from_helpdesk,
+                note from lcm_faowelfaredesk join currently_supported using (id_client)";
+                return self::_retrieve($sql);
+	}
+
+	/*
 		Runs a query and returns the data in an array
 
 		@param string $sql the query

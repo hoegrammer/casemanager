@@ -13,16 +13,18 @@ class SupportCombo
 		Constructor takes array containing legal_reason
 		field and translates it into bus pass boolean.
 
-		@param array $data must contain amount and legal reason
+		@param int    $amount       required
+		@param string $legal_reason required
+		
 	*/
-	public function __construct(array $data)
+	public function __construct($amount, $legal_reason)
 	{
-		if (!array_key_exists('amount', $data)
-		    || !array_key_exists('legal_reason', $data)
-		) {
-			throw new InvalidArgumentException('No amount or no legal reason');
+		if ($amount === null || $legal_reason === null) {
+			throw new InvalidArgumentException(
+				'No amount, or no legal reason'	
+			);
 		}
-		$this->amount = $data['amount'];
-		$this->bus_pass = $data['legal_reason'] === 'yes';
+		$this->amount = $amount;
+		$this->bus_pass = $legal_reason === 'yes';
 	}
 }

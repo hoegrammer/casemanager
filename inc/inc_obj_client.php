@@ -121,7 +121,9 @@ class LcmClient extends LcmObject {
                 if (empty($data)) {
                         return null;
                 }
-		return new SupportCombo($data[0]); // data is returned as multi array
+		// $data[0] because data comes in a multidimensional array 
+		// which in fact contains a single row
+		return new SupportCombo($data[0]['amount'], $data[0]['legal_reason']);
 	}
 
 	/*

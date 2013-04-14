@@ -918,6 +918,12 @@ a.set_fnt_sz {
         background-color: #CCCCCC;
 }
 
+/* Stops print cutting rows in half, and prints
+header on each sheet DOES NOT WORK IN CHROME */
+#welfare_sheet table { page-break-inside:auto }
+#welfare_sheet tr    { page-break-inside:avoid; page-break-after:auto }
+#welfare_sheet thead { display:table-header-group }
+
 /* Things not to print */
 #header, .news_box {
 	display: none;

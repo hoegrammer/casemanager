@@ -37,13 +37,29 @@ function show_input_form() {
 }
 
 function show_printable_sheet() {
+	$selected = 'selected = "selected"';
+	$from_helpdesk = null;
+	// set up filters
+	if ($_POST['collect_from'] === 'welfare') {
+		// keep selected on GUI
+		$welfare_selected = $selected;
+		// to pass to DB
+		$from_helpdesk = 0;
+	} elseif ($_POST['collect_from'] === 'help') {
+	        $help_selected = $selected;
+		$from_helpdesk = 1;
+	}
+	if (in_array( $_POST['support_type'], array('accommodated', 'not_accommodated'))) {
+                $support_type = $_POST['support_type'];
+		$support_type === 'accommodated' ? $accommodated_selected = $selected : $not_accommodated_selected = $selected; 
+        }
+
 	// get client name, usual support and FAO Welfare Desk information
 	// for all supported clients
-	$data = DataRetrieval::getWelfareSheetInformation();
+	$data = DataRetrieval::getWelfareSheetInformation($from_helpdesk, $support_type);
 	require 'inc/WelfareSheetRow.class.php';
 	require 'inc/SupportCombo.class.php';
 	require 'inc/FAOWelfareDesk.class.php';
 	$rows = WelfareSheetRow::createMany($data);
-	//echo "<pre>"; print_r($rows); echo "</pre>";
 	require 'inc/templates/welfare_payments_sheet.tpl';
 }

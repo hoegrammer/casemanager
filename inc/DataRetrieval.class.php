@@ -70,12 +70,23 @@ class DataRetrieval
 			- Usual support amount + bus pass
 			- FAO Welfare Desk information, if any
 	*/
-	public static function getWelfareSheetInformation()
+	public static function getWelfareSheetInformation($from_helpdesk, $support_type)
 	{
 		$sql = "select id_client, name_first, name_last,
 		currently_supported.amount as usual_amount, currently_supported.legal_reason, 
 		lcm_faowelfaredesk.amount as fao_amount, bus_pass, letter, advocacy, from_helpdesk,
-                note from currently_supported left join lcm_faowelfaredesk using (id_client)";
+                note from currently_supported left join lcm_faowelfaredesk using (id_client) 
+		where 1=1 ";
+		if ($from_helpdesk === 1) {
+			$sql .= " and  from_helpdesk = 1";
+		} elseif ($from_helpdesk === 0) {
+			$sql .= " and  (from_helpdesk = 0 or from_helpdesk is null)"; 
+		}
+		if ($support_type === 'accommodated') {
+			$sql .= " and type_case = 'Accomidation'";
+		} elseif ($support_type === 'not_accommodated') {
+			$sql .= " and type_case != 'Accomidation'";
+		}
                 return self::_retrieve($sql);
 	}
 

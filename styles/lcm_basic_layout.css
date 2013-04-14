@@ -920,3 +920,11 @@ tr.welfare_input .bus_pass_checkbox {
 #welfare_sheet th {
         background-color: #CCCCCC;
 }
+
+#welfare_sheet_filter {
+        padding: 10px;
+}
+
+#welfare_sheet_filter select {
+	margin-right: 20px;
+}

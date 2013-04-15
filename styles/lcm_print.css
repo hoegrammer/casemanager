@@ -904,20 +904,23 @@ a.set_fnt_sz {
 
 /* Printable Welfare Payments Sheet */
 
-#welfare_sheet {
+#welfare_sheet, #welfare_sheet_summary {
         font-size: 0.9em;
         border: 1px solid black;
         border-collapse: collapse;
 }
 
-#welfare_sheet td, th {
+#welfare_sheet td, th, #welfare_sheet_summary td, th {
         padding: 5px;
 }
 
-#welfare_sheet th {
+#welfare_sheet th, #welfare_sheet_summary th {
         background-color: #CCCCCC;
 }
 
+#welfare_sheet_summary {
+	margin: 20px;
+}
 
 /* Stops print cutting rows in half, and prints
 header on each sheet DOES NOT WORK IN CHROME */

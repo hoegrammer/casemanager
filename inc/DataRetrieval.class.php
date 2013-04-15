@@ -87,6 +87,7 @@ class DataRetrieval
 		} elseif ($support_type === 'not_accommodated') {
 			$sql .= " and type_case != 'Accomidation'";
 		}
+		$sql .= ' order by name_first';
                 return self::_retrieve($sql);
 	}
 

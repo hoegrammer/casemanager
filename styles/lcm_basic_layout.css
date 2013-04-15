@@ -907,17 +907,17 @@ tr.welfare_input .bus_pass_checkbox {
 
 /* Printable Welfare Payments Sheet */
 
-#welfare_sheet {
+#welfare_sheet, #welfare_sheet_summary {
 	font-size: 0.9em;
 	border: 1px solid black;
 	border-collapse: collapse;
 }
 
-#welfare_sheet td, th {
+#welfare_sheet td, th, #welfare_sheet_summary td, th {
 	padding: 5px;
 }
 
-#welfare_sheet th {
+#welfare_sheet th, #welfare_sheet_summary th {
         background-color: #CCCCCC;
 }
 
@@ -928,3 +928,9 @@ tr.welfare_input .bus_pass_checkbox {
 #welfare_sheet_filter select {
 	margin-right: 20px;
 }
+
+#welfare_sheet_summary  {
+        margin: 20px;
+}
+
+

@@ -58,8 +58,11 @@ function show_printable_sheet() {
 	// for all supported clients
 	$data = DataRetrieval::getWelfareSheetInformation($from_helpdesk, $support_type);
 	require 'inc/WelfareSheetRow.class.php';
+	require 'inc/WelfareSheetSummary.class.php';
 	require 'inc/SupportCombo.class.php';
 	require 'inc/FAOWelfareDesk.class.php';
 	$rows = WelfareSheetRow::createMany($data);
+	$summary = new WelfareSheetSummary($rows);
+	$summary->calculate();
 	require 'inc/templates/welfare_payments_sheet.tpl';
 }

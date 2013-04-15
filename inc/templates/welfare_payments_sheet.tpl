@@ -46,3 +46,21 @@
 	</tr>
 	<?php } ?>
 </table>
+<table id='welfare_sheet_summary' border=1>
+	<thead>
+		<th>Summary</th>
+	</thead>
+	<?php foreach ($summary->amounts as $pounds => $quantity) { ?>
+	<tr>
+		<td><?php echo "$quantity x &pound;$pounds"; ?></td>
+	</tr>
+        <?php } ?>
+	<tr>
+		<td><?php echo "Total: &pound;" . $summary->total; ?></td>
+	</tr>
+	<tr>
+		<td><?php echo "Bus Passes: " . $summary->busPasses; ?></td>
+	</tr>
+
+
+</table>

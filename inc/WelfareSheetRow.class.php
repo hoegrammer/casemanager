@@ -8,6 +8,8 @@ class WelfareSheetRow
 {
 	public $usualSupport; //string 
 	public $thisWeekSupport; //string
+	public $thisWeekCash;  // int, pounds
+	public $thisWeekBusPass; // bit
 	public $client_name; // first and last
 	public $client_id;
 	public $letter; // bool
@@ -32,9 +34,13 @@ class WelfareSheetRow
 		// If there is no FAO regarding support, set this week same as normal
 		if ($fao_amount === null) {
 			$this->thisWeekSupport = $this->usualSupport;
+			$this->thisWeekCash = $usualSupport_obj->amount;
+			$this->thisWeekBusPass = $usualSupport_obj->bus_pass;
 		} else {
 			$thisWeekSupport_obj = new SupportCombo($fao_amount, $bus_pass);
 			$this->thisWeekSupport = $thisWeekSupport_obj->toString();
+			$this->thisWeekCash = $thisWeekSupport_obj->amount;
+                        $this->thisWeekBusPass = $thisWeekSupport_obj->bus_pass;
 		}	
 		$this->letter = $letter;
 		$this->advocacy = $advocacy;

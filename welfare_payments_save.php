@@ -25,4 +25,4 @@ for($i = 0; $i < sizeof($_POST['id_case']); $i ++) {
 	}
 }
 
-header('Location: /welfare_payments.php?tab=record', true, 303);
+header('Location: '. dirname($_SERVER['PHP_SELF']) .'/welfare_payments.php?tab=record', true, 303);

@@ -1,5 +1,5 @@
 <div id='welfare_sheet_filter'>
-   <form id='filter' action = "<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+   <form id='filter' action = "<?php echo $_SERVER['PHP_SELF'] ?>?tab=print" method="POST">
 	<label for='collect_from'>Collect From:</label>	
 	<select id='collect_from' name='collect_from' onChange="document.getElementById('filter').submit()">
 		<option value='any'>Any</option>

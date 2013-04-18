@@ -12,6 +12,12 @@
 				Record Payments Given
 				<?php if ($tab !== 'record') echo '</a>';?>
 			</li>
+			<li <?php if ($tab === 'report') echo 'class="active"'; ?>>
+				<?php if ($tab !== 'report') echo '<a href='. $_SERVER['PHP_SELF'] .'?tab=report>' ;?>
+				Report				
+				<?php if ($tab !== 'report') echo '</a>';?>
+			</li>
+
 		</ul>
 	</div>
 </div> <!-- end of matt header div-->

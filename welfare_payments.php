@@ -16,11 +16,17 @@ $tab = htmlentities($_GET['tab']);
 require 'inc/templates/welfare_payments_header.tpl';
 
 // Decide what to do based on tab chosen.
-if ($tab === 'record') {
-	show_input_form();
-} else {
-	show_printable_sheet();
-}
+switch ($tab)  {
+	case "record":
+		show_input_form();
+		break;
+	case "print":
+		show_printable_sheet();
+		break;
+	case "report":
+		show_report();
+		break;
+}	
 	
 function show_input_form() {
 	// Get client names and ids for everyone who is currently financially supported
@@ -34,6 +40,25 @@ function show_input_form() {
 		// otherwise display the form
 		require 'inc/templates/welfare_payments_input.tpl';
 	}
+}
+
+function show_report() {
+
+	// Get welfare payment histories for the default period
+	$data = DataRetrieval::getWelfarePaymentHistories();
+
+	// create a report from the data
+	require 'inc/WelfareReportBuilder.class.php';
+	require 'inc/WelfareReport.class.php';
+	require 'inc/WelfareReportRow.class.php';
+	require 'inc/WelfareReportEntry.class.php';
+	require 'inc/Decorator.class.php';
+	$builder = new WelfareReportBuilder($data);
+	$decorator = new Decorator();
+	$report = $builder->buildReport($decorator);
+	
+	// display the report
+	require('inc/templates/welfare_payments_report.tpl');
 }
 
 function show_printable_sheet() {
@@ -57,6 +82,8 @@ function show_printable_sheet() {
 	// get client name, usual support and FAO Welfare Desk information
 	// for all supported clients
 	$data = DataRetrieval::getWelfareSheetInformation($from_helpdesk, $support_type);
+	
+	// create rows, and a summary which combines them
 	require 'inc/WelfareSheetRow.class.php';
 	require 'inc/WelfareSheetSummary.class.php';
 	require 'inc/SupportCombo.class.php';

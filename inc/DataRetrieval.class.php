@@ -6,6 +6,22 @@ from the DB. */
 class DataRetrieval 
 {
 
+
+	/*
+		Retrieves actual amount given and whether bus pass given
+		for each client by week over the default period.
+	*/
+	public static function getWelfarePaymentHistories()
+	{
+		$default_period = "5 week";
+		$sql = "select id_client, name_first, name_last, outcome_amount,
+		 bus_pass_given, date(date_start) as date_start from lcm_client join lcm_case_client_org 
+		using (id_Client) join lcm_followup using (id_case) where 
+		date_start <= now() and date_start >= date_sub(curdate(), interval $default_period) 
+		and type = 'followups27' order by id_client, date_start";
+		return self::_retrieve($sql);
+	}
+
 	/*
 		Gets data about clients who are currently (financially)
 		supported and have not had a welfare desk update today.

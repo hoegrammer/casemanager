@@ -5,14 +5,20 @@
 class WelfareReportEntry
 {
 	public $date;
-	public $amount;
-	public $bus_pass;
+	private $_amount;
+	private $_bus_pass;
+	
 
 	public function __construct($date, $amount, $bus_pass)
 	{
 		$this->date = $date;
-		$this->amount = $amount;
-		$this->bus_pass = $bus_pass;
+		$this->_amount = $amount;
+		$this->_bus_pass = $bus_pass;
+	}
+
+	public function decorate(Decorator $decorator)
+	{
+		return $decorator->makeAmountAndBusPassCells($this->_amount, $this->_bus_pass);
 	}
 
 }

@@ -36,6 +36,7 @@ class WelfareReportBuilder
 			// also ensure the report has the date, for column heading
 			$report->addDate($date_start);
 		}
+		$report->createDummyEntries(); // place holder entries where client not paid on date
 		return $report;
 	}
 }

@@ -17,6 +17,18 @@ class WelfareReport
 	                $this->dates[] = $date;
 		}
         }
+
+	public function createDummyEntries()
+	{
+		// for any combination of client and date
+		// that has no entry, create a dummy one.
+		foreach($this->rows as $row) {
+			foreach($this->dates as $date) {
+				$row->addDummyEntryIfNeeded($date);	
+			}
+		}
+		
+	}
 }
 
 ?>

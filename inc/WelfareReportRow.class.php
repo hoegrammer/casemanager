@@ -20,7 +20,14 @@ class WelfareReportRow
 
 	public function addEntry(WelfareReportEntry $entry)
 	{
-		$this->entries[] = $entry;
+		$this->entries[$entry->date] = $entry;
+	}
+
+	public function addDummyEntryIfNeeded($date)
+	{
+		if (!isset($this->entries[$date])) {
+			$this->addEntry(new WelfareReportEntry($date, null, null));
+		}
 	}
 
 	public function decorate(Decorator $decorator)

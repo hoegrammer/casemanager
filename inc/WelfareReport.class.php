@@ -29,6 +29,11 @@ class WelfareReport
 		}
 		
 	}
+	
+	public function sortDates()
+	{
+		rsort($this->dates);
+	}
 }
 
 ?>

@@ -37,6 +37,7 @@ class WelfareReportBuilder
 			$report->addDate($date_start);
 		}
 		$report->createDummyEntries(); // place holder entries where client not paid on date
+		$report->sortDates(); // Dates may not have been added in order
 		return $report;
 	}
 }

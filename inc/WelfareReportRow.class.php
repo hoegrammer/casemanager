@@ -32,10 +32,11 @@ class WelfareReportRow
 
 	public function decorate(Decorator $decorator)
 	{
+		// sort the entries by date
+		// make the link
 		$this->link = $decorator->makeLink(
 			$this->_id_client, $this->_name_first, $this->_name_last
 		);
 	}
 }
-
 ?>

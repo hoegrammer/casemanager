@@ -18,7 +18,7 @@ class DataRetrieval
 		 bus_pass_given, date(date_start) as date_start from lcm_client join lcm_case_client_org 
 		using (id_Client) join lcm_followup using (id_case) where 
 		date_start <= now() and date_start >= date_sub(curdate(), interval $default_period) 
-		and type = 'followups27' order by id_client, date_start";
+		and type = 'followups27' order by name_first";
 		return self::_retrieve($sql);
 	}
 
@@ -30,7 +30,7 @@ class DataRetrieval
 	{
 		return self::_retrieve('select * from currently_supported
 		where id_case not in (select id_case from lcm_followup
-		where type = "followups27" and date(date_start) = date(now()))');
+		where type = "followups27" and date(date_start) = date(now())) order by name_first');
 	}
 
 	/*

@@ -16,18 +16,19 @@ class WelfareSheetRow
 	public $advocacy; // bool
 	public $collect_from; // string
 	public $note; // text
+	private $decorator; // object for making name into link etc
 
 	/*
 		construct from array containing
 		usual support information as well
-		as FAOWelfareDesk information
+		as FAOWelfareDesk information, and a Decorator
 	*/
 
 	public function __construct(
 		$id_client, $name_first, $name_last, $usual_amount, $legal_reason, $fao_amount, $bus_pass, 
-		$letter, $advocacy, $from_helpdesk, $note
+		$letter, $advocacy, $from_helpdesk, $note, Decorator $decorator
 	) {
-		$this->client_name = $name_first . ' ' . $name_last;
+		$this->client_name = $decorator->makeLink($id_client, $name_first, $name_last);
 		$usualSupport_obj = new SupportCombo($usual_amount, $legal_reason);
 		$this->usualSupport = $usualSupport_obj->toString();
 
@@ -48,14 +49,15 @@ class WelfareSheetRow
 		$this->note = $note;
 	}
 
-	public static function createMany(array $data) 
+	public static function createMany(array $data, Decorator $decorator) 
 	{
 		foreach ($data as $row) {
 			$rows[] = new WelfareSheetRow(
 				$row['id_client'], $row['name_first'], $row['name_last'],
 				$row['usual_amount'], $row['legal_reason'], $row['fao_amount'],
 				$row['bus_pass'], $row['letter'], 
-                                $row['advocacy'], $row['from_helpdesk'], $row['note']
+                                $row['advocacy'], $row['from_helpdesk'], $row['note'],
+				$decorator
 			);
 		}
 		return $rows;

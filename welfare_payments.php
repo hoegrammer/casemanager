@@ -88,7 +88,9 @@ function show_printable_sheet() {
 	require 'inc/WelfareSheetSummary.class.php';
 	require 'inc/SupportCombo.class.php';
 	require 'inc/FAOWelfareDesk.class.php';
-	$rows = WelfareSheetRow::createMany($data);
+	require 'inc/Decorator.class.php';
+	$decorator = new Decorator();
+	$rows = WelfareSheetRow::createMany($data, $decorator);
 	$summary = new WelfareSheetSummary($rows);
 	$summary->calculate();
 	require 'inc/templates/welfare_payments_sheet.tpl';

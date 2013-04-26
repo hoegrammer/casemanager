@@ -44,8 +44,10 @@ function show_input_form() {
 
 function show_report() {
 
+	extract (setUpFilters());
+
 	// Get welfare payment histories for the default period
-	$data = DataRetrieval::getWelfarePaymentHistories();
+	$data = DataRetrieval::getWelfarePaymentHistories($from_helpdesk, $support_type);
 
 	// create a report from the data
 	require 'inc/WelfareReportBuilder.class.php';
@@ -58,26 +60,14 @@ function show_report() {
 	$report = $builder->buildReport($decorator);
 	
 	// display the report
+	global $tab;
+	require 'inc/templates/welfare_payments_filters.tpl';
 	require('inc/templates/welfare_payments_report.tpl');
 }
 
 function show_printable_sheet() {
-	$selected = 'selected = "selected"';
-	$from_helpdesk = null;
-	// set up filters
-	if ($_POST['collect_from'] === 'welfare') {
-		// keep selected on GUI
-		$welfare_selected = $selected;
-		// to pass to DB
-		$from_helpdesk = 0;
-	} elseif ($_POST['collect_from'] === 'help') {
-	        $help_selected = $selected;
-		$from_helpdesk = 1;
-	}
-	if (in_array( $_POST['support_type'], array('accommodated', 'not_accommodated'))) {
-                $support_type = $_POST['support_type'];
-		$support_type === 'accommodated' ? $accommodated_selected = $selected : $not_accommodated_selected = $selected; 
-        }
+	
+	extract (setUpFilters());
 
 	// get client name, usual support and FAO Welfare Desk information
 	// for all supported clients
@@ -93,5 +83,38 @@ function show_printable_sheet() {
 	$rows = WelfareSheetRow::createMany($data, $decorator);
 	$summary = new WelfareSheetSummary($rows);
 	$summary->calculate();
+	global $tab;
+	require 'inc/templates/welfare_payments_filters.tpl';
 	require 'inc/templates/welfare_payments_sheet.tpl';
+}
+
+function setUpFilters()
+{
+	// from POST data, work out what to filter by and
+	// ensure selections remain selected
+        $selected = 'selected = "selected"';
+        $from_helpdesk = null;
+        // set up filters
+        if ($_POST['collect_from'] === 'welfare') {
+                // keep selected on GUI
+                $welfare_selected = $selected;
+                // to pass to DB
+                $from_helpdesk = 0;
+        } elseif ($_POST['collect_from'] === 'help') {
+                $help_selected = $selected;
+                $from_helpdesk = 1;
+        }
+        if (in_array( $_POST['support_type'], array('accommodated', 'not_accommodated'))) {
+                $support_type = $_POST['support_type'];
+                $support_type === 'accommodated' ? $accommodated_selected = $selected : $not_accommodated_selected = $selected;
+        }
+
+	return array(
+		'from_helpdesk' => $from_helpdesk, 
+		'welfare_selected' => $welfare_selected, 
+		'help_selected' => $help_selected, 
+		'support_type' => $support_type, 
+		'accommodated_selected' => $accommodated_selected,
+		'not_accommodated_selected' => $not_accommodated_selected
+	);
 }

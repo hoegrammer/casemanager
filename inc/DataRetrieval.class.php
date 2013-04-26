@@ -11,14 +11,17 @@ class DataRetrieval
 		Retrieves actual amount given and whether bus pass given
 		for each client by week over the default period.
 	*/
-	public static function getWelfarePaymentHistories()
+	public static function getWelfarePaymentHistories($from_helpdesk, $support_type)
 	{
 		$default_period = "5 week";
 		$sql = "select id_client, name_first, name_last, outcome_amount,
 		 bus_pass_given, date(date_start) as date_start from lcm_client join lcm_case_client_org 
-		using (id_Client) join lcm_followup using (id_case) where 
+		using (id_Client) join lcm_followup using (id_case) 
+		join lcm_case using (id_case) left join lcm_faowelfaredesk using (id_client) where 
 		date_start <= now() and date_start >= date_sub(curdate(), interval $default_period) 
-		and type = 'followups27' order by name_first";
+		and type = 'followups27'";
+		$sql .= self::_getWelfareFilters($from_helpdesk, $support_type); 
+		$sql .= ' order by name_first';
 		return self::_retrieve($sql);
 	}
 
@@ -91,20 +94,29 @@ class DataRetrieval
 		$sql = "select id_client, name_first, name_last,
 		currently_supported.amount as usual_amount, currently_supported.legal_reason, 
 		lcm_faowelfaredesk.amount as fao_amount, bus_pass, letter, advocacy, from_helpdesk,
-                note from currently_supported left join lcm_faowelfaredesk using (id_client) 
-		where 1=1 ";
-		if ($from_helpdesk === 1) {
-			$sql .= " and  from_helpdesk = 1";
-		} elseif ($from_helpdesk === 0) {
-			$sql .= " and  (from_helpdesk = 0 or from_helpdesk is null)"; 
-		}
-		if ($support_type === 'accommodated') {
-			$sql .= " and type_case = 'Accomidation'";
-		} elseif ($support_type === 'not_accommodated') {
-			$sql .= " and type_case != 'Accomidation'";
-		}
+                note from currently_supported left join lcm_faowelfaredesk using (id_client) where 1 = 1";
+		$sql .= self::_getWelfareFilters($from_helpdesk, $support_type); 
 		$sql .= ' order by name_first';
                 return self::_retrieve($sql);
+	}
+
+	/*
+		Build the SQL for the filter(s) at runtime
+	*/
+	private static function _getWelfareFilters($from_helpdesk, $support_type)
+	{
+		$whereClause = "";
+		if ($from_helpdesk === 1) {
+			$filterSql .= " and  from_helpdesk = 1";
+		} elseif ($from_helpdesk === 0) {
+			$filterSql .= " and  (from_helpdesk = 0 or from_helpdesk is null)"; 
+		}
+		if ($support_type === 'accommodated') {
+			$filterSql .= " and type_case = 'Accomidation'";
+		} elseif ($support_type === 'not_accommodated') {
+			$filterSql .= " and type_case != 'Accomidation'";
+		}
+		return $filterSql;
 	}
 
 	/*

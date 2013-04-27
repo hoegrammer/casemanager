@@ -8,6 +8,7 @@
 			<th class='td_strand_title'>Cash</th>
 			<th class='td_strand_title'>Bus Pass</th>
 			<th class='td_strand_title'>Notes</th>
+			<th class='td_strand_title'>Absent</th>
 		</tr>
 		<?php 
 		foreach ($clients as $client) {
@@ -35,6 +36,10 @@
 			<td>
                                 <input type='text' size='80px' name="note[<?php echo $client['id_case']; ?>]"  />
                         </td>
+			<td class = 'centred'>
+                                <input type='checkbox' name="absent[<?php echo $client['id_case']; ?>]"  />
+                        </td>
+
 	
 		</tr>
 	        <?php } ?>

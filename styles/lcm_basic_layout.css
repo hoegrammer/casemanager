@@ -145,6 +145,10 @@ ul.tabs_list li a {
 /* Other visual settings - font, colors, sizes, boxes */
 /* ================================================== */
 
+.centred {
+	text-align: center;
+}
+
 a.balance_link {
 	float: left;
 	margin-top: 8px;

@@ -934,3 +934,10 @@ tr.welfare_input .bus_pass_checkbox {
 }
 
 
+/* Welfare Report */
+
+#welfare_report_summary {
+	height: 40px;
+	font-weight: bold;
+}
+

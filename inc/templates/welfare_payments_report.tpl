@@ -35,4 +35,12 @@
 			} ?> <!-- end foreach date -->
 		</tr>
 	        <?php } ?> <!-- end foreach row -->
+		<!-- Summary -->
+		<tr id = 'welfare_report_summary'>
+			<td>TOTAL</td>
+		<?php foreach ($report->dates as $date) { 
+			echo "<td>&pound;" . $report->summary[$date]['cash']  . "</td>";
+			echo "<td>" . $report->summary[$date]['bus_passes']  . "</td>";
+		 } ?>
+		</tr>
 	</table>

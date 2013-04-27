@@ -46,7 +46,6 @@ class WelfareReport
 				$this->summary[$date]['bus_passes'] += (int)$row->getBusPassesGivenOn($date);
 			}	
 		}
-		print_r($this->summary);
         }
 }
 

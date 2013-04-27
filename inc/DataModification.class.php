@@ -15,11 +15,12 @@ class DataModification
 		$id_case   = mysql_real_escape_string($welfare_payment->id_case);
 		$amount   = mysql_real_escape_string($welfare_payment->amount);
 		$bus_pass = mysql_real_escape_string($welfare_payment->bus_pass);
+		$absent = $welfare_payment->absent;		
 		
 		$sql = "insert into lcm_followup (type, id_author, description,
-			date_start, id_case, outcome_amount, bus_pass_given)
+			date_start, id_case, outcome_amount, bus_pass_given, absent)
 			values ('followups27', $id_author, '$description',
-			NOW(), $id_case, '$amount', '$bus_pass')";
+			NOW(), $id_case, '$amount', '$bus_pass', '$absent')";
 		self::_execute($sql);
 	}
 

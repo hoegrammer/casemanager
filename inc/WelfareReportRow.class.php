@@ -38,5 +38,18 @@ class WelfareReportRow
 			$this->_id_client, $this->_name_first, $this->_name_last
 		);
 	}
+
+	public function getCashGivenOn($date)
+	{
+		$entry = $this->entries[$date];
+		return $entry->amount;
+	}
+
+	public function getBusPassesGivenOn($date)
+        {
+                $entry = $this->entries[$date];
+                return (int)$entry->bus_pass;
+        }
+
 }
 ?>

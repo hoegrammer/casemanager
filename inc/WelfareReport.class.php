@@ -4,6 +4,7 @@ class WelfareReport
 {
 	public $rows; // array of WelfareReportRow objects
 	public $dates; // for column headings. String array
+	public $summary; // Total cash and total bus passes for each date
 
 	public function addRow(WelfareReportRow $row)
 	{
@@ -34,6 +35,19 @@ class WelfareReport
 	{
 		rsort($this->dates);
 	}
+
+	public function makeSummary()
+        {
+		// Total cash and total bus passes for each date
+                foreach($this->dates as $date) {
+			$this->summary[$date] = array('cash' => 0, 'bus_passes' => 0);
+			foreach($this->rows as $row) {
+				$this->summary[$date]['cash'] += $row->getCashGivenOn($date);
+				$this->summary[$date]['bus_passes'] += (int)$row->getBusPassesGivenOn($date);
+			}	
+		}
+		print_r($this->summary);
+        }
 }
 
 ?>

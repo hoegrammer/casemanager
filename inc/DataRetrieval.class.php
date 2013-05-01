@@ -19,7 +19,7 @@ class DataRetrieval
 		using (id_Client) join lcm_followup using (id_case) 
 		join lcm_case using (id_case) left join lcm_faowelfaredesk using (id_client) where 
 		date_start <= now() and date_start >= date_sub(curdate(), interval $default_period) 
-		and type = 'followups27'";
+		and type = 'followups27' and (bus_pass_given =1 or lcm_followup.outcome_amount > -1)";
 		$sql .= self::_getWelfareFilters($from_helpdesk, $support_type); 
 		$sql .= ' order by name_first';
 		return self::_retrieve($sql);

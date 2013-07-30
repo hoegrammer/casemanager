@@ -6,6 +6,12 @@ from the DB. */
 class DataModification 
 {
 
+        public static function deleteAllFaos()
+        {
+                $sql = "delete from lcm_faowelfaredesk";
+                self::_execute($sql);
+        }
+
 	// always inserts. 
 	public static function saveWelfarePayment(WelfarePayment $welfare_payment)
 	{

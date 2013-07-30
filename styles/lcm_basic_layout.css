@@ -25,6 +25,12 @@ body {
 	min-height: 91px;
 }
 
+.right_float {
+	float: right;
+	margin-top: -40px;
+	margin-right: 40px;
+}
+
 /* Maybe will be removed later */
 #wrapper_wide {
 	border: solid red thin;

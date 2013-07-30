@@ -46,3 +46,6 @@
 	</table>
 	<input type='submit' value='save' id='welfare_input_submit' />
 </form>
+<form action='clear_faos.php' method='post' onsubmit="return confirm('Really delete all FAO Welfare Desk entries?');">
+	<input type='submit' value='Clear All FAO Welfare Desk entries' class = 'right_float'>
+</form>

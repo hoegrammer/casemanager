@@ -2,7 +2,7 @@
     <table class='table_strands'>  <!-- table within a table -->
 	<tr><td class='td_strand'>
 	    <div class='td_strand_title'>
-                Information for Welfare Desk staff
+                <small>Information for Welfare Desk staff</small>
 	    </div>
 	    <table>
 		<tr>
@@ -52,8 +52,6 @@
 			<td>
 				<input type='submit' value='Update' />
 			</td>
-		</tr>
-	    </table>
 	</td></tr>
     </table>
 </form>

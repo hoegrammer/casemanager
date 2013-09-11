@@ -200,6 +200,7 @@ switch ($tab) {
 		// include code that decides if client is currently supported and if so 
 		// presents FAO Welfare Desk panel
 		require 'inc/fao_welfare_desk.php';	
+		require 'inc/accompanied_by.php';	
 
 		echo "<table class='table_strands'>";
 		for ($cpt = 0; (($i<$prefs['page_rows']) && ($row1 = lcm_fetch_array($result))); $cpt++)

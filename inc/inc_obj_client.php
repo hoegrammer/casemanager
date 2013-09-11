@@ -34,6 +34,14 @@ class LcmClient extends LcmObject {
 	var $case_start_from;
 	private $_id_client;
 
+	function getId() {
+		return $this->_id_client;
+	}
+
+	function getAccompaniedBy() {
+		return DataRetrieval::getAccompaniedBy($this->_id_client);
+	}
+
 	function LcmClient($id_client = 0, $record=0,$import=0) {
 		$id_client = intval($id_client);
 		$this->cases = null;

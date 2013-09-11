@@ -7,6 +7,12 @@ class DataRetrieval
 {
 
 
+
+	public static function getAccompaniedBy($id_client) {
+		$sql = "select regularly_accompanied_to_vulcan_house_by from lcm_client where id_client = $id_client";
+		$array = self::_retrieve($sql);
+		return $array[0][0];
+	}
 	/*
 		Retrieves actual amount given and whether bus pass given
 		for each client by week over the default period.
@@ -18,7 +24,7 @@ class DataRetrieval
 		 bus_pass_given, date(date_start) as date_start from lcm_client join lcm_case_client_org 
 		using (id_Client) join lcm_followup using (id_case) 
 		join lcm_case using (id_case) left join lcm_faowelfaredesk using (id_client) where 
-		date_start <= now() and date_start >= date_sub(curdate(), interval $default_period) 
+		date_start <= n() and date_start >= date_sub(curdate(), interval $default_period) 
 		and type = 'followups27' and (bus_pass_given =1 or lcm_followup.outcome_amount > -1)";
 		$sql .= self::_getWelfareFilters($from_helpdesk, $support_type); 
 		$sql .= ' order by name_first';

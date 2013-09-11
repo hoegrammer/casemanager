@@ -6,6 +6,13 @@ from the DB. */
 class DataModification 
 {
 
+	public static function saveAccompaniedBy($accompanied_by, $id_client)
+        {
+                $sql = "update lcm_client set regularly_accompanied_to_vulcan_house_by = '$accompanied_by' where id_client = $id_client";
+                self::_execute($sql);
+        }
+
+
         public static function deleteAllFaos()
         {
                 $sql = "delete from lcm_faowelfaredesk";

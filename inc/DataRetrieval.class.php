@@ -7,6 +7,12 @@ class DataRetrieval
 {
 
 
+	public static function getClientNameByCaseId($id_case) {
+	$sql = "select concat(name_first, ' ', name_last) as name from lcm_case_client_org join lcm_client using (id_client)
+		join lcm_case using (id_case) where id_case = $id_case";
+		$array = self::_retrieve($sql);
+                return $array[0]['name'];
+	}
 
 	public static function getAccompaniedBy($id_client) {
 		$sql = "select regularly_accompanied_to_vulcan_house_by from lcm_client where id_client = $id_client";

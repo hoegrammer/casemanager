@@ -88,17 +88,7 @@ elseif ($tab=='unavailable')
 
 $order_set = false;
 $order_room = '';
-if ($_REQUEST['order_room'] == 'ASC' || $_REQUEST['order_room'] == 'DESC') 
-	{
-	$q .= " ORDER BY r.name " . $_REQUEST['order_room'];
-	$order_set = true;
-	}
-else if ($_REQUEST['order_type'] == 'ASC' || $_REQUEST['order_type'] == 'DESC') 
-	{
-	$q .= " ORDER BY r.type " . $_REQUEST['order_type'];
-	$order_set = true;
-	}
-
+$q .= " ORDER BY r.name";
 $result = lcm_query($q);
 $number_of_rows = lcm_num_rows($result);
 

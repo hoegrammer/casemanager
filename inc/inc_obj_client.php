@@ -419,7 +419,7 @@ class LcmClient extends LcmObject {
 		if ($this->getDataInt('id_client'))
 			{
 			//copy client details to old client file.
-			lcm_query('insert into lcm_old_client select *, ""as id_record from lcm_client where id_client = '.$this->getDataInt('id_client'));
+			lcm_query('insert into lcm_old_client select id_client , name_first , name_middle , name_last, date_creation, date_update , date_birth , citizen_number , nass_number , gender , country , language, eng_level, intrepreter , religion, entery_date , status , status_details , referal , referal_details , letter1 , letter2 , letter3 , letter4 , national_assistance , section4, income , income_notes, accomidation, accomidation_notes , food, food_notes , social1 , social2 , social3 , social4 , social5 , social_notes, health_p, health_m, medications , hospital, clinics , gp , notes, check1 , check2 , check3 , check4 , conflict, accom, pannel , last_work, solicitor, address , telephone, contact, ""as id_record from lcm_client where id_client = '.$this->getDataInt('id_client'));
 			}
 
 		//

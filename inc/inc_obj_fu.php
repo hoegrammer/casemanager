@@ -562,8 +562,9 @@ class LcmFollowupInfoUI extends LcmFollowup {
 		// +---------------------------------------------------+
 		// | ADD GREEN HEADER: GROUP-USERNAME AND DATE OF WORK |
 		// +---------------------------------------------------+
-		if (isset($this->data['id_case'])) 
-		echo DataRetrieval::getClientNameByCaseId($this->data['id_case']);
+		if (isset($this->data['id_case']) && $this->data['id_case']) { 
+			echo DataRetrieval::getClientNameByCaseId($this->data['id_case']);
+		}
 		echo '<table class="tbl_data_box">';
 		$dis = isDisabled(! ($admin || $zot));
 		

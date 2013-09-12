@@ -19,7 +19,7 @@ class DataRetrieval
 	public static function getAccompaniedBy($id_client) {
 		$sql = "select regularly_accompanied_to_vulcan_house_by from lcm_client where id_client = $id_client";
 		$array = self::_retrieve($sql);
-		return $array[0][0];
+		return $array[0]['regularly_accompanied_to_vulcan_house_by'];
 	}
 	/*
 		Retrieves actual amount given and whether bus pass given

@@ -4,7 +4,7 @@
 require 'inc/inc.php';
 
 // required for getting information to display
-require 'inc/DataRetrieval.class.php';
+require_once 'inc/DataRetrieval.class.php';
 
 // header, sidebar etc.
 lcm_page_start();

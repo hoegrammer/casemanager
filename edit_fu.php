@@ -25,7 +25,6 @@ include('inc/inc.php');
 include_lcm('inc_acc');
 include_lcm('inc_filters');
 include_lcm('inc_obj_fu');
-var_dump($obj_client);
 // Read the policy settings
 $fu_sum_billed = read_meta('fu_sum_billed');
 $admin = ($GLOBALS['author_session']['status']=='admin');

@@ -32,7 +32,7 @@ define('_INC_OBJ_FU', '1');
 include_lcm('inc_db');
 include_lcm('inc_obj_generic');
 include_lcm('inc_obj_client');
-include_lcm('DataRetrieval.class');
+include_once('inc/DataRetrieval.class.php');
 
 class LcmFollowup extends LcmObject {
 	var $data; 
@@ -562,6 +562,7 @@ class LcmFollowupInfoUI extends LcmFollowup {
 		// +---------------------------------------------------+
 		// | ADD GREEN HEADER: GROUP-USERNAME AND DATE OF WORK |
 		// +---------------------------------------------------+
+		if (isset($this->data['id_case'])) 
 		echo DataRetrieval::getClientNameByCaseId($this->data['id_case']);
 		echo '<table class="tbl_data_box">';
 		$dis = isDisabled(! ($admin || $zot));

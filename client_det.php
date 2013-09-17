@@ -29,7 +29,6 @@ include_lcm('inc_contacts');
 include_lcm('inc_obj_client');
 include_lcm('inc_obj_case');
 include_lcm('inc_obj_fu');
-
 $client = intval(_request('client'));
 
 if (! ($client > 0))
@@ -259,36 +258,44 @@ switch ($tab) {
 				case 'submitted':
 					$text='Submitted on';
 					$futype='followups17" or type="followups28';
+					$show_start_date = false;
 					break;
 				case 'supported':
 					$text='Supported on';
 					$futype='followups20';
+					$show_start_date = false;
 					break;
 				case 'accom':
 					$text='Moved in on';
 					$futype='followups24';
+					$show_start_date = false;
 					break;
 				case 'terminated':
 					$text='Terminated on';
 					$futype='followups22';
+					$show_start_date = true;
 					break;
 				case 'rejected':
 					$text='Rejected on';
 					$futype='followups19';
+					$show_start_date = false;
 					break;
 				case 'waiting list':
 					$text='Added to waiting list on';
-					$futype='followups18';
+					$show_start_date = false;
 					break;
 				default :
 					$text='First Submitted on';
+					$show_start_date = false;
 					$futype='followups17';
 					break;
 				}
 		
 			$row2=lcm_fetch_array(lcm_query('select max(date_start) as date_start from lcm_followup where id_case='.$row1['id_case'].' and type="'.$futype.'"'));
+			if ($show_start_date === true && $admin === true) {
+				echo "Started on: " . format_date($row1['date_creation'], 'date_short') . "<br />";
+			}
 			echo $text . ": " . format_date($row2['date_start'], 'date_short') . "<br />";
-
 			if ($row1['start_time'])
 				{
 				echo "<b>";

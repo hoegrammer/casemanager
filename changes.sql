@@ -1,3 +1,5 @@
-alter table lcm_client add regularly_accompanied_to_vulcan_house_by smallint;
-alter table lcm_client modify regularly_accompanied_to_vulcan_house_by varchar(255);
-
+insert into lcm_keyword (id_group, name ,title ) values (29, 'religion11', 'Sikh');
+insert into lcm_keyword (id_group, name ,title ) values (29, 'religion12', 'Rastafarian');
+insert into lcm_keyword (id_group, name ,title ) values (29, 'religion13', 'Animist/Indigenous');
+insert into lcm_keyword (id_group, name ,title ) values (29, 'religion14', 'Other');
+insert into lcm_keyword (id_group, name ,title ) values (29, 'religion10', 'Jewish');

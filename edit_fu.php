@@ -153,6 +153,7 @@ else
 		case 'followups30': $title='Attendance at Night Shelter'; break;
 		case 'followups34': $title='Post-it Note'; break;
 		case 'followups43': $title='Emergency Payment'; break;
+		case 'followups44': $title='Night at Host'; break;
 		case 'stage_change' :
 			switch ($_REQUEST['stage'])
 				{

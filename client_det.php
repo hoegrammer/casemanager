@@ -552,6 +552,8 @@ switch ($tab) {
 			{
 			echo "<a href=\"edit_fu.php?type=followups30&case=".$row['id_case']."\" class=\"create_new_lnk click_btn\">Report night at shelter</a>\n";
 			}
+			
+		echo "<a href=\"edit_fu.php?type=followups44&case=".$row['id_case']."\" class=\"create_new_lnk click_btn\">Report night at host</a>\n";
 		echo "</p>\n";
 		$obj_client->printFollowups();
 		if ($GLOBALS['author_session']['right3'])

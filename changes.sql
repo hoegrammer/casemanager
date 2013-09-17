@@ -3,3 +3,4 @@ insert into lcm_keyword (id_group, name ,title ) values (29, 'religion12', 'Rast
 insert into lcm_keyword (id_group, name ,title ) values (29, 'religion13', 'Animist/Indigenous');
 insert into lcm_keyword (id_group, name ,title ) values (29, 'religion14', 'Other');
 insert into lcm_keyword (id_group, name ,title ) values (29, 'religion10', 'Jewish');
+insert into lcm_keyword (id_group, name ,title ) values (1, 'followups44', 'Night at Host');

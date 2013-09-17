@@ -753,6 +753,11 @@ class LcmFollowupInfoUI extends LcmFollowup {
 			echo '<input type="hidden" name="type" value="followups43">';
 			echo '<input type="hidden" name="bugfix" value="followups43">';
 			}
+		elseif ($this->getDataString('type')=='followups44' || $this->getDataString('bugfix')=='followup44')
+			{//emergency payment
+			echo '<input type="hidden" name="type" value="followups44">';
+			echo '<input type="hidden" name="bugfix" value="followups44">';
+			}
 		else 
 			{
 			if ($special=='opening')

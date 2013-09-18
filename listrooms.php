@@ -185,36 +185,12 @@ for ($i = 0 ; (($i<$prefs['page_rows']) && ($row = lcm_fetch_array($result))) ; 
 			{
 			echo '(Suitable for '.($row['sex']=='both'?'male or female':$row['sex']).' clients'.($row['note']?'.<br/>Extra Notes: '.$row['note']:'').')';
 			}
-		echo "</td>";
-//		echo "<td width = '40%' class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
-//		if (!$row['pid'])
-//			{
-//			if ($admin)
-//				{
-//				echo '<a href="edit_fu.php?room='.$row['id_room'].'&ctype=accomidation&type=stage_change&stage=reserved&ref=listrooms.php" class="add_lnk">
-//					Make Reservation</a>';
-//				if (!$row['aid'] && $row['status']=='normal')
-//					{
-//					echo '<a href="edit_fu.php?room='.$row['id_room'].'&ctype=accomidation&type=stage_change&stage=accom&ref=listrooms.php" class="add_lnk">
-//						Move a Client In</a>';
-//					}
-//				}
-//			}
-//		else
-//			{
-//			if ($admin)
-//				{	
-//				echo '<a href="edit_fu.php?room='.$row['id_room'].'&case='.$row['pca'].'&ctype=accomidation&type=stage_change&stage=unreserved&ref=listrooms.php" class="add_lnk">
-//					Cancel Reservation</a>';
-//					}
-//			if (!$row['aid'] && $row['status']=='normal')
-//				{
-//				echo '<a href="edit_fu.php?room='.$row['id_room'].'&case='.$row['pca'].'&ctype=accomidation&type=stage_change&stage=accom&ref=listrooms.php" class="add_lnk">
-//					Move In Reservation</a>';
-//				}
-//			}
 
 		echo "</td>";
+echo "<td><p class='normal_text'><a href='delete_room.php?id_room=".$row['id_room']."' class='add_lnk'>Delete</a></p></td>";
+
+		echo "</td>";
+
 		echo "</tr>\n";
 		}
 	}

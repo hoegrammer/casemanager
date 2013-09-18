@@ -253,7 +253,6 @@ switch ($tab) {
 				echo "Weekly Support: £".$row1['amount'].($row1['legal_reason']=='yes'?' & a bus pass':'');
 				echo "<br />";
 				}
-
 			switch ($row1['stage'])
 				{
 				case 'submitted':
@@ -271,6 +270,27 @@ switch ($tab) {
 				case 'terminated':
 					$text='Terminated on';
 					$futype='followups22';
+					if ($row1['type_case'] == 'Accomidation') {
+						$moved_in = lcm_fetch_array(
+							lcm_query(
+								"select date_format(date_start, '%e %b %Y') from lcm_followup where id_case = ". $row1['id_case'] .
+								" and type = 'followups24' and date_start < '" . $row1['date_update']. "' order by date_start 
+								desc limit 1"
+							)
+						);
+						echo "<b>MOVED IN ON</b>: ". $moved_in[0] . "<br />";
+					} else {
+						$supported_on = lcm_fetch_array(                                                        
+							lcm_query(
+                                                                "select date_format(date_start, '%e %b %Y') from lcm_followup where id_case = ". $row1['id_case'] .
+                                                                " and type = 'followups20' and date_start < '" . $row1['date_update']. "' order by date_start 
+                                                                desc limit 1"
+                                                        )
+                                                );
+						echo "<b>SUPPORT STARTED ON</b>: ". $supported_on[0] . "<br />";
+
+					}
+					
 					break;
 				case 'rejected':
 					$text='Rejected on';

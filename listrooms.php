@@ -187,7 +187,8 @@ for ($i = 0 ; (($i<$prefs['page_rows']) && ($row = lcm_fetch_array($result))) ; 
 			}
 
 		echo "</td>";
-echo "<td><p class='normal_text'><a href='delete_room.php?id_room=".$row['id_room']."' class='add_lnk'>Delete</a></p></td>";
+echo "<td><p class='normal_text'><a href='delete_room.php?id_room=".$row['id_room']."&list_pos=".$_GET['list_pos']."' class='add_lnk' onclick='return confirm(\"Click OK to delete the room.\");'>Delete</a></p></td>";
+
 
 		echo "</td>";
 

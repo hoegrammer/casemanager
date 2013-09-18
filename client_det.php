@@ -53,7 +53,8 @@ $edit = true;
 $groups = array(
 	'work' => 'File',
 	'details' => 'Details',
-	'documents'=> 'Documents'
+	'documents'=> 'Documents',
+	'key_dates' => 'Key Dates'
 	);
 $tab = ( isset($_GET['tab']) ? $_GET['tab'] : 'work' );
 show_tabs($groups,$tab,$_SERVER['REQUEST_URI']);
@@ -592,6 +593,23 @@ switch ($tab) {
 
 				echo "</p>\n";
 				break;
+			case 'key_dates':
+				$dates = lcm_fetch_array(
+					lcm_query(
+						"select * from key_dates where id_client = " . $row['id_client']
+					)
+				);
+				extract($dates);
+				echo '<form action = "save_key_dates.php?id_client='.$row['id_client'].'" method = "post">';
+				echo '<p>Start: <input type="text" name = "start" class="auto-kal" value ="'. $start.'"/></p>';
+                                echo '<p>1st month review: <input type="text" name = "first" class="auto-kal" value ="'. $first.'" /></p>';
+                                echo '<p>5th month review: <input type="text" name = "fifth" class="auto-kal" /></p>';
+                                echo '<p>9th month review: <input type="text" name = "ninth" class="auto-kal" /></p>';
+                                echo '<p>Year end review: <input type="text" name = "yearend" class="auto-kal" /></p>';
+                                echo '<p>Agreed end of Support: <input type="text" name = "supportend" class="auto-kal" /></p>';
+                                echo '<p>Agreed end of Accommodation: <input type="text" name = "accomend" class="auto-kal" /></p>';
+				echo '<input type="submit" value="Update">';
+
 		}
 
 

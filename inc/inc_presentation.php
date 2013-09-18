@@ -98,6 +98,9 @@ function lcm_html_start($title = "AUTO", $css_files = "", $meta = '') {
 	<meta http-equiv=\"Content-Type\" content=\"text/html; charset=". $charset ."\" />\n";
 	echo "$meta\n";
 
+	echo '<link rel="stylesheet" href="Kalendae-master/build/kalendae.css" type="text/css" charset="utf-8">
+<script src="Kalendae-master/build/kalendae.standalone.js" type="text/javascript" charset="utf-8"></script>';
+
 	// The 'antifocus' is used to erase default titles such as "New appointment"
 	// other functions are used in calendar functions (taken from Spip's presentation.js)
 	echo "<script type='text/javascript'><!--

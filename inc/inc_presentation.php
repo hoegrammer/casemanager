@@ -164,7 +164,7 @@ function lcm_html_start($title = "AUTO", $css_files = "", $meta = '') {
 				return memo_obj[n];
 			}       
 
-			/d = document; 
+			d = document; 
 			if((p = n.indexOf(\"?\"))>0 && parent.frames.length) {
 				d = parent.frames[n.substring(p+1)].document; 
 				n = n.substring(0,p);

@@ -594,21 +594,26 @@ switch ($tab) {
 				echo "</p>\n";
 				break;
 			case 'key_dates':
-				$dates = lcm_fetch_array(
-					lcm_query(
-						"select * from key_dates where id_client = " . $row['id_client']
-					)
-				);
-				extract($dates);
-				echo '<form action = "save_key_dates.php?id_client='.$row['id_client'].'" method = "post">';
-				echo '<p>Start: <input type="text" name = "start" class="auto-kal" value ="'. $start.'"/></p>';
-                                echo '<p>1st month review: <input type="text" name = "first" class="auto-kal" value ="'. $first.'" /></p>';
-                                echo '<p>5th month review: <input type="text" name = "fifth" class="auto-kal" /></p>';
-                                echo '<p>9th month review: <input type="text" name = "ninth" class="auto-kal" /></p>';
-                                echo '<p>Year end review: <input type="text" name = "yearend" class="auto-kal" /></p>';
-                                echo '<p>Agreed end of Support: <input type="text" name = "supportend" class="auto-kal" /></p>';
-                                echo '<p>Agreed end of Accommodation: <input type="text" name = "accomend" class="auto-kal" /></p>';
-				echo '<input type="submit" value="Update">';
+				$sql = "select 
+                                                if(start = 0, '', date_format(start, '%d %M %Y') ) as start,
+                                                if(first = 0, '', date_format(first, '%d %M %Y') ) as first,
+                                                if(fifth = 0, '', date_format(fifth, '%d %M %Y') ) as fifth,
+                                                if(ninth = 0, '', date_format(ninth, '%d %M %Y') ) as ninth,
+                                                if(yearend = 0, '', date_format(yearend, '%d %M %Y') ) as yearend,
+                                                if(accomend = 0, '', date_format(accomend, '%d %M %Y') ) as accomend,
+                                                if(supportend = 0, '', date_format(supportend, '%d %M %Y' )) as supportend
+                                                 from key_dates where id_client = " . $row['id_client'];
+				$dates = lcm_fetch_array(lcm_query($sql));
+				echo '<form action = "save_key_dates.php">';
+				echo '<input type="hidden" name = "id_client" value ='. $row['id_client'] .' />';
+				echo '<p>Start: <input type="text" name = "start" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['start'].'"/></p>';
+                                echo '<p>1st month review: <input type="text" name = "first" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['first'].'" /></p>';
+                                echo '<p>5th month review: <input type="text" name = "fifth" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['fifth'].'" /></p>';
+                                echo '<p>9th month review: <input type="text" name = "ninth" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['ninth'].'" /></p>';
+                                echo '<p>Year end review: <input type="text" name = "yearend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['yearend'].'"  /></p>';
+                                echo '<p>Agreed end of Support: <input type="text" name = "supportend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['supportend'].'"  /></p>';
+                                echo '<p>Agreed end of Accommodation: <input type="text" name = "accomend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['accomend'].'"  /></p>';
+				echo '<input type="submit" value="Update"></form>';
 
 		}
 

@@ -283,7 +283,7 @@ function lcm_html_start($title = "AUTO", $css_files = "", $meta = '') {
 	echo "</head>\n";
 
 	// right-to-left (Arabic, Hebrew, Farsi, etc. -- even if not supported at the moment)
-	echo '<body' . ($lcm_lang_rtl ? ' dir="rtl"' : '') . ">\n";
+	echo '<body onbeforeunload="alert();"' . ($lcm_lang_rtl ? ' dir="rtl"' : '') . ">\n";
 }
 
 function lcm_page_start($title = "", $css_files = "", $meta = '', $help_code = '') {

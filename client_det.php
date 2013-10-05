@@ -603,17 +603,17 @@ switch ($tab) {
                                                 if(accomend = 0, '', date_format(accomend, '%d %M %Y') ) as accomend,
                                                 if(supportend = 0, '', date_format(supportend, '%d %M %Y' )) as supportend
                                                  from key_dates where id_client = " . $row['id_client'];
-				$dates = lcm_fetch_array(lcm_query($sql));
-				echo '<form action = "save_key_dates.php">';
+				$dates = lcm_fetch_array(lcm_query($sql)); ?>
+				<?php echo '<form action = "save_key_dates.php">';
 				echo '<input type="hidden" name = "id_client" value ='. $row['id_client'] .' />';
-				echo '<p>Start: <input type="text" name = "start" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['start'].'"/></p>';
-                                echo '<p>1st month review: <input type="text" name = "first" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['first'].'" /></p>';
-                                echo '<p>5th month review: <input type="text" name = "fifth" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['fifth'].'" /></p>';
-                                echo '<p>9th month review: <input type="text" name = "ninth" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['ninth'].'" /></p>';
-                                echo '<p>Year end review: <input type="text" name = "yearend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['yearend'].'"  /></p>';
-                                echo '<p>Agreed end of Support: <input type="text" name = "supportend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['supportend'].'"  /></p>';
-                                echo '<p>Agreed end of Accommodation: <input type="text" name = "accomend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['accomend'].'"  /></p>';
-				echo '<input type="submit" value="Update"></form>';
+				echo '<p>Start: <input type="text"  id = "start" name = "start" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['start'].'"/><input type = "submit" value = "clear" onclick = "javascript:document.getElementById(\'start\').value = \'\';"/></p>';
+                                echo '<p>1st month review: <input type="text"  id="first" name = "first" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['first'].'" /><input type = "submit" value = "clear" onclick = "javascript:document.getElementById(\'first\').value = \'\';"/></p>';
+                                echo '<p>5th month review: <input type="text"  id="fifth" name = "fifth" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['fifth'].'" /><input type = "submit" value = "clear" onclick = "javascript:document.getElementById(\'fifth\').value = \'\';"/></p>';
+                                echo '<p>9th month review: <input type="text"  id = "ninth" name = "ninth" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['ninth'].'" /><input type = "submit" value = "clear" onclick = "javascript:document.getElementById(\'ninth\').value = \'\';"/></p>';
+                                echo '<p>Year end review: <input type="text"  id = "yearend" name = "yearend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['yearend'].'"  /><input type = "submit" value = "clear" onclick = "javascript:document.getElementById(\'yearend\').value = \'\';"/></p>';
+                                echo '<p>Agreed end of Support: <input type="text" onclick="colourupdate(\'update\');" id = "supportend" name = "supportend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['supportend'].'"  /><input type = "submit" value = "clear" onclick = "javascript:document.getElementById(\'supportend\').value = \'\';"/></p>';
+                                echo '<p>Agreed end of Accommodation: <input type="text" onclick="colourupdate(\'update\');" id = "accomend" name = "accomend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['accomend'].'"  /><input type = "submit" value = "clear" onclick = "javascript:document.getElementById(\'accomend\').value = \'\';"/></p>';
+				echo '<input id = "update" type="submit" value="Update"></form>';
 
 		}
 

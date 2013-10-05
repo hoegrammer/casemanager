@@ -603,8 +603,9 @@ switch ($tab) {
                                                 if(accomend = 0, '', date_format(accomend, '%d %M %Y') ) as accomend,
                                                 if(supportend = 0, '', date_format(supportend, '%d %M %Y' )) as supportend
                                                  from key_dates where id_client = " . $row['id_client'];
-				$dates = lcm_fetch_array(lcm_query($sql)); ?>
-				<?php echo '<form action = "save_key_dates.php">';
+				$dates = lcm_fetch_array(lcm_query($sql));
+print_r($author);
+				echo '<form action = "save_key_dates.php">';
 				echo '<input type="hidden" name = "id_client" value ='. $row['id_client'] .' />';
 				echo '<p>Start: <input type="text"  id = "start" name = "start" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['start'].'"/><input type = "submit" value = "clear" onclick = "javascript:document.getElementById(\'start\').value = \'\';"/></p>';
                                 echo '<p>1st month review: <input type="text"  id="first" name = "first" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['first'].'" /><input type = "submit" value = "clear" onclick = "javascript:document.getElementById(\'first\').value = \'\';"/></p>';

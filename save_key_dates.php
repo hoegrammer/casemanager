@@ -3,6 +3,10 @@
 
 include('inc/inc.php');
 
+if (!$GLOBALS['author_session']['right4']) {
+	die("You need panel permissions to edit this");
+}
+
 $id_client = mysql_real_escape_string($_GET['id_client']);
 $yearend = $_GET['yearend'] ? date('Y-m-d', strtotime($_GET['yearend'])) : '';
 $supportend = $_GET['supportend'] ?  date('Y-m-d', strtotime($_GET['supportend'])) : '';

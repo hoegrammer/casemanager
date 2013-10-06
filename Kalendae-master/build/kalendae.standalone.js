@@ -1687,7 +1687,6 @@ var MinPubSub = function(d){
             }
             break;
         }
-
         // if the input is null, the date is not valid
         if (input == null) {
             config._isValid = false;
@@ -2389,7 +2388,6 @@ moment.fn.yearDay = function (input) {
     return (typeof input === 'undefined') ? yearday :
         this.add({ d : input - yearday });
 };
-
 today = Kalendae.moment().stripTime();
 
 if (typeof jQuery !== 'undefined' && (typeof document.addEventListener === 'function' || util.isIE8())) {
@@ -2406,6 +2404,5 @@ if (typeof jQuery !== 'undefined' && (typeof document.addEventListener === 'func
 		return this;
 	};
 }
-
 
 })();

@@ -53,7 +53,8 @@ $edit = true;
 $groups = array(
 	'work' => 'File',
 	'details' => 'Details',
-	'documents'=> 'Documents'
+	'documents'=> 'Documents',
+	'key_dates' => 'Key Dates'
 	);
 $tab = ( isset($_GET['tab']) ? $_GET['tab'] : 'work' );
 show_tabs($groups,$tab,$_SERVER['REQUEST_URI']);
@@ -572,6 +573,29 @@ switch ($tab) {
 
 				echo "</p>\n";
 				break;
+			case 'key_dates':
+				$sql = "select 
+                                                if(start = 0, '', date_format(start, '%d %M %Y') ) as start,
+                                                if(first = 0, '', date_format(first, '%d %M %Y') ) as first,
+                                                if(fifth = 0, '', date_format(fifth, '%d %M %Y') ) as fifth,
+                                                if(ninth = 0, '', date_format(ninth, '%d %M %Y') ) as ninth,
+                                                if(yearend = 0, '', date_format(yearend, '%d %M %Y') ) as yearend,
+                                                if(accomend = 0, '', date_format(accomend, '%d %M %Y') ) as accomend,
+                                                if(supportend = 0, '', date_format(supportend, '%d %M %Y' )) as supportend
+                                                 from key_dates where id_client = " . $row['id_client'];
+				$dates = lcm_fetch_array(lcm_query($sql));
+print_r($author);
+				echo '<form action = "save_key_dates.php">';
+				echo '<input type="hidden" name = "id_client" value ='. $row['id_client'] .' />';
+				echo '<p><span class = "keydate">Start:</span> <input type="text"  id = "start" onblur="if (this.value === \'undefined\') {this.value=\'\'};" name = "start" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['start'].'"/><input type = "button" value = "clear" onclick = "javascript:document.getElementById(\'start\').value = \'\';"/></p>';
+                                echo '<p><span class = "keydate"> 1st month review:</span><input type="text"  id="first" onblur="if (this.value === \'undefined\') {this.value=\'\'};" name = "first" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['first'].'" /><input type = "button" value = "clear" onclick = "javascript:document.getElementById(\'first\').value = \'\';"/></p>';
+                                echo '<p><span class = "keydate"> 5th month review:</span><input type="text"  id="fifth" onblur="if (this.value === \'undefined\') {this.value=\'\'};" name = "fifth" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['fifth'].'" /><input type = "button" value = "clear" onclick = "javascript:document.getElementById(\'fifth\').value = \'\';"/></p>';
+                                echo '<p><span class = "keydate"> 9th month review:</span><input type="text"  id = "ninth" onblur="if (this.value === \'undefined\') {this.value=\'\'};" name = "ninth" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['ninth'].'" /><input type = "button" value = "clear" onclick = "javascript:document.getElementById(\'ninth\').value = \'\';"/></p>';
+                                echo '<p><span class = "keydate"> Year end review:</span><input type="text"  id = "yearend" onblur="if (this.value === \'undefined\') {this.value=\'\'};" name = "yearend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['yearend'].'"  /><input type = "button" value = "clear" onclick = "javascript:document.getElementById(\'yearend\').value = \'\';"/></p>';
+                                echo '<p><span class = "keydate"> Agreed end of Support:</span><input type="text"  id = "supportend" onblur="if (this.value === \'undefined\') {this.value=\'\'};" name = "supportend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['supportend'].'"  /><input type = "button" value = "clear" onclick = "javascript:document.getElementById(\'supportend\').value = \'\';"/></p>';
+                                echo '<p><span class = "keydate"> Agreed end of Accommodation:</span><input type="text" id = "accomend" onblur="if (this.value === \'undefined\') {this.value=\'\'};" name = "accomend" class="auto-kal" data-kal="format: \'DD MMMM YYYY\'" value ="'. $dates['accomend'].'"  /><input type = "button" value = "clear" onclick = "javascript:document.getElementById(\'accomend\').value = \'\';"/></p>';
+				echo '<input id = "update" type="submit" value="Update"></form>';
+
 		}
 
 

@@ -951,3 +951,8 @@ tr.welfare_input .bus_pass_checkbox {
 	font-weight: bold;
 }
 
+span.keydate {
+	font-size: 0.9em;
+	width: 210px;
+	float: left;
+}

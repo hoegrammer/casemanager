@@ -98,6 +98,9 @@ function lcm_html_start($title = "AUTO", $css_files = "", $meta = '') {
 	<meta http-equiv=\"Content-Type\" content=\"text/html; charset=". $charset ."\" />\n";
 	echo "$meta\n";
 
+	echo '<link rel="stylesheet" href="Kalendae-master/build/kalendae.css" type="text/css" charset="utf-8">
+<script src="Kalendae-master/build/kalendae.standalone.js" type="text/javascript" charset="utf-8"></script>';
+
 	// The 'antifocus' is used to erase default titles such as "New appointment"
 	// other functions are used in calendar functions (taken from Spip's presentation.js)
 	echo "<script type='text/javascript'><!--
@@ -161,7 +164,7 @@ function lcm_html_start($title = "AUTO", $css_files = "", $meta = '') {
 				return memo_obj[n];
 			}       
 
-			/d = document; 
+			d = document; 
 			if((p = n.indexOf(\"?\"))>0 && parent.frames.length) {
 				d = parent.frames[n.substring(p+1)].document; 
 				n = n.substring(0,p);
@@ -280,7 +283,7 @@ function lcm_html_start($title = "AUTO", $css_files = "", $meta = '') {
 	echo "</head>\n";
 
 	// right-to-left (Arabic, Hebrew, Farsi, etc. -- even if not supported at the moment)
-	echo '<body' . ($lcm_lang_rtl ? ' dir="rtl"' : '') . ">\n";
+	echo '<body onbeforeunload="alert();"' . ($lcm_lang_rtl ? ' dir="rtl"' : '') . ">\n";
 }
 
 function lcm_page_start($title = "", $css_files = "", $meta = '', $help_code = '') {

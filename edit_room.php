@@ -76,7 +76,7 @@ matt_page_start($title.'...');
 echo show_all_errors();
 
 no_tabs();
-echo '<form action="upd_room" method="post"/>';
+echo '<form action="upd_room.php" method="post"/>';
 echo '<table class="tbl_usr_dtl" width=100%>';
 
 echo "<tr><td width='15%'>";

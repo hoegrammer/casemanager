@@ -589,9 +589,6 @@ class LcmClient extends LcmObject {
 		if (clean_input($this->getDataString('civil_status')))
 			$cl .= ", civil_status = '" . clean_input($this->getDataString('civil_status')) . "'";
 	
-//		if (clean_input($this->getDataString('income')))
-//			$cl .= ", income = '" . clean_input($this->getDataString('income')) . "'";
-	
 		if ($this->getDataInt('id_client') > 0) {
 			$q = "UPDATE lcm_client
 				SET 
@@ -632,7 +629,6 @@ class LcmClient extends LcmObject {
 
 	function printFollowupsTitle()
 		{
-//		show_page_subtitle("Case Work in ".$this->getDataString('name_first')."'s File");
 		}
 
 	function printFollowups($show_filters = false) {
@@ -987,37 +983,6 @@ class LcmClientInfoUI extends LcmClient {
 				. "</li>\n";
 			}
 
-//		if (substr($meta_civil_status, 0, 3) == 'yes') {
-//			// [ML] Patch for bug #1372138 (LCM < 0.6.4)
-//			$civil_status = $this->getDataString('civil_status', 'unknown');
-//
-//			echo '<li>'
-///				. '<span class="label2">' . _Ti('person_input_civil_status') . '</span>'
-//				. '<span class="value2">' . _Tkw('civilstatus', $civil_status) . '</span>'
-//				. "</li>\n";
-//		}
-//
-//		if (substr($meta_income, 0, 3) == 'yes') {
-//			// [ML] Patch for bug #1372138 (LCM < 0.6.4)
-//			$income = $this->getDataString('income', 'unknown');
-//
-//			echo '<li>' 
-//				. '<span class="label2">' . _Ti('person_input_income') . '</span>'
-//				. '<span class="value2">' . _Tkw('income', $income) . '</span>'
-//				. "</li>\n";
-//		}
-//
-//
-
-
-
-
-
-
-
-
-//		show_all_keywords('client', $this->getDataInt('id_client'));
-
 		echo '<li>'
 			. '<span class="label2">' . _Ti('case_input_date_creation') . '</span>'
 			. '<span class="value2">' . format_date($this->getDataString('date_creation')) . '</span>'
@@ -1091,48 +1056,17 @@ class LcmClientInfoUI extends LcmClient {
 		$matt = $this->getDataString($varname);
 		foreach($futype_kws as $kw) 
 			{
-//			print"(".$kw['name']."|".$default_fu.")";
 			$sel = isSelected(($kw['name'] == $default_fu)||($kw['name']==$matt));
 			if ($sel) $kw_found = true;
-//			$sel = isSelected($matt == $kw['name']);
-//			if ($sel) $kw_found = true;
 			echo '<option value="' . $kw['name'] . '"' . $sel . '>' . _T(remove_number_prefix($kw['title'])) . "</option>\n";
-//			print " | ";
 			}
 		// Exotic case where the FU keyword was hidden by the administrator,
 		// but an old follow-up using that keyword is being edited.
 		if (! $kw_found)
 			{
-//			echo '<option selected="selected" value="' . $default_fu . '">' . _Tkw('followups', $default_fu) . "</option>\n";
 			}
 
 		}
-//	function getCurrent($groupname, $varname)
-//		{
-//		if ($varname =='')
-//			$varname=$groupname;
-//		$default_fu = get_suggest_in_group_name($groupname);
-//		$futype_kws = get_keywords_in_group_name($groupname);
-//		$kw_found = false;
-//		$matt = $this->getDataString($varname);
-//		foreach($futype_kws as $kw) 
-//			{
-//			print"(".$kw['name']."|".$default_fu.")";
-//			$sel = isSelected(($kw['name'] == $default_fu)||($kw['name']==$matt));
-//			if ($sel) $kw_found = true;
-//			$sel = isSelected($matt == $kw['name']);
-//			if ($sel) $kw_found = true;
-//			echo '<option value="' . $kw['name'] . '"' . $sel . '>' . _T(remove_number_prefix($kw['title'])) . "</option>\n";
-//			print " | ";
-//			}
-//		// Exotic case where the FU keyword was hidden by the administrator,
-//		// but an old follow-up using that keyword is being edited.
-//		if (! $kw_found)
-//			{
-//			echo '<option selected="selected" value="' . $default_fu . '">' . _Tkw('followups', $default_fu) . "</option>\n";
-//			}
-//
-//		}
 
 	function printGeneral($mode) {
 		// Get site preferences
@@ -1157,14 +1091,6 @@ class LcmClientInfoUI extends LcmClient {
 			// Client name
 			echo '<tr><td>' ._T('person_input_name_first') . '</td>' . "\n";
 			echo '<td>'. clean_output($this->getDataString('name_first')) . '</td></tr>' . "\n";
-			
-//	// [ML] always show middle name, if any, no matter the configuration
-//	if ($this->getDataString('name_middle') || substr($client_name_middle, 0, 3) == 'yes') 
-//		{
-//		echo '<tr><td>' . f_err_star('name_middle') . _T('person_input_name_middle') . '</td>' . "\n";
-//		echo '<td><input name="name_middle" value="' . clean_output($this->getDataString('name_middle')) . '" class="search_form_txt" /></td></tr>' . "\n";
-//		}
-				
 			echo '<tr><td>' . _T('person_input_name_last') . '</td>' . "\n";
 			echo '<td>' . clean_output($this->getDataString('name_last')) . '</td></tr>' . "\n";
 			
@@ -1185,13 +1111,6 @@ class LcmClientInfoUI extends LcmClient {
 			
 			echo "</td></tr>\n";
 			
-//			if ($this->getDataString('id_client')) 
-//				{
-//				echo "<tr>\n";
-//				echo '<td>' . _Ti('time_input_date_creation') . '</td>';
-//				echo '<td>' . format_date($this->getDataString('date_creation'), 'full') . '</td>';
-//				echo "</tr>\n";
-//				}
 			
 			if (substr($client_citizen_number, 0, 3) == 'yes') 
 				{
@@ -1214,10 +1133,8 @@ class LcmClientInfoUI extends LcmClient {
 			echo '<tr><td>';
 			echo 'Country of Origin';
 			echo '</td><td>';
-//			echo '<select name="country" size="1" class="sel_frm">';
 			$x = get_kw_from_name('ethnicity',$this->getDataString('country'));
 			print remove_number_prefix($x['title']);
-//			echo "</select>\n";
 			echo '</td></tr>';
 			// +-------------+
 			// | LANGUAGE    |
@@ -1263,7 +1180,6 @@ class LcmClientInfoUI extends LcmClient {
 			echo 'Date of Entry';
 			echo '</td><td>';
 			$the_date=date('Y-m-d');
-//			echo get_date_inputs('zot',$this->getDataString('entery_date'));
 			echo format_date($this->getDataString('entery_date'),'date_short');
 
 			echo '</td></tr>';
@@ -1302,18 +1218,6 @@ class LcmClientInfoUI extends LcmClient {
 				. clean_output($this->getDataString('referal_details'))
 				. '</textarea>';
 			echo '</td></tr>';
-
-//			// +-------------+
-//			// | LETTERS     |
-//			// +-------------+
-//			echo '<tr><td>';
-//			echo 'Documentation';
-//			echo '</td><td>';
-//			echo '<select name="referal" size="1" class="sel_frm">';
-//			$x=$this->getDropdown('letter');
-//			echo "</select>\n";
-//			echo '</td></tr>';
-
 
 			echo '<tr><td colspan="2">';show_page_subtitle('Contact Details');echo'</td></tr>';
 			echo '<tr><td>Address:</td>' . "\n";

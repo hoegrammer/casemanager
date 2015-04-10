@@ -84,7 +84,6 @@ class LcmClient extends LcmObject {
 				{
 				$nkey = substr($key, 7);
 				}
-
 			$this->data[$nkey] = _request($key);
 		}
 
@@ -588,7 +587,6 @@ class LcmClient extends LcmObject {
 
 		if (clean_input($this->getDataString('civil_status')))
 			$cl .= ", civil_status = '" . clean_input($this->getDataString('civil_status')) . "'";
-	
 		if ($this->getDataInt('id_client') > 0) {
 			$q = "UPDATE lcm_client
 				SET 
@@ -673,14 +671,20 @@ class LcmClient extends LcmObject {
 
 		show_list_end($my_list_pos, $this->getFollowupTotal(), true);
 	}
-
-
-
-
-
 }
 
 class LcmClientInfoUI extends LcmClient {
+    function getLanguage() {
+        $raw  = $this->getDataString('language');
+        if (substr($raw, 0, 8) === 'Language') {
+            // This is a entry that was made using the dropdown method
+            $arr = get_kw_from_name('language',$this->getDataString('language'));
+            return $arr['title'];
+        } 
+        // This is an extry that was made using the text box
+        return $raw;
+    }
+
 	function LcmClientInfoUI($id_client = 0,$record=0,$import=0) {
 		$this->LcmClient($id_client,$record,$import);
 	}
@@ -750,7 +754,7 @@ class LcmClientInfoUI extends LcmClient {
 		if ($i);
 			{
 			echo '<li>'
-				. '<span class="label1">Language: </span>'
+				. '<span class="label1">Languages: </span>'
 				. '<span class="value1">' .remove_number_prefix($i['title']) . '</span>'
 				. "</li>\n";
 			}
@@ -1060,12 +1064,6 @@ class LcmClientInfoUI extends LcmClient {
 			if ($sel) $kw_found = true;
 			echo '<option value="' . $kw['name'] . '"' . $sel . '>' . _T(remove_number_prefix($kw['title'])) . "</option>\n";
 			}
-		// Exotic case where the FU keyword was hidden by the administrator,
-		// but an old follow-up using that keyword is being edited.
-		if (! $kw_found)
-			{
-			}
-
 		}
 
 	function printGeneral($mode) {
@@ -1140,10 +1138,9 @@ class LcmClientInfoUI extends LcmClient {
 			// | LANGUAGE    |
 			// +-------------+
 			echo '<tr><td>';
-			echo 'Language';
+			echo 'Languages';
 			echo '</td><td>';
-			$x = get_kw_from_name('language',$this->getDataString('language'));
-			print remove_number_prefix($x['title']);
+		    echo $this->getLanguage();
 			echo '</td></tr>';
 			// +-------------+
 			// | ENG_LEVEL   |
@@ -1440,16 +1437,6 @@ class LcmClientInfoUI extends LcmClient {
 		// Contacts (e-mail, phones, etc.)
 		//
 			}
-//		if ($mode!='scores')
-//			{
-//			echo "<tr>\n";
-//			echo '<td colspan="2" align="center" valign="middle">';
-//			show_page_subtitle(_T('client_subtitle_contacts'));
-//			echo '</td>';
-//			echo "</tr>\n";
-//		
-//			show_all_contacts_two('client', $this->getDataInt('id_client'));
-//			}
 		if ($mode!='salrev')
 			echo "</table>\n";
 	}
@@ -1556,11 +1543,11 @@ class LcmClientInfoUI extends LcmClient {
 			// | LANGUAGE    |
 			// +-------------+
 			echo '<tr><td>';
-			echo 'Language';
+			echo 'Languages';
 			echo '</td><td>';
-			echo '<select name="language" size="1" class="sel_frm">';
-			$x=$this->getDropdown('language');
-			echo "</select>\n";
+			echo '<input type = "text" name="language" class="search_form_txt"';
+            echo ' value = "' . $this->getLanguage() . '">'; 
+			echo "</input>\n";
 			echo '</td></tr>';
 			// +-------------+
 			// | ENG_LEVEL   |
@@ -1601,9 +1588,6 @@ class LcmClientInfoUI extends LcmClient {
 			echo '</td><td>';
 			$the_date=date('Y-m-d');
 			echo get_date_inputs('zot',$this->getDataString('entery_date'));
-//			echo '<select name="religion" size="1" class="sel_frm">';
-//			$x=$this->getDropdown('religion');
-//			echo "</select>\n";
 			echo '</td></tr>';
 			// +-------------+
 			// | STATUS      |
@@ -1880,15 +1864,6 @@ class LcmClientInfoUI extends LcmClient {
 			echo "</textarea>";
 			echo "</td></tr>";
 			}
-//		if ($mode!='scores')
-//			{
-//			echo "<tr>\n";
-//			echo '<td colspan="2" align="center" valign="middle">';
-//			show_page_subtitle(_T('client_subtitle_contacts'));
-//			echo '</td>';
-//			echo "</tr>\n";		
-//			show_edit_contacts_form('client', $this->getDataInt('id_client'));
-//			}
 		if ($mode!='salrev')
 			echo "</table>\n";
 	}

@@ -132,11 +132,11 @@ function show_new_note($ref='index.php')
 	echo "</td><td>";
 	echo "<select name='cc'>";
 	echo "<option value='post-admin'>Admin Team</option>";
-	echo "<option value='post-accom'>Accomidation Team</option>";
+	echo "<option value='post-accom'>Accommodation Team</option>";
 	echo "<option value='post-panel'>Panel</option>";
-	echo "<option value='post-sal'>SAL</option>";
+	echo "<option value='post-sal'>Advocacy</option>";
 	echo "<option value='post-helpd'>Help Desk</option>";
-	echo "<option value='post-bef'>Befrienders</option>";
+	echo "<option value='post-bef'>Accompaniers</option>";
 	echo "<option value='post-tres'>Tresuary</option>";
 	echo "<option value='post-ns'>Night Shelter</option>";
 	echo "</select>";

@@ -156,10 +156,10 @@ else
 					echo '<li>Admin? ' . ($author_data['right3']?"<strong>Yes</strong>":"No") . "</li>\n";
 					echo '<li>Panel? ' . ($author_data['right4']?"<strong>Yes</strong>":"No") . "</li>\n";
 					echo '<li>Accom.? ' . ($author_data['right5']?"<strong>Yes</strong>":"No") . "</li>\n";
-					echo '<li>SAL? ' . ($author_data['right6']?"<strong>Yes</strong>":"No") . "</li>\n";
-					echo '<li>Tresuary? ' . ($author_data['right7']?"<strong>Yes</strong>":"No") . "</li>\n";
+					echo '<li>Advocacy? ' . ($author_data['right6']?"<strong>Yes</strong>":"No") . "</li>\n";
+					echo '<li>Treasury? ' . ($author_data['right7']?"<strong>Yes</strong>":"No") . "</li>\n";
 					echo '<li>Night Shelter? ' . ($author_data['right8']?"<strong>Yes</strong>":"No") . "</li>\n";
-					echo '<li>Befrienders? ' . ($author_data['right9']?"<strong>Yes</strong>":"No") . "</li>\n";
+					echo '<li>Accompaniers? ' . ($author_data['right9']?"<strong>Yes</strong>":"No") . "</li>\n";
 					}
 
 				echo "</ul>\n";
@@ -179,14 +179,14 @@ else
 				if ($author_data['status']=='befriender')
 					{
 					echo '<a href="edit_fu.php?bef='.$author_data['id_author'].'&ctype=befriender&type=stage_change&stage=bef&ref=author_det.php?author='.$author_data['id_author'].'" class="create_new_lnk click_btn">
-					Befriend a Client
+					Accompany a Client
 					</a>';
 					}
 				echo '</p>';
 
 				if ($author_data['status']=='befriender')
 					{
-					show_page_subtitle('Clients Befriended');
+					show_page_subtitle('Clients Accompanied');
 					$result = lcm_query('
 							select 
 								cl.*,

@@ -89,7 +89,7 @@ switch ($tab)
 		break;
 	case 'reviewdue':
 		$type='applist';
-		$text='Clients recently reviewed by SAL, and awaitng a Panel review.';
+		$text='Clients recently reviewed by Advocacy, and awaitng a Panel review.';
 		$listtype='rev';
 		break;
 	case 'terminated':

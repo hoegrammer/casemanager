@@ -145,10 +145,10 @@ else
 		{
 		case 'support': $title='Submit to Panel';break;
 		case 'accomidation': $title='Submit to Accommodation Team';break;
-		case 'befriender': $title='Submit for a Befriender';break;
-		case 'salreview': $title='SAL Review'; break;
+		case 'befriender': $title='Submit for an Accompanier';break;
+		case 'salreview': $title='Advocacy Review'; break;
 		case 'review': $title='Review'; break;
-		case 'salreview': $title='SAL Review'; break;
+		case 'salreview': $title='Advocacy Review'; break;
 		case 'followups28': $title='Resubmission'; break;
 		case 'followups30': $title='Attendance at Night Shelter'; break;
 		case 'followups34': $title='Post-it Note'; break;
@@ -171,7 +171,7 @@ else
 				case 'accomreserved':$title='Reserve New Room';break;
 				case 'unreserved':$title='Cancel Reservation';break;
 				case 'unreserved2':$title='Cancel New Reservation';break;
-				case 'bef':$title='Assign Befriender';break;
+				case 'bef':$title='Assign Accompanier';break;
 				default: $title='Change Stage';
 				}
 			break;

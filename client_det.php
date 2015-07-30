@@ -219,7 +219,7 @@ switch ($tab) {
 			elseif ($row1['type_case']=='Support')
 				echo "Support";
 			elseif ($row1['type_case']=='Befriender')
-				echo "Befriender";
+				echo "Accompanier";
 			else
 				echo "Other";
 
@@ -294,11 +294,11 @@ switch ($tab) {
 				{
 				echo "<b>";
 				if ($row1['ttl']=='salrev')
-					echo "SAL Review Due: ";
+					echo "Advocacy Review Due: ";
 				elseif ($row1['ttl']=='suprev')
 					echo "Next Panel Review Due: ";
 				elseif ($row1['ttl']=='accrev')
-					echo "Next Accomidation Review Due: ";
+					echo "Next Accommodation Review Due: ";
 				elseif ($row1['ttl']=='supterm'||$row1['ttl']=='accterm')
 					echo "Termination Due: ";
 				else
@@ -354,7 +354,7 @@ switch ($tab) {
 							}
 						if (($row1['ttl']=='salrev')&&($GLOBALS['author_session']['right6']))
 							{
-							echo '<a href="edit_fu.php?case='.$row1['id_case'].'&ctype=support&type=salreview&'.$ref.'" class="content_link">SAL Review Now</a>&nbsp';
+							echo '<a href="edit_fu.php?case='.$row1['id_case'].'&ctype=support&type=salreview&'.$ref.'" class="content_link">Advocacy Review Now</a>&nbsp';
 							}
 						if (($row1['ttl']=='supterm'||$row1['ttl']=='accterm')&&($supad))
 							{
@@ -400,7 +400,7 @@ switch ($tab) {
 							}
 						if (($row1['ttl']=='salrev')&&($GLOBALS['author_session']['right6']))
 							{
-							echo '<a href="edit_fu.php?case='.$row1['id_case'].'&ctype=accomidation&type=salreview&'.$ref.'" class="content_link">SAL Review Now</a>&nbsp';
+							echo '<a href="edit_fu.php?case='.$row1['id_case'].'&ctype=accomidation&type=salreview&'.$ref.'" class="content_link">Advocacy Review Now</a>&nbsp';
 							}
 						if ($row1['ttl']=='supterm'||$row1['ttl']=='accterm')
 							{

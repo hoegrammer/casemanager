@@ -313,7 +313,7 @@ if (($_SESSION['form_data']['app_title']=='accterm'))
 			id_author = ' .	($_SESSION['form_data']['user']>0?$_SESSION['form_data']['user']:$GLOBALS['author_session']['id_author']) . ',
 			title = "post-admin", 
 			colour = "yellow", 
-			description = "This client\'s accomidation has been marked for termination. Please notify the client.",
+			description = "This client\'s accommodation has been marked for termination. Please notify the client.",
 			date_creation = "'.$_SESSION['form_data']['app_start_time'] . '"
 			';
 	$postit=true;

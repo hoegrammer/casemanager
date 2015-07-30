@@ -823,12 +823,12 @@ class LcmFollowupInfoUI extends LcmFollowup {
 			echo "</td><td>";
 			echo "<select name='cc'>";
 			echo "<option value='post-admin'>Admin Team</option>";
-			echo "<option value='post-accom'>Accomidation Team</option>";
+			echo "<option value='post-accom'>Accommodation Team</option>";
 			echo "<option value='post-panel'>Panel</option>";
 			echo "<option value='post-sal'>Advocacy</option>";
 			echo "<option value='post-helpd'>Help Desk</option>";
 			echo "<option value='post-bef'>Accompaniers</option>";
-			echo "<option value='post-tres'>Tresuary</option>";
+			echo "<option value='post-tres'>Treasury</option>";
 			echo "<option value='post-ns'>Night Shelter</option>";
 			echo "</select>";
 			echo "</td></tr>";
@@ -943,7 +943,7 @@ class LcmFollowupInfoUI extends LcmFollowup {
 			echo '</table>';
 			if ($checked)
 				{
-				echo 'There are no clients on the accomidation waiting list. Sorry';
+				echo 'There are no clients on the accommodation waiting list. Sorry';
 				}
 			echo "</td></tr>";
 			}

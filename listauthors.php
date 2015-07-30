@@ -123,13 +123,13 @@ if ($tab == 'user' || $tab=='group')
 	$headers[4]['order'] = 'no_order';
 	$headers[5]['title'] = 'Accom.';
 	$headers[5]['order'] = 'no_order';
-	$headers[6]['title'] = 'SAL';
+	$headers[6]['title'] = 'Advocacy';
 	$headers[6]['order'] = 'no_order';
-	$headers[7]['title'] = 'Tresuary';
+	$headers[7]['title'] = 'Treasury';
 	$headers[7]['order'] = 'no_order';
 	$headers[8]['title'] = 'NightShelter';
 	$headers[8]['order'] = 'no_order';
-	$headers[9]['title'] = 'Befrienders';
+	$headers[9]['title'] = 'Accompaniers';
 	$headers[9]['order'] = 'no_order';
 	}
 

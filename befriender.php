@@ -42,7 +42,7 @@ $groups = array(
 	'outstanding' => 'Post-its',
 	'new' => 'Awaiting Decision',
 	'bef' => 'Clients',
-	'befriender' => 'Accompaners',
+	'befriender' => 'Accompaniers',
 	);
 $tab = ( isset($_GET['tab']) ? $_GET['tab'] : 'outstanding' );
 show_tabs($groups,$tab,$_SERVER['REQUEST_URI']);
@@ -55,12 +55,12 @@ switch ($tab)
 		break;
 	case 'new':
 		$type='caselist';
-		$text='List of clients who have applied for a befriender.';
+		$text='List of clients who have applied for an accompanier.';
 		$listtype=41;
 		break;
 	case 'bef':
 		$type='caselist';
-		$text='List of clients currently befriended.';
+		$text='List of clients currently accompanied.';
 		$listtype=42;
 		break;
 	case 'befriender':
@@ -145,9 +145,9 @@ switch ($tab)
 			$headers[4]['order'] = 'no_order';
 			$headers[5]['title'] = 'Accom.';
 			$headers[5]['order'] = 'no_order';
-			$headers[6]['title'] = 'SAL';
+			$headers[6]['title'] = 'Advocacy';
 			$headers[6]['order'] = 'no_order';
-			$headers[7]['title'] = 'Tresuary';
+			$headers[7]['title'] = 'Treasury';
 			$headers[7]['order'] = 'no_order';
 			$headers[8]['title'] = 'NightShelter';
 			$headers[8]['order'] = 'no_order';

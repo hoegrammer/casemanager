@@ -263,7 +263,6 @@ echo show_all_errors($_SESSION['errors']);
 			}
 		if ($type == 'user')
 			{
-		print "TEST";
 			echo'<input type="hidden" name="status" value="normal"/>';
 			}
 		elseif ($type == 'befriender')

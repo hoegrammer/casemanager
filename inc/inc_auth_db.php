@@ -57,7 +57,6 @@ class Auth_db {
 			$this->md5next = $future_mdpass;
 			return true;
 		}
-
 		return false;
 	}
 

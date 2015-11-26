@@ -107,9 +107,15 @@ function show_login($cible, $prive = 'prive', $message_login='') {
 		return;
 	}
 
-	if (_request('var_erreur') == 'pass')
+	if (_request('var_erreur') == 'pass') {
 		$error = _T('login_password_incorrect');
-
+		record_failed_login_attempt($login);
+		if (account_should_be_blocked($login)) {
+			block_account($login);
+			$error = 'Your account has been blocked due to too many failed login attempts. Please call the Assist office on 0114 275 4960 for help';
+		}
+	}
+		
 	// The login is memorized in the cookie for a possible future admin login
 	if ((!$login) && isset($_COOKIE['lcm_admin'])) {
 		if (ereg("^@(.*)$", $_COOKIE['lcm_admin'], $regs))
@@ -272,6 +278,22 @@ function show_login($cible, $prive = 'prive', $message_login='') {
 	echo "</div>\n";
 
 	echo close_login();
+}
+
+function record_failed_login_attempt($login) {
+	lcm_query("INSERT into failed_login_attempts (username) values ('$login')");
+}
+
+function account_should_be_blocked($login) {
+	$result = lcm_query("SELECT count(*) from failed_login_attempts where username = '$login' and `time` > DATE_SUB(NOW(), INTERVAL 6 HOUR) AND cleared = 0;");
+	$arr = mysql_fetch_array($result);
+	return $arr[0] > 5;
+}
+
+function block_account($login) {
+	lcm_query("UPDATE lcm_author set right1 = 0 where username = '$login'");
+	// once the account is blocked, set login attempts to "cleared", so they can start afresh after unblocking
+	lcm_query("UPDATE failed_login_attempts set cleared = 1 where username = '$login'");
 }
 
 ?>

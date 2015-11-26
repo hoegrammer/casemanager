@@ -310,7 +310,7 @@ function lcm_page_start($title = "", $css_files = "", $meta = '', $help_code = '
 		{	
 		matt_page_start('ACCESS DENIED');
 		no_tabs();
-		echo "<p>Sorry. This username is not currently allowed to log into case manager. You may be able to use the system as part of a group.<p>";
+		echo "<p>Your account may be blocked due to too many failed logins. Please call the Assist office on 0114 275 4960 for help.<p>";
 		echo "<a href=\"lcm_cookie.php?logout=" . htmlspecialchars($author_session['username']) ."\" class=\"prefs_logout\" title=\"" . _T('menu_profile_logout_tooltip') . "\">" . _T('menu_profile_logout') . "</a>";
 		matt_page_end();
 		exit;

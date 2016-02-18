@@ -743,6 +743,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 'menu_main' => 'Main menu',
 'menu_main_admin' => 'Admin Team',
 'menu_main_helpdesk' => 'Helpdesk',
+'menu_main_friday' => 'Friday Team',
 'menu_main_befriender' => 'Accompanying Team',
 'menu_main_sal' => 'Advocacy',
 'menu_main_authors' => 'Users, Groups & Hosts',

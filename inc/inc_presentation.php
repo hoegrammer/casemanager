@@ -371,6 +371,7 @@ echo"
 						echo show_navmenu_item("befriender.php", 'main_befriender');
 						echo show_navmenu_item("admin.php", 'main_admin');
 						echo show_navmenu_item("helpdesk.php", 'main_helpdesk');
+						echo show_navmenu_item("friday.php", 'main_friday');
 						echo "</ul>\n";
 						echo "</div>\n";
 

@@ -45,7 +45,7 @@ class WelfareSheetRow
 		}	
 		$this->letter = $letter;
 		$this->advocacy = $advocacy;
-		$this->collect_from = $from_helpdesk ? 'Helpdesk' : 'Welfare' ;
+		$this->collect_from = $from_helpdesk ? 'Friday Team' : 'Welfare' ;
 		$this->note = $note;
 	}
 

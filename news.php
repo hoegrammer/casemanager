@@ -43,7 +43,7 @@ else
 	lcm_bubble('news');
 	}
 
-echo '<p><textarea name="news" rows="3" cols="40">'.read_meta('news').'</textarea></p>';
+echo '<p><textarea name="news" rows="7" cols="100">'.read_meta('news').'</textarea></p>';
 echo '<input type="hidden" name="updated" value="yes">';
 echo '<button type="submit" class="simple_form_btn">Submit</button>';
 echo '</form>';

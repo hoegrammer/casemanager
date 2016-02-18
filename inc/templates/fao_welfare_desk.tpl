@@ -30,7 +30,7 @@
 		</tr>
 		<tr>
 			<td>
-				<label for='fao_from_helpdesk'><b><small>Collect from Helpdesk:</small></b></label>
+				<label for='fao_from_helpdesk'><b><small>Friday Team:</small></b></label>
 			</td>
 			<td>
 				<input type='checkbox' name='fao_from_helpdesk' id='fao_from_helpdesk'

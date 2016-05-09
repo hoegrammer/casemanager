@@ -232,6 +232,10 @@ if (! strlen(lcm_utf8_decode(_session('name_last')))) {
 		$fl .= ", right9 = '1'";
 	else
 		$fl .= ", right9 = '0'";
+	if (_session('right10')=='on')
+		$fl .= ", right10 = '1'";
+	else
+		$fl .= ", right10 = '0'";
 //	}
 
 if (_session('id_author') > 0) {

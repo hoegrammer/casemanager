@@ -292,6 +292,7 @@ echo show_all_errors($_SESSION['errors']);
 			echo '<input type="checkbox" '.$disabled.'name="right7" '.($user['right7']==1?"checked":"").' />Treasury<br/>';
 			echo '<input type="checkbox" '.$disabled.'name="right8" '.($user['right8']==1?"checked":"").' />Night Shelter<br/>';
 			echo '<input type="checkbox" '.$disabled.'name="right9" '.($user['right9']==1?"checked":"").' />Befrienders<br/>';
+			echo '<input type="checkbox" '.$disabled.'name="right10" '.($user['right10']==1?"checked":"").' />Friday Team<br/>';
 			echo "</td></tr>";
 			if ($type == 'user')
 				{

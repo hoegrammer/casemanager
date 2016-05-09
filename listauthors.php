@@ -43,7 +43,7 @@ show_tabs($groups,$tab,$_SERVER['REQUEST_URI']);
 lcm_bubble($tab);
 
 
-$q = "SELECT id_author,name_first,name_middle,name_last,status, right1, right2, right3, right4, right5, right6, right7, right8, right9
+$q = "SELECT id_author,name_first,name_middle,name_last,status, right1, right2, right3, right4, right5, right6, right7, right8, right9, right10
 		FROM lcm_author ";
 
 if ($tab == 'user')
@@ -173,6 +173,9 @@ for ($i = 0 ; (($i<$prefs['page_rows']) && ($row = lcm_fetch_array($result))) ; 
 		echo "</td>\n";
 		echo "<td class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
 		echo ($row['right9']?'<strong>Yes</strong>':'No');
+		echo "</td>\n";
+		echo "<td class='tbl_cont_" . ($i % 2 ? "dark" : "light") . "'>";
+		echo ($row['right10']?'<strong>Yes</strong>':'No');
 		echo "</td>\n";
 		}
 

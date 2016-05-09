@@ -160,6 +160,7 @@ else
 					echo '<li>Treasury? ' . ($author_data['right7']?"<strong>Yes</strong>":"No") . "</li>\n";
 					echo '<li>Night Shelter? ' . ($author_data['right8']?"<strong>Yes</strong>":"No") . "</li>\n";
 					echo '<li>Accompaniers? ' . ($author_data['right9']?"<strong>Yes</strong>":"No") . "</li>\n";
+					echo '<li>Friday Team? ' . ($author_data['right10']?"<strong>Yes</strong>":"No") . "</li>\n";
 					}
 
 				echo "</ul>\n";

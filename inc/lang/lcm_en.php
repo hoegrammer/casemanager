@@ -436,7 +436,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 // H
 'help_intro_old_clients'=>'These are old clients rescued from the previous version of Case Manager. To import them into the current database, click on them, check and ammend their details, then submit them. Please note that the Date of Registration and the client\'s contact details were not saved!',
-'help_intro_no_notes'=>'There are no outstanding post-it notes to be delt with!',
+'help_intro_no_notes'=>'There are no outstanding post-it notes to be dealt with!',
 'help_intro_user'=>'All users registered with the system. You can click on a user for their details, or add a new user with the button below.',
 'help_intro_befriender'=>'All accompaniers registered with the system. You can click on an accompanier for their details, or add a new accompanier with the button below.',
 'help_intro_host'=>'All hosts registered with the system. You can click on a host for their details, or add a new host with the button below.',

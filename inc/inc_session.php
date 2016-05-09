@@ -73,7 +73,7 @@ function fichier_session($id_session, $alea) {
 //
 function lcm_add_session($content, $id_session) {
 	$session_file = get_session_file($id_session, read_meta('alea_ephemere'));
-	$vars = array('id_author', 'name_first', 'name_middle', 'name_last', 'username', 'email', 'status', 'right1', 'right2', 'right3', 'right4', 'right5', 'right6', 'right7', 'right8', 'right9', 'lang', 'ip_change', 'hash_env');
+	$vars = array('id_author', 'name_first', 'name_middle', 'name_last', 'username', 'email', 'status', 'right1', 'right2', 'right3', 'right4', 'right5', 'right6', 'right7', 'right8', 'right9', 'right10', 'lang', 'ip_change', 'hash_env');
 
 	$text = "<"."?php\n";
 	reset($vars);

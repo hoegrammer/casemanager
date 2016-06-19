@@ -829,6 +829,7 @@ class LcmFollowupInfoUI extends LcmFollowup {
 			echo "<option value='post-helpd'>Help Desk</option>";
 			echo "<option value='post-bef'>Accompaniers</option>";
 			echo "<option value='post-ns'>Night Shelter</option>";
+			echo "<option value='post-friday'>Friday Team</option>";
 			echo "</select>";
 			echo "</td></tr>";
 			echo "<tr><td>";

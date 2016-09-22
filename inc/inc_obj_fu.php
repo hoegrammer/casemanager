@@ -578,9 +578,17 @@ class LcmFollowupInfoUI extends LcmFollowup {
 		$day = (int) substr($date,8,2);
 		$hour = (int) substr($date,11,2);
 		$min = (int) substr($date,14,2);
-		echo get_date_inputs($name, date('Y-m-d'), false);
-		echo ' ' . _T('time_input_time_at') . ' ';
-		echo get_time_inputs($name, null, $hours24 = false, null, null, true);
+		if (($special == 'nightshelter') && ($hour < 21)) {
+			// pre-9pm probably refers to prior night so tweak date/time
+			echo get_date_inputs($name, date('Y-m-d',time()-86400), false);
+			echo ' ' . _T('time_input_time_at') . ' ';
+			echo get_time_inputs($name, date('Y-m-d 23:00:00',time()-86400), $hours24 = false);
+		}
+		else {
+			echo get_date_inputs($name, date('Y-m-d'), false);
+			echo ' ' . _T('time_input_time_at') . ' ';
+			echo get_time_inputs($name, null, $hours24 = false, null, null, true);
+		}
 		echo '<a href="#" onClick="
 			document.forms[\'form\'][\'start_year\'].value = '.$year.';
 			document.forms[\'form\'][\'start_month\'].value = '.$month.';

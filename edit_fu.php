@@ -199,7 +199,15 @@ if ($case)
 	$row = lcm_fetch_array($result);
 	$obj_fu->setDataString('client',$row['id_client']);
 	}
-$obj_fu->printEdit();
+
+if (isset($_REQUEST['type']) && ($_REQUEST['type'] == 'followups30'))
+	{
+	$obj_fu->printEdit('nightshelter');
+	}
+else
+	{
+	$obj_fu->printEdit();
+	}
 
 echo "<button id=\"mr_submit\" name=\"submit\" type=\"submit\" value=\"submit\" class=\"simple_form_btn search_form_btn\">" . _T('button_validate') . "</button>\n";
 
